@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>(EM PROGRESSO) Formulário de Cadastro e Consulta</title>
+  </head>
+  <body>
+
+    <div class="img-fundo"></div>
+
+    <div class="container-cliente">
+
+      <div class="header">
+        <h2>Informações Cliente</h2>
+      </div>
+
+      <form id="form" class="form">
+
+        <div class="form-control">
+          <label for="id">ID</label>
+          <input type="text" id="cliente-id" placeholder="Digite o id do cliente..."/>
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <div class="form-control">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome-cliente" placeholder="Digite o nome do cliente.." />
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <div class="form-control">
+          <label for="endereco">Endereço</label>
+          <input type="text" id="cliente-endereco" placeholder="Digite seu endereço..."/>
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <div class="form-control">
+          <label for="telefone">Telefone</label>
+          <input type="text" id="cliente-telefone" placeholder="Digite o telefone do cliente..."/>
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <button class="button" id="button01" type="submit">Buscar</button>
+
+      </form>
+      
+
+    </div>
+
+    <div class="container-pedido">
+
+      <div class="header">
+        <h2>Informações Pedido</h2>
+      </div>
+
+      <form id="form" class="form">
+
+        <div class="form-control">
+          <label for="numero">Número do Pedido</label>
+          <input type="text" id="pedido-numero" placeholder="Digite o número do pedido..."/>
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <div class="form-control">
+          <label for="data">Data do pedido</label>
+          <input type="date" id="pedido-data" placeholder="Digite a data do pedido..."/>
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <div class="form-control">
+          <label for="data">Valor do pedido</label>
+          <input type="number" step="0.01" name="quantity" min="0.01" id="pedido-valor" placeholder="Digite o valor do pedido..."/>
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <div class="form-control">
+          <label for="data">Descrição do pedido</label>
+          <input type="text" id="pedido-descricao" placeholder="Digite a descrição do pedido..."/>
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+
+        <button class="button" id="button02" type="submit">Buscar</button>
+
+
+      </form>
+
+    </div>
+
+    <div class="botoes">
+      <button class="button" id="button03" type="submit">Cadastrar</button>
+    </div>
+
+    <script src="./scripts.js"></script>
+  </body>
+</html>
