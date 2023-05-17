@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <div class="left-side">
+            <img src="assets/cookie.png" alt="Cookie">
+            <span style="font-size: 20px; font-weight: 700; margin-top: 10px;">cookies da clarinha</span>
+            <small style="font-weight: 500;">encontre o melhor cookie para acompanhar os seus dias!</small>
+            <canvas id="myCanvas"></canvas>
+            <canvas id="myCanvas2"></canvas>
+        </div>
+
+        <div class="right-side">
+            <div class="groups">
+                <img src="assets/exemplo.png" alt="Logo" style="width: 70px; height: 70px; margin-bottom: 25px;">
+
+                <p style="font-size: 22px"><span style="font-weight: 700">Bem-vindo de volta,</span> acesse sua conta
+                    para
+                    continuar</p>
+
+                <div id="testando" class="inputGroupOne">
+                    <input id="celular" type="text" required="" autocomplete="off">
+                    <label for="celular">Celular</label>
+                    <input id="senha" type="password" required="" autocomplete="off">
+                    <label for="senha">Senha</label>
+                </div>
+
+                <button onclick="logar()" id="buttonLogin">Entrar</button>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="script.js"></script>
+
+</html>
