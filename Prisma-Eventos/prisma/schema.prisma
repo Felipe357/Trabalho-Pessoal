@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Filial {
+  id          String        @id
+  fazenda     String
+  regiao      String
+  colaborador Colaborador[]
+}
+
+model Colaborador {
+  cracha      String       @id(map: "PK__Colabora__1831D4A9C5C599CC")
+  nome        String       @db.VarChar(255)
+  aut         Boolean      @default(false)
+  nasc        DateTime
+  id_filial   String
+  dependentes Dependente[]
+  evento      Col_Evento[]
+  filial      Filial       @relation(fields: [id_filial], references: [id])
+}
+
+model Dependente {
+  id          Int          @id @default(autoincrement())
+  nome        String
+  nasc        DateTime
+  ativo       Boolean
+  cf          Boolean // cf = Conjuge e Filho, sendo 0 = Conjuge e 1 = Filho
+  cracha_col  String
+  colaborador Colaborador  @relation(fields: [cracha_col], references: [cracha])
+  Dep_Evento  Dep_Evento[]
+}
+
+model Evento {
+  id               Int          @id @default(autoincrement())
+  nome             String
+  descricao        String?
+  data             DateTime
+  inicio           String
+  duracao          String
+  cep              String
+  endereco         String
+  numero           String
+  bairro           String
+  cidade           String
+  complemento      String?
+  part             Int          @default(0) // part = Participantes, sendo 0 = ninguém, 1 = Acompanhante e 2 Todo Mundo
+  idade            Int? // idade máxima do filho para participar do evento
+  form_inicio      DateTime
+  form_fim         DateTime
+  form_hora_inicio String
+  form_hora_fim    String
+  col              Col_Evento[]
+  Dep_Evento       Dep_Evento[]
+}
+
+model Col_Evento {
+  id          Int         @id @default(autoincrement())
+  cracha_col  String
+  id_evento   Int
+  presenca    Boolean     @default(false)
+  bebe        Boolean     @default(false)
+  transporte  Boolean     @default(false)
+  confirmar   Boolean     @default(false)
+  colaborador Colaborador @relation(fields: [cracha_col], references: [cracha])
+  evento      Evento      @relation(fields: [id_evento], references: [id])
+}
+
+model Dep_Evento {
+  id            Int        @id @default(autoincrement())
+  id_dependente Int
+  id_evento     Int
+  presenca      Boolean    @default(false)
+  bebe          Boolean    @default(false)
+  confirmar     Boolean    @default(false)
+  dependente    Dependente @relation(fields: [id_dependente], references: [id])
+  evento        Evento     @relation(fields: [id_evento], references: [id])
+}
+
+model Acompanhante {
+  id         Int     @id @default(autoincrement())
+  cracha_col String?
+  nome       String?
+  id_evento  Int?
+  presenca   Boolean @default(false)
+  bebe       Boolean @default(false)
+}
