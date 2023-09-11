@@ -18,4 +18,4 @@ app.use('/eventos/evento' , routerE);
 app.use('/eventos/dependente' , routerD);
 app.use('/eventos/convite' , routerA);
 
-app.listen(3000, () => { console.log("ok"); })
+app.listen(3000, () => { console.log("API Funcionando!"); })

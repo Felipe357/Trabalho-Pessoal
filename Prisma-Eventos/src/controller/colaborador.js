@@ -3,12 +3,13 @@ const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
+const moment = require("moment");
+
 const prisma = new PrismaClient();
 
 const criar = async (req, res) => {
 
     req.body.forEach(f => {
-        console.log(f.nasc);
         f.nasc = new Date(f.nasc).toISOString()
     })
 
@@ -17,7 +18,7 @@ const criar = async (req, res) => {
             OR: req.body
         }
     })
-    
+
     let colaboradorDuplicado = []
 
     colaboradorReg.forEach((e) => {
@@ -37,16 +38,33 @@ const criar = async (req, res) => {
         where: {
             OR: req.body
         }
-        
+
     })
 
-    res.status(200).json([{"Cadastrado": colaboradorCad}, {"Duplicado": colaboradorDuplicado}]).end();
+    colaboradorCad.forEach(c => {
+        c.nasc = moment(c.nasc).format("DD/MM/YYYY")
+    })
+
+    res.status(200).json({
+        "status": 200,
+        "message": "Colaboradores cadastrados!",
+        "Cadastrado": colaboradorCad,
+        "Duplicado": colaboradorDuplicado
+    }).end();
 
 };
 
 const listar = async (req, res) => {
     let colaborador = await prisma.Colaborador.findMany({})
-    res.status(200).json(colaborador).end();
+
+    colaborador.forEach(c => {
+        c.nasc = moment(c.nasc).format("DD/MM/YYYY")
+    })
+    res.status(200).json({
+        "status": 200,
+        "message": "Colaboradores listados com sucesso!",
+        "colaboradores": colaborador
+    }).end();
 
 }
 
@@ -81,9 +99,9 @@ const decodifica = async (req, res) => {
 
         const novosdados = Buffer.from(JSON.stringify(dados)).toString('base64url')
 
-        const novoToken = header64+"."+novosdados+"."+assinatura64
+        const novoToken = header64 + "." + novosdados + "." + assinatura64
 
-        res.status(200).json({ novoToken: novoToken}).end();
+        res.status(200).json({ novoToken: novoToken }).end();
     } else {
         res.status(200).json({ err: "Token invalido" }).end();
     }
@@ -96,7 +114,15 @@ const buscar = async (req, res) => {
             dependentes: true
         }
     })
-    res.status(200).json(colaborador).end();
+
+    colaborador.forEach(c => {
+        c.nasc = moment(c.nasc).format("DD/MM/YYYY")
+    })
+    res.status(200).json({
+        "status": 200,
+        "message": "Colaboradores listados com sucesso!",
+        "colaboradores": colaborador
+    }).end();
 }
 
 module.exports = {

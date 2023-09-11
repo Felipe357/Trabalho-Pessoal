@@ -7,11 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Evento {
+  id               Int             @id @default(autoincrement())
+  nome             String
+  descricao        String?
+  data             DateTime
+  inicio           String
+  duracao          String
+  cep              String
+  endereco         String
+  numero           String
+  bairro           String
+  cidade           String
+  complemento      String?
+  part             Int             @default(0) // part = Participantes, sendo 0 = ninguém, 1 = Acompanhante e 2 Todo Mundo
+  idade            Int? // idade máxima do filho para participar do evento
+  form_inicio      DateTime
+  form_fim         DateTime
+  form_hora_inicio String
+  form_hora_fim    String
+  col              Col_Evento[]
+  Dep_Evento       Dep_Evento[]
+  filiais          FilialEventos[]
+}
+
 model Filial {
   id          String        @id
   fazenda     String
   regiao      String
   colaborador Colaborador[]
+  eventos     FilialEventos[]
+}
+
+model FilialEventos {
+  id        Int    @id @default(autoincrement())
+  id_evento Int
+  evento    Evento @relation(fields: [id_evento], references: [id], onDelete: Cascade)
+  id_filial String
+  filial    Filial @relation(fields: [id_filial], references: [id], onDelete: Cascade)
 }
 
 model Colaborador {
@@ -32,31 +65,8 @@ model Dependente {
   ativo       Boolean
   cf          Boolean // cf = Conjuge e Filho, sendo 0 = Conjuge e 1 = Filho
   cracha_col  String
-  colaborador Colaborador  @relation(fields: [cracha_col], references: [cracha])
+  colaborador Colaborador  @relation(fields: [cracha_col], references: [cracha], onDelete: Cascade)
   Dep_Evento  Dep_Evento[]
-}
-
-model Evento {
-  id               Int          @id @default(autoincrement())
-  nome             String
-  descricao        String?
-  data             DateTime
-  inicio           String
-  duracao          String
-  cep              String
-  endereco         String
-  numero           String
-  bairro           String
-  cidade           String
-  complemento      String?
-  part             Int          @default(0) // part = Participantes, sendo 0 = ninguém, 1 = Acompanhante e 2 Todo Mundo
-  idade            Int? // idade máxima do filho para participar do evento
-  form_inicio      DateTime
-  form_fim         DateTime
-  form_hora_inicio String
-  form_hora_fim    String
-  col              Col_Evento[]
-  Dep_Evento       Dep_Evento[]
 }
 
 model Col_Evento {
@@ -67,8 +77,8 @@ model Col_Evento {
   bebe        Boolean     @default(false)
   transporte  Boolean     @default(false)
   confirmar   Boolean     @default(false)
-  colaborador Colaborador @relation(fields: [cracha_col], references: [cracha])
-  evento      Evento      @relation(fields: [id_evento], references: [id])
+  colaborador Colaborador @relation(fields: [cracha_col], references: [cracha], onDelete: Cascade)
+  evento      Evento      @relation(fields: [id_evento], references: [id], onDelete: Cascade)
 }
 
 model Dep_Evento {
@@ -78,8 +88,8 @@ model Dep_Evento {
   presenca      Boolean    @default(false)
   bebe          Boolean    @default(false)
   confirmar     Boolean    @default(false)
-  dependente    Dependente @relation(fields: [id_dependente], references: [id])
-  evento        Evento     @relation(fields: [id_evento], references: [id])
+  dependente    Dependente @relation(fields: [id_dependente], references: [id], onDelete: Cascade)
+  evento        Evento     @relation(fields: [id_evento], references: [id], onDelete: Cascade)
 }
 
 model Acompanhante {
@@ -89,4 +99,5 @@ model Acompanhante {
   id_evento  Int?
   presenca   Boolean @default(false)
   bebe       Boolean @default(false)
+  confirmar  Boolean @default(false)
 }
