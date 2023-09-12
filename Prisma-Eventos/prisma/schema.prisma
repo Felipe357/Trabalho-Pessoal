@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -32,7 +32,7 @@ model Evento {
 }
 
 model Filial {
-  id          String        @id
+  id          String          @id
   fazenda     String
   regiao      String
   colaborador Colaborador[]
@@ -48,7 +48,7 @@ model FilialEventos {
 }
 
 model Colaborador {
-  cracha      String       @id(map: "PK__Colabora__1831D4A9C5C599CC")
+  cracha      String       @id
   nome        String       @db.VarChar(255)
   aut         Boolean      @default(false)
   nasc        DateTime

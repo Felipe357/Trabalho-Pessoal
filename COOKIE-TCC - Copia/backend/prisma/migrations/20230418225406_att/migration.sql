@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE `vendas` MODIFY `id_produto` INTEGER NOT NULL DEFAULT 0,
-    MODIFY `id_estoque` INTEGER NOT NULL DEFAULT 0;
