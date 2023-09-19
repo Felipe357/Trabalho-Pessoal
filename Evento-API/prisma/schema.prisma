@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Evento {
+  id               Int             @id @default(autoincrement())
+  nome             String
+  descricao        String?
+  data             DateTime
+  inicio           String
+  duracao          String
+  cep              String
+  endereco         String
+  numero           String
+  bairro           String
+  cidade           String
+  complemento      String?
+  part             Int             @default(0)
+  idade            Int?
+  form_inicio      DateTime
+  form_fim         DateTime
+  form_hora_inicio String
+  form_hora_fim    String
+  col              Col_Evento[]
+  Dep_Evento       Dep_Evento[]
+  filiais          FilialEventos[]
+}
+
+model Filial {
+  id          String          @id
+  fazenda     String
+  regiao      String
+  colaborador Colaborador[]
+  eventos     FilialEventos[]
+}
+
+model FilialEventos {
+  id        Int    @id @default(autoincrement())
+  id_evento Int
+  id_filial String
+  evento    Evento @relation(fields: [id_evento], references: [id], onDelete: Cascade)
+  filial    Filial @relation(fields: [id_filial], references: [id], onDelete: Cascade)
+}
+
+model Colaborador {
+  cracha      String       @id(map: "PK__Colabora__1831D4A9C5C599CC")
+  nome        String       @db.VarChar(255)
+  aut         Boolean      @default(false)
+  nasc        DateTime
+  id_filial   String
+  evento      Col_Evento[]
+  filial      Filial       @relation(fields: [id_filial], references: [id], onDelete: Cascade)
+  dependentes Dependente[]
+}
+
+model Dependente {
+  id          Int          @id @default(autoincrement())
+  nome        String
+  nasc        DateTime
+  ativo       Boolean
+  cf          Boolean
+  cracha_col  String
+  Dep_Evento  Dep_Evento[]
+  colaborador Colaborador  @relation(fields: [cracha_col], references: [cracha], onDelete: Cascade)
+}
+
+model Col_Evento {
+  id          Int         @id @default(autoincrement())
+  cracha_col  String
+  id_evento   Int
+  bebe        Boolean     @default(false)
+  presenca    Boolean     @default(false)
+  transporte  Boolean     @default(false)
+  confirmar   Boolean     @default(false)
+  colaborador Colaborador @relation(fields: [cracha_col], references: [cracha], onDelete: Cascade)
+  evento      Evento      @relation(fields: [id_evento], references: [id], onDelete: Cascade)
+}
+
+model Dep_Evento {
+  id            Int        @id @default(autoincrement())
+  id_dependente Int
+  id_evento     Int
+  bebe          Boolean    @default(false)
+  presenca      Boolean    @default(false)
+  confirmar     Boolean    @default(false)
+  dependente    Dependente @relation(fields: [id_dependente], references: [id], onDelete: Cascade)
+  evento        Evento     @relation(fields: [id_evento], references: [id], onDelete: Cascade)
+}
+
+model Acompanhante {
+  id         Int     @id @default(autoincrement())
+  cracha_col String?
+  nome       String?
+  presenca   Boolean @default(false)
+  bebe       Boolean @default(false)
+  confirmar  Boolean @default(false)
+  id_evento  Int?
+}
