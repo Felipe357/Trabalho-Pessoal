@@ -1,0 +1,140 @@
+.input {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-selecionada {
+    height: 25px;
+    width: 300px;
+    border: 2px solid #cfcfcf;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 10pt;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.data-selecionada>img {
+    height: 20px;
+    transform: rotate(-90deg);
+    transition: .2s ease;
+}
+
+.fundo {
+    position: absolute;
+    bottom: 60px;
+    width: 300px;
+    background: #ffffff;
+    border: 2px solid #b7b7b7;
+    border-radius: 5px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.header-calendario {
+    display: flex;
+    align-items: center;
+    padding: 15px 30px 0px;
+    justify-content: space-between;
+}
+
+.header-calendario .icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-calendario .icons img {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    color: #878787;
+}
+
+.header-calendario .icons img:first-child {
+    transform: rotate(180deg);
+}
+
+.icons span:last-child {
+    margin-right: -10px;
+}
+
+.header-calendario .icons span:hover {
+    background: #f2f2f2;
+}
+
+.header-calendario .data {
+    font-size: 12pt;
+    font-weight: 500;
+}
+
+.calendario {
+    padding: 10px;
+    position: relative;
+    left: -20px;
+}
+
+.calendario ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    text-align: center;
+}
+
+.calendario .dias {
+    margin-bottom: 10px;
+}
+
+.calendario li {
+    color: #333;
+    width: calc(100% / 7);
+    font-size: 10pt;
+}
+
+.calendario .semana li {
+    font-weight: 500;
+    cursor: default;
+}
+
+.calendario .dias li {
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    margin-top: 15px;
+}
+
+.dias li.inactive {
+    color: #aaa;
+}
+
+.dias li.active {
+    color: #fff;
+}
+
+.dias li::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 30px;
+    width: 30px;
+    z-index: -1;
+    border-radius: 2px;
+    transform: translate(-50%, -50%);
+}
+
+.dias li.active::before {
+    background: #52B032;
+}
+
+.dias li.activeM::before {
+    background: #51b0327b;
+}
+
+.dias li:not(.active):hover::before {
+    background: #f2f2f2;
+}

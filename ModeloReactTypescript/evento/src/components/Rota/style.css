@@ -1,0 +1,53 @@
+.rota-menu {
+    height: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.rota {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10pt;
+    font-weight: 400;
+    color: black;
+}
+
+.rota>img {
+    height: 22px;
+    padding: 6px 10px;
+    background-color: #eaf6e6a7;
+    border-radius: 15px;
+    width: 42;
+    cursor: pointer;
+}
+
+#rota-span-maior {
+    color: #8f8e8e;
+    font-size: 10pt;
+}
+
+#titulo-menu-rota {
+    font-size: 18pt;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+}
+
+.rota-title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 50px;
+}
+
+.rota-title>button {
+    background-color: #5aaf30;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    color: #fff;
+    font-size: 12pt;
+    cursor: pointer;
+}

@@ -1,0 +1,48 @@
+header {
+    height: 60px;
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    align-items: center;
+}
+
+#header-img {
+    height: 16px;
+}
+
+#header-img-col {
+    height: 60%;
+    padding: 6px;
+    background-color: #ffffff;
+    border-radius: 100px;
+}
+
+.sino,
+.rede {
+    background-color: #fff2ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+}
+
+.colaborador {
+    background-color: #dcefd683;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    padding: 0px 15px 0px 10px;
+    align-items: center;
+    border-radius: 100px;
+    margin-left: 10px;
+    gap: 10px;
+}
+
+#nome-col {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #317031;
+}

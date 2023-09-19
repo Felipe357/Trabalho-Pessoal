@@ -1,0 +1,101 @@
+.menu-lateral {
+    height: 100vh;
+    width: 360px;
+    border-right: 2px solid #ececec;
+    padding: 0px 16px;
+}
+
+.title {
+    height: 92px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title-left {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12pt;
+    line-height: 2.25rem;
+    font-weight: 800;
+    width: 115px;
+    color: #253621;
+}
+
+.title-left>img {
+    height: 28px;
+}
+
+.title-left>span {
+    margin-top: 10px;
+}
+
+.fechar {
+    background-color: #dcefd6;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fechar>img {
+    height: 23px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 200px;
+    margin-top: 10px;
+}
+
+.btn-menu {
+    height: 3%;
+    width: 80%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 20px;
+    cursor: pointer;
+    transition: .2s ease-in;
+}
+
+.icon>img {
+    margin-top: 6px;
+    height: 20px;
+}
+
+#span-menu {
+    color: #3a3a3a;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.btn-menu-select:last-child {
+    background-color: #d2f3c57e !important;
+}
+
+.s {
+    color: #3f8a52 !important;
+}
+
+.btn-menu:hover {
+    background-color: #d9eed049;
+}
+
+#title-UGB {
+    color: #3a3a3a;
+    font-size: 10pt;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    margin: 20px 0px 0px 18px;
+}
