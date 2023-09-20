@@ -6,6 +6,6 @@ import colaborador from '../controller/colaborador'
 
 router.post('/criar', colaborador.criar)
 router.get('/listar', colaborador.listar)
-router.get('/buscar', colaborador.buscar)
+router.post('/buscar', colaborador.buscar)
 
 export default router

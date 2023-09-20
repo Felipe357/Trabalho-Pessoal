@@ -284,7 +284,47 @@ const confirmar = async (req: Request, res: Response) => {
             }
         })
 
+        const acompanhanteEvento = await prisma.acompanhante.findMany({
+            where: {
+                id_evento: req.body.id_evento,
+                cracha_col: req.body.cracha
+            }
+        })
+
         if (convite.length > 0) {
+
+            if (req.body.acompanhante !== undefined) {
+                if (acompanhanteEvento.length > 0) {
+                    if (typeof req.body.acompanhante.confirmar !== "boolean") {
+                        return res.status(200).json({
+                            "status": 200,
+                            "message": "Confirmar no acompanhante está incorreto!"
+                        })
+                    }
+                }
+            }
+
+            if (req.body.dependentes !== undefined && req.body.dependentes.length > 0) {
+                req.body.dependentes.forEach(async (d: dependente) => {
+                    if (typeof d.id_dependente !== "number" || typeof d.confirmar !== "boolean") {
+                        return res.status(200).json({
+                            "status": 200,
+                            "message": "Campos do dependente incorreto!"
+                        })
+                    }
+                })
+            }
+
+            if (req.body.acompanhante !== undefined) {
+                await prisma.acompanhante.update({
+                    where: {
+                        id: acompanhanteEvento[0].id
+                    },
+                    data: {
+                        "confirmar": req.body.acompanhante.confirmar
+                    }
+                })
+            }
 
             await prisma.col_Evento.update({
                 where: {
@@ -295,53 +335,37 @@ const confirmar = async (req: Request, res: Response) => {
                 }
             })
 
-            if (req.body.dependentes !== undefined && req.body.dependentes > 0) {
+            if (req.body.dependentes !== undefined) {
                 req.body.dependentes.forEach(async (d: dependente) => {
-                    if (typeof d.id_dependente === "number" && typeof d.confirmar === "boolean") {
-                        const confirmarDependente = await prisma.dep_Evento.findMany({
+                    const confirmarDependente = await prisma.dep_Evento.findMany({
+                        where: {
+                            id_evento: req.body.id_evento,
+                            id_dependente: d.id_dependente
+                        }
+                    })
+
+                    if (confirmarDependente.length > 0) {
+                        await prisma.dep_Evento.update({
                             where: {
-                                id_evento: req.body.id_evento,
-                                id_dependente: d.id_dependente
+                                id: confirmarDependente[0].id
+                            },
+                            data: {
+                                "confirmar": d.confirmar
                             }
                         })
-        
-                        if (confirmarDependente.length > 0) {
-                            await prisma.dep_Evento.update({
-                                where: {
-                                    id: confirmarDependente[0].id
-                                },
-                                data: {
-                                    "confirmar": d.confirmar
-                                }
-                            })
-                        } else {
-                            return res.status(200).json({
-                                "status": 200,
-                                "message": "Dependente não encontrado!"
-                            })
-                        }
+                    } else {
+                        return res.status(200).json({
+                            "status": 200,
+                            "message": "Dependente não encontrado!"
+                        })
                     }
                 })
             }
 
-            // Finalizar validação de acompanhante
-
-            const acompanhanteEvento = await prisma.acompanhante.findMany({
-                where: {
-                    id_evento: req.body.id_evento,
-                    cracha_col: req.body.cracha
-                }
+            return res.status(200).json({
+                "status": 200,
+                "message": "Colaborador confirmado com sucesso!"
             })
-            if (acompanhanteEvento.length > 0) {
-                await prisma.acompanhante.update({
-                    where: {
-                        id: acompanhanteEvento[0].id
-                    },
-                    data: {
-                        "confirmar": req.body.acompanhante.confirmar
-                    }
-                })
-            }
 
         } else {
             return res.status(200).json({
