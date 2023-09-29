@@ -6,7 +6,7 @@ import cors from 'cors'
 dotenv.config()
 
 const app: Application = express()
-const port = process.env.PORT || 3000
+const port = 3000
 
 import colaborador from "./src/routes/colaborador"
 import filial from "./src/routes/filial"
