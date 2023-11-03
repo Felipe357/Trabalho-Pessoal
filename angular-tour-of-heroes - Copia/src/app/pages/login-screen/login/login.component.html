@@ -1,0 +1,38 @@
+<div class="container-login">
+  <div class="header-login">
+    <img src="../../../../assets/Imagens.png" alt="logo_folhas_TV" />
+    <span>Digite seu login Terra Viva!</span>
+  </div>
+  <form class="form-login">
+    <div class="input-group">
+      <input
+        required=""
+        class="input"
+        type="text"
+        name="userApp"
+        [(ngModel)]="user"
+      />
+      <label class="input-label">Usuário</label>
+    </div>
+    <div class="input-group">
+      <input
+        required=""
+        type="password"
+        class="input"
+        name="passApp"
+        [(ngModel)]="pass"
+      />
+      <label class="input-label">Senha</label>
+    </div>
+
+    <span style="font-size: 10pt;">Esqueceu a <span style="color: #52b032;">senha?</span></span>
+
+    <span class="message-login">
+      {{ messageLogin }}
+    </span>
+
+    <button (click)="buttonLogin()" class="button login" type="submit">
+      Entrar
+    </button>
+  </form>
+</div>
