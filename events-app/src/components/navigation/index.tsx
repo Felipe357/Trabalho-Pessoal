@@ -71,7 +71,6 @@ export const Navigation = ({ open, setOpen }: Props) => {
 
                         <Button
                             variant="light"
-                            startContent
                             aria-label="Champagne Party"
                             className={`h-16 gap-6 justify-start  ${pathname === '/controleEventos' ? `bg-[#E4F4DF]` : ''}`}
                             onClick={() => {
