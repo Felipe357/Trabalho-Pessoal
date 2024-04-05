@@ -48,7 +48,7 @@ const Evento = ({ id, titulo, data, local, onAction }: EventoProps) => {
                         <Chip
                             startContent={<FontAwesomeIcon icon={faLocationDot} />}
                             variant="faded"
-                            className="h-10 px-2 gap-2"
+                            className="h-10 px-4 gap-2"
                         >
                             {truncatedLocal}
                         </Chip>
