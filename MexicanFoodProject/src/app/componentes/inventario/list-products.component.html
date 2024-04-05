@@ -1,0 +1,40 @@
+<po-page-default p-title="Inventário">
+
+  <div class="po-row confirm">
+    <po-dynamic-form
+    class="po-xl-8"
+    #dynamicForm
+    p-auto-focus="name"
+    [p-fields]="fields"
+    [p-value]="person"
+    [p-validate-fields]="validateFields"
+    >
+    </po-dynamic-form>
+
+    <po-button
+      class="buttonConfirm"
+      p-label="Buscar"
+      [p-disabled]="!form.form.valid"
+      (p-click)="onClick()"
+    >
+    </po-button>
+  </div>
+
+  <po-table
+    [p-auto-collapse]="true"
+    [p-columns]="columns"
+    [p-hide-columns-manager]="true"
+    [p-hide-table-search]="false"
+    [p-items]="items"
+    [p-sort]="true"
+    [p-striped]="true">
+    <ng-template p-table-cell-template let-column="balance" let-row="row">
+      <po-number class="po-lg-6" [p-min]="10" p-clean="false" [(ngModel)]="row.balance" p-clean> </po-number>
+    </ng-template>
+  </po-table>
+
+</po-page-default>
+
+<div>
+  <po-loading-overlay [hidden]="isHideLoading"></po-loading-overlay>
+</div>
