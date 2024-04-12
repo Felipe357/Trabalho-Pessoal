@@ -20,17 +20,41 @@
     </po-button>
   </div>
 
+  <div class="send">
+    <po-button
+      class="po-md-3"
+      p-icon="po-icon-archive"
+      [p-disabled]="disableSendInventory"
+      p-label="Realizar Inventário"
+      (p-click)="sendInventory()">
+    </po-button>
+  </div>
+
   <po-table
+    #productsTable
     [p-auto-collapse]="true"
     [p-columns]="columns"
     [p-hide-columns-manager]="true"
-    [p-hide-table-search]="false"
+    [p-hide-table-search]="true"
     [p-items]="items"
     [p-sort]="true"
-    [p-striped]="true">
+    [p-striped]="true"
+    [p-selectable]="true"
+    p-selectable-entire-line="false"
+    [p-hide-select-all]="true"
+    (p-selected)="toggleDisable()"
+    (p-unselected)="toggleDisable()">
+
     <ng-template p-table-cell-template let-column="balance" let-row="row">
-      <po-number class="po-lg-6" [p-min]="10" p-clean="false" [(ngModel)]="row.balance" p-clean> </po-number>
+      <po-number
+        class="po-lg-6"
+        [p-min]="row.defaultBalance"
+        p-clean="false"
+        [(ngModel)]="row.balance"
+        [ngModelOptions]="{standalone: true}">
+      </po-number>
     </ng-template>
+
   </po-table>
 
 </po-page-default>
@@ -38,3 +62,10 @@
 <div>
   <po-loading-overlay [hidden]="isHideLoading"></po-loading-overlay>
 </div>
+
+<po-modal
+  #modal
+  p-click-out="true"
+  p-size="sm"
+  p-title="{{ modalTitle }}">
+</po-modal>

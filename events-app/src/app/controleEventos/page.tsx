@@ -1,11 +1,20 @@
-import React from 'react';
+"use client";
 
-const controleEventos = () => {
-    return (
-        <div className="flex-1 flex items-center justify-center">
-            <span>Controle de Eventos</span>
-        </div>
-    )
-}
+import React from "react";
+import { ControleEventoProvider } from "./controleEventoProvider";
+import ListaEventos from "./_components/listaEventos";
+import OpcaoesEvento from "./_components/opcoesEvento";
 
-export default controleEventos
+const ControleEventos = () => {
+  return (
+    <ControleEventoProvider>
+      <div className="p-6 overflow-hidden w-full gap-4 h-full flex flex-col md:flex-row">
+        <OpcaoesEvento />
+
+        <ListaEventos />
+      </div>
+    </ControleEventoProvider>
+  );
+};
+
+export default ControleEventos;

@@ -1,0 +1,144 @@
+import Image from "next/image";
+import { Button, Chip } from "@nextui-org/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendarCheck,
+  faCalendarDays,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { usePageContext } from "../pageProvider";
+import { parse } from "date-fns";
+
+type EventoProps = {
+  eventProps: {
+    id: string;
+    img: any;
+    titulo: string;
+    data: string;
+    hora: string;
+    local: string;
+    descricao: string;
+    dataFormularioInicio: string;
+    dataFormularioFim: string;
+    confirm: boolean;
+    tipoConvidado: number;
+    idadeDependente: number;
+  };
+};
+
+const Evento = ({ eventProps }: EventoProps) => {
+  const { id, img, titulo, data, local, dataFormularioFim, confirm } =
+    eventProps;
+
+  const dataAtual = new Date();
+
+  const providedDate = parse(dataFormularioFim, "dd/MM/yyyy", new Date());
+
+  const [maxLength, setMaxLength] = useState(45);
+  const [truncatedLocal, setTruncatedLocal] = useState(local);
+
+  useEffect(() => {
+    const updateMaxLength = () => {
+      setMaxLength(window.innerWidth < 768 ? 38 : 45);
+    };
+
+    updateMaxLength();
+
+    window.addEventListener("resize", updateMaxLength);
+
+    return () => {
+      window.removeEventListener("resize", updateMaxLength);
+    };
+  }, []);
+
+  if (local.length > maxLength) {
+    const truncated = local.slice(0, maxLength - 3) + "...";
+
+    if (truncated !== truncatedLocal) setTruncatedLocal(truncated);
+  }
+
+  const { disclousureEvento, form } = usePageContext();
+
+  const { onOpen } = disclousureEvento;
+  const { setValue } = form;
+
+  return (
+    <Button
+      isIconOnly
+      className="relative w-full h-auto max-w-[620px] min-h-[280px] md:min-h-[320px] overflow-hidden rounded-3xl"
+      onPress={() => {
+        onOpen();
+        setValue("evento", eventProps);
+      }}
+    >
+      <div className="w-full">
+        <Image src={img} layout="fill" objectFit="cover" alt="Fundo Evento" />
+      </div>
+      <div className="bg-[#00000066] absolute h-full w-full top-0 p-4 md:p-6 flex flex-col justify-between items-start">
+        <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mix-blend-screen whitespace-normal">
+          {titulo}
+        </span>
+        <div className="w-full flex flex-wrap gap-y-2 justify-between items-end">
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Chip
+              startContent={<FontAwesomeIcon icon={faCalendarDays} />}
+              variant="faded"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2"
+            >
+              {data}
+            </Chip>
+            <Chip
+              startContent={<FontAwesomeIcon icon={faLocationDot} />}
+              variant="faded"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2"
+            >
+              {truncatedLocal}
+            </Chip>
+            {dataAtual <= providedDate ? (
+              <Chip
+                startContent={<FontAwesomeIcon icon={faCalendarCheck} />}
+                variant="faded"
+                className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-red-500 border-red-600"
+              >
+                Confirmar até {dataFormularioFim}
+              </Chip>
+            ) : (
+              <Chip
+                startContent={<FontAwesomeIcon icon={faCalendarCheck} />}
+                variant="faded"
+                className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-red-500 border-red-600"
+              >
+                Confirmação Encerrada
+              </Chip>
+            )}
+          </div>
+          {confirm ? (
+            <Chip
+              variant="faded"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-[#3E7E28] border-[#3E7E28]"
+            >
+              Já confirmado
+            </Chip>
+          ) : dataAtual <= providedDate ? (
+            <Chip
+              variant="faded"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-[#F45302] border-[#F45302]"
+            >
+              Confirmação Pendente
+            </Chip>
+          ) : (
+            <Chip
+              variant="faded"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-[#F45302] border-[#F45302]"
+            >
+              Não é Possível Confirmar
+            </Chip>
+          )}
+        </div>
+      </div>
+    </Button>
+  );
+};
+
+export default Evento;

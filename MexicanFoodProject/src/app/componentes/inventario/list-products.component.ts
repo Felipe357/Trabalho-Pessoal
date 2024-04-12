@@ -4,7 +4,9 @@ import {
   ForceOptionComponentEnum,
   PoDynamicFormComponent,
   PoDynamicFormField,
-  PoNotificationService
+  PoModalComponent,
+  PoNotificationService,
+  PoTableComponent
 } from '@po-ui/ng-components'
 import { ListProductsService } from './list-products.service'
 import { format } from 'date-fns'
@@ -114,10 +116,36 @@ export class ListProductsComponent {
         this.items = []
         this.poNotification.warning('Não existe produtos nessa data!')
       } else {
-        this.items = res.permission[0].items
+        this.items = res.permission[0].items.map((item: any) => {
+          return {
+            ...item,
+            defaultBalance: item.balance < 0 ? 0 : item.balance
+          }
+        })
         this.poNotification.success('Produtos buscados com sucesso!')
       }
     })
+  }
+
+  @ViewChild('modal', { static: true }) poModal!: PoModalComponent;
+  @ViewChild('productsTable', { static: true }) poTable!: PoTableComponent;
+
+  disableSendInventory = true
+  modalTitle = ''
+
+  sendInventory = () => {
+    this.isHideLoading = false
+    this.listProductsService
+    .sendInventory()
+    .subscribe((res: any) => {
+      this.modalTitle = res.message
+      this.isHideLoading = true
+      this.poModal.open();
+    })
+  }
+
+  toggleDisable = () => {
+    this.disableSendInventory = this.poTable.getSelectedRows().length === 0
   }
 
 }
