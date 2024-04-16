@@ -36,7 +36,7 @@ const ListaEventos = () => {
   const colorParticipante = ["#D4D4D866", "#F45302", "#345eeb", "#3E7E28"];
 
   return (
-    <div className="border-2 rounded-2xl border-[#eee] p-8 w-full h-full overflow-y-auto">
+    <div className="shadow-large border-2 rounded-2xl border-[#eee] p-8 w-full h-full overflow-y-auto">
       <Table
         removeWrapper
         aria-label="Example static collection table"
@@ -58,7 +58,9 @@ const ListaEventos = () => {
             evento.map((e) => {
               return (
                 <TableRow key={e.id}>
-                  <TableCell>{e.titulo}</TableCell>
+                  <TableCell className="truncate max-w-40 md:max-w-max whitespace-nowrap">
+                    {e.titulo}
+                  </TableCell>
                   <TableCell>{e.data}</TableCell>
                   <TableCell>{e.hora}</TableCell>
                   <TableCell className="flex items-center justify-center">

@@ -32,7 +32,7 @@ const OpcaoesEvento = () => {
   const pathname = usePathname();
 
   return (
-    <div className="w-full md:min-w-72 md:max-w-60 h-36 md:h-full border-2 rounded-2xl border-[#eee] p-6 text-center flex flex-row md:flex-col overflow-auto gap-3">
+    <div className="shadow-large w-full md:min-w-72 md:max-w-60 h-36 md:h-full border-2 rounded-2xl border-[#eee] p-6 text-center flex flex-row md:flex-col overflow-auto gap-3">
       <span className="text-xl font-bold flex items-center justify-center">
         Configurações
       </span>
@@ -49,7 +49,7 @@ const OpcaoesEvento = () => {
         >
           <ListboxItem
             key="new"
-            className="h-14 gap-4 fle"
+            className="h-14 gap-4"
             description
             onPress={() => router.push(`/controleEventos/novoEvento`)}
             startContent={<FontAwesomeIcon icon={faPlus} />}

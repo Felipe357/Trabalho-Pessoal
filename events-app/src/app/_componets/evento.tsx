@@ -99,7 +99,7 @@ const Evento = ({ eventProps }: EventoProps) => {
               <Chip
                 startContent={<FontAwesomeIcon icon={faCalendarCheck} />}
                 variant="faded"
-                className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-red-500 border-red-600"
+                className="h-8 md:h-10 px-2 md:px-4 gap-2"
               >
                 Confirmar até {dataFormularioFim}
               </Chip>
@@ -107,7 +107,7 @@ const Evento = ({ eventProps }: EventoProps) => {
               <Chip
                 startContent={<FontAwesomeIcon icon={faCalendarCheck} />}
                 variant="faded"
-                className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-red-500 border-red-600"
+                className="h-8 md:h-10 px-2 md:px-4 gap-2"
               >
                 Confirmação Encerrada
               </Chip>

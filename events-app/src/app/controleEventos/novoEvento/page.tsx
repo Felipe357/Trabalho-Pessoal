@@ -8,7 +8,7 @@ import { NovoEventoProvider } from "./novoEventoProvider";
 const NovoEvento = () => {
   return (
     <NovoEventoProvider>
-      <div className="p-6 overflow-hidden w-full h-full flex flex-wrap items-start gap-1">
+      <div className="p-6 overflow-hidden w-full h-full flex flex-wrap items-start">
         <NovoEventoHeader />
 
         <div className=" w-full h-5/6 md:mx-10 p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">

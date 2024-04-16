@@ -42,7 +42,7 @@ const FormularioEvento = () => {
               isRequired: true,
               label: "Título",
               labelPlacement: "outside",
-              className: "w-2/6 min-w-full sm:min-w-80",
+              className: "w-2/6 min-w-full md:min-w-80",
             }}
             controllerProps={{ control: control, name: "evento.nome" }}
           />
@@ -52,7 +52,7 @@ const FormularioEvento = () => {
               placeholder: "Digite aqui uma descrição para o evento",
               label: "Descrição",
               labelPlacement: "outside",
-              className: "w-5/12 min-w-full sm:min-w-80",
+              className: "w-5/12 min-w-full md:min-w-80",
             }}
             controllerProps={{ control: control, name: "evento.descricao" }}
           />
