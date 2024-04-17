@@ -37,7 +37,7 @@ const ModalAceitar = () => {
                   Confirmar participação
                 </span>
 
-                <span className=" font-bold text-xl md:text-3xl text-[#3E7E28]">
+                <span className=" font-bold text-xl md:text-3xl text-primary">
                   {evento.titulo}
                 </span>
 
@@ -50,7 +50,8 @@ const ModalAceitar = () => {
 
             <ModalFooter>
               <Button
-                className="bg-[#3E7E28] text-white"
+                color="primary"
+                className="text-white"
                 onPress={() => console.log(colaborador)}
               >
                 Confirmar

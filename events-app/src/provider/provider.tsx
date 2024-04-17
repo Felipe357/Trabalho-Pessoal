@@ -133,6 +133,7 @@ const AppProvider = ({
             marginLeft: `${maxLength && open ? "320px" : "0px"}`,
             transition: "margin-left .3s ease-in-out",
           }}
+          className="events"
         >
           {children}
         </div>

@@ -46,6 +46,7 @@ const ModalEvento = () => {
       isOpen={isOpenEvento}
       onClose={onCloseEvento}
       backdrop="blur"
+      className="events"
       classNames={{ backdrop: "z-[5000]", wrapper: "z-[6000]" }}
     >
       <ModalContent>
@@ -68,7 +69,7 @@ const ModalEvento = () => {
                   <FontAwesomeIcon
                     icon={faCalendarDays}
                     size="lg"
-                    color={"#3E7E28"}
+                    color="#3E7E28"
                   />
                   <span className="font-medium text-base md:text-xl text-black">
                     {data} ás {hora}
@@ -79,7 +80,7 @@ const ModalEvento = () => {
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     size="lg"
-                    color={"#3E7E28"}
+                    color="#3E7E28"
                   />
                   <span className="font-medium text-base md:text-xl text-black">
                     {local}
@@ -102,11 +103,7 @@ const ModalEvento = () => {
 
                 <div className="flex flex-wrap items-center justify-start gap-4 h-20">
                   <div className="flex items-center gap-4">
-                    <FontAwesomeIcon
-                      icon={faClock}
-                      size="lg"
-                      color={"#3E7E28"}
-                    />
+                    <FontAwesomeIcon icon={faClock} size="lg" color="#3E7E28" />
                     <span className="font-medium text-lg md:text-xl text-black">
                       Duração
                       <br />
@@ -117,11 +114,7 @@ const ModalEvento = () => {
                   <Divider orientation="vertical" className="mx-1 h-3/4" />
 
                   <div className="flex items-center gap-4">
-                    <FontAwesomeIcon
-                      icon={faUsers}
-                      size="lg"
-                      color={"#3E7E28"}
-                    />
+                    <FontAwesomeIcon icon={faUsers} size="lg" color="#3E7E28" />
                     <span className="font-medium text-lg md:text-xl text-black">
                       Dependentes
                       <br />
@@ -132,11 +125,7 @@ const ModalEvento = () => {
                   <Divider orientation="vertical" className="mx-1 h-3/4" />
 
                   <div className="flex items-center gap-4">
-                    <FontAwesomeIcon
-                      icon={faBeer}
-                      size="xl"
-                      color={"#3E7E28"}
-                    />
+                    <FontAwesomeIcon icon={faBeer} size="xl" color="#3E7E28" />
                     <span className="font-medium text-lg md:text-xl text-black">
                       Bebidas para
                       <br />
@@ -150,13 +139,13 @@ const ModalEvento = () => {
               {dataAtual <= providedDate ? (
                 <>
                   <Button
-                    className="bg-[#F45302] text-white"
+                    className="bg-warning text-white"
                     onPress={onOpenEventoCancelar}
                   >
                     Não vou á festa
                   </Button>
                   <Button
-                    className="bg-[#3E7E28] text-white h-14 w-32 text-md"
+                    className="bg-primary text-white h-14 w-32 text-md"
                     onPress={() => router.push(`/formulario/${id}`)}
                   >
                     Vou á festa
@@ -165,7 +154,7 @@ const ModalEvento = () => {
               ) : (
                 <>
                   <Button
-                    className="bg-[#3E7E28] text-white h-14 w-32 text-md"
+                    className="bg-primary text-white h-14 w-32 text-md"
                     onPress={() => router.push(`/formulario/${id}`)}
                   >
                     Visualizar

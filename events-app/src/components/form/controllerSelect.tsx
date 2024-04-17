@@ -21,7 +21,9 @@ const ControllerInput = (params: Props) => {
             {...selectProps}
             onSelectionChange={(e) => field.onChange((e as any).anchorKey)}
             classNames={{
-              trigger: "h-14",
+              trigger: `h-14 ${
+                field.value && "border-primary"
+              } data-[hover=true]:border-primary group-data-[focus=true]:border-primary`,
               label: "font-bold text-xl top-[45%]",
             }}
           ></Select>

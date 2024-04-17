@@ -1,4 +1,4 @@
-import ControllerCheckbox from "@/components/form/checkbox";
+import ControllerCheckbox from "@/components/form/controllerCheckbox";
 import { useFomrularioContext } from "../formularioProvider";
 import ControllerInput from "@/components/form/controllerInput";
 import { parse } from "date-fns";

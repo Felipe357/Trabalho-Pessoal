@@ -1,6 +1,6 @@
 import { Input } from "@nextui-org/react";
 import { useFomrularioContext } from "../formularioProvider";
-import ControllerCheckbox from "@/components/form/checkbox";
+import ControllerCheckbox from "@/components/form/controllerCheckbox";
 import { parse } from "date-fns";
 
 const FormColaborador = () => {

@@ -19,6 +19,32 @@ const config: Config = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui(),],
+  plugins: [nextui({
+    themes: {
+      "events": {
+              colors: {
+                primary: {
+                  50: "#3E7E28",
+                  100: "#FFF",
+                  200: "#FFF",
+                  300: "#FFF",
+                  400: "#FFF",
+                  500: "#DD62ED",
+                  600: "#F182F6",
+                  700: "#FCADF9",
+                  800: "#FFF",
+                  DEFAULT: "#3E7E28",
+                  foreground: "#ffffff",
+                },
+                warning: {
+                  DEFAULT: "#F45302",
+                  foreground: "#ffffff",
+                },
+                focus: "#3E7E28",
+              },
+            },
+  }
+  })
+],
 };
 export default config;

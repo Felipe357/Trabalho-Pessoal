@@ -20,12 +20,48 @@ interface NovoEventoContextProps {
   form: any;
 }
 
+export interface HorasProps {
+  key: string;
+  value: string;
+}
+
 export const NovoEventoContext = createContext({} as NovoEventoContextProps);
 
 export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
+  const horas: HorasProps[] = [];
+
+  const carregarHorario = () => {
+    for (let index = 0; index < 24; index++) {
+      horas.push({
+        key: "H" + index,
+        value:
+          index.toString().length === 1
+            ? "0" + index.toString() + ":00"
+            : index.toString() + ":00",
+      });
+      horas.push({
+        key: "M" + index,
+        value:
+          index.toString().length === 1
+            ? "0" + index.toString() + ":30"
+            : index.toString() + ":30",
+      });
+    }
+  };
+
+  carregarHorario();
+
   const form = useForm({
     defaultValues: {
       novoEvento: {},
+      horaInicio: {
+        keys: horas,
+        disableKeys: [],
+      },
+      horaFim: {
+        keys: horas,
+        disableKeys: [],
+      },
     },
   });
 

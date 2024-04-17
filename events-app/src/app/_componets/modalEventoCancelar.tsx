@@ -27,6 +27,7 @@ const ModalEventoCancelar = () => {
       onClose={onCloseCancelar}
       backdrop="blur"
       placement="center"
+      className="events"
       classNames={{ backdrop: "z-[6000]", wrapper: "z-[7000]" }}
     >
       <ModalContent>
@@ -38,7 +39,7 @@ const ModalEventoCancelar = () => {
                 Certeza qua não vai participar?
               </span>
 
-              <span className=" font-bold text-xl md:text-3xl text-[#3E7E28]">
+              <span className=" font-bold text-xl md:text-3xl text-primary">
                 {titulo}
               </span>
 
@@ -49,7 +50,7 @@ const ModalEventoCancelar = () => {
             </ModalBody>
             <ModalFooter>
               <Button
-                className="bg-[#3E7E28] text-white"
+                className="bg-primary text-white"
                 onPress={() => {
                   onClose();
                   onCloseEvento();

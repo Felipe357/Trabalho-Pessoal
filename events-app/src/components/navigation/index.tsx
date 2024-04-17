@@ -24,11 +24,11 @@ export const Navigation = ({ open, setOpen }: Props) => {
 
   return (
     <>
-      <div className="w-full bg-white p-6 fixed top-0 left-0 right-0 z-20 flex flex-row items-center gap-10">
+      <div className="events w-full bg-white p-6 fixed top-0 left-0 right-0 z-20 flex flex-row items-center gap-10">
         <Button
           isIconOnly
           aria-label="Close Drawer"
-          className={`bg-[#3E7E28]`}
+          color="primary"
           onPress={() => setOpen(true)}
         >
           <FontAwesomeIcon icon={faBars} color={"#FFF"} />
@@ -49,7 +49,7 @@ export const Navigation = ({ open, setOpen }: Props) => {
           elevation: 0,
         }}
       >
-        <div className="w-80 flex-1 flex flex-col border-2 border-r-[#eeeeee] px-6 gap-10">
+        <div className="events w-80 flex-1 flex flex-col border-2 border-r-[#eeeeee] px-6 gap-10">
           <div className="flex flex-row justify-between items-center mt-8">
             <div className="flex flex-row items-center justify-center gap-4">
               <Image
@@ -65,7 +65,7 @@ export const Navigation = ({ open, setOpen }: Props) => {
               <Button
                 isIconOnly
                 aria-label="Close Drawer"
-                className={`bg-[#3E7E28]`}
+                color="primary"
                 onPress={() => setOpen(false)}
               >
                 <FontAwesomeIcon icon={faClose} color={"#FFF"} />
@@ -78,7 +78,7 @@ export const Navigation = ({ open, setOpen }: Props) => {
               aria-label="Champagne Party"
               className={`${
                 pathname === "/" || pathname.includes("formulario")
-                  ? `bg-[#3E7E28]`
+                  ? `bg-primary`
                   : ""
               } h-14 gap-6 justify-start`}
               onClick={() => {
@@ -110,7 +110,7 @@ export const Navigation = ({ open, setOpen }: Props) => {
               variant="light"
               aria-label="Champagne Party"
               className={`h-16 gap-6 justify-start  ${
-                pathname.includes("controleEventos") ? `bg-[#3E7E28]` : ""
+                pathname.includes("controleEventos") ? `bg-primary` : ""
               }`}
               onClick={() => {
                 router.push("/controleEventos");
@@ -136,7 +136,7 @@ export const Navigation = ({ open, setOpen }: Props) => {
               variant="light"
               aria-label="help"
               className={`${
-                pathname === "/help" ? `bg-[#3E7E28]` : ""
+                pathname === "/help" ? `bg-primary` : ""
               } h-14 gap-6 justify-start`}
               onClick={() => {
                 router.push("/help");

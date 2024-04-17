@@ -116,21 +116,21 @@ const Evento = ({ eventProps }: EventoProps) => {
           {confirm ? (
             <Chip
               variant="faded"
-              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-[#3E7E28] border-[#3E7E28]"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-primary border-primary"
             >
               Já confirmado
             </Chip>
           ) : dataAtual <= providedDate ? (
             <Chip
               variant="faded"
-              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-[#F45302] border-[#F45302]"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-warning border-warning"
             >
               Confirmação Pendente
             </Chip>
           ) : (
             <Chip
               variant="faded"
-              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-[#F45302] border-[#F45302]"
+              className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-warning border-warning"
             >
               Não é Possível Confirmar
             </Chip>

@@ -18,10 +18,10 @@ const NovoEvento = () => {
             classNames={{
               tabList:
                 "gap-6 w-full relative rounded-none p-0 border-b border-divider",
-              cursor: "w-full bg-[#3E7E28]",
+              cursor: "w-full bg-primary",
               tab: "max-w-max px-0 h-12",
               tabContent:
-                "group-data-[selected=true]:text-[#3E7E28] text-xl font-bold px-4",
+                "group-data-[selected=true]:text-primary text-xl font-bold px-4",
             }}
           >
             <Tab key="event" title="Evento">

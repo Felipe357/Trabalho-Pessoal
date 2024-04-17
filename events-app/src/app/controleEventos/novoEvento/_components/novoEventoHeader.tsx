@@ -14,7 +14,7 @@ const NovoEventoHeader = () => {
       <Button
         isIconOnly
         radius="full"
-        className="bg-[#3E7E28]"
+        color="primary"
         size="sm"
         onPress={() => router.replace("/controleEventos")}
       >
