@@ -51,16 +51,19 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
 
   carregarHorario();
 
+  const tabs: string[] = ["event", "location", "bracelet", "fields"];
+
   const form = useForm({
     defaultValues: {
       novoEvento: {},
-      horaInicio: {
+      horas: {
         keys: horas,
-        disableKeys: [],
+        disableKeysInicio: [],
+        disableKeysFim: [],
       },
-      horaFim: {
-        keys: horas,
-        disableKeys: [],
+      tabs: {
+        select: "event",
+        tabs: tabs,
       },
     },
   });

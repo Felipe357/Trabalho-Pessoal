@@ -8,7 +8,7 @@ interface Props {
   };
 }
 
-const ControllerInput = (params: Props) => {
+const ControllerInputFile = (params: Props) => {
   const { inputProps } = params;
 
   return (
@@ -20,7 +20,6 @@ const ControllerInput = (params: Props) => {
           <Input
             {...inputProps}
             variant="bordered"
-            defaultValue={field.value}
             classNames={{
               inputWrapper: `min-h-14 ${
                 field.value && "border-primary"
@@ -28,7 +27,12 @@ const ControllerInput = (params: Props) => {
               description: "text-red-700",
               label: "font-bold text-xl top-[45%]",
             }}
-            onChange={(e) => field.onChange(e.target.value)}
+            onChange={(e) =>
+              field.onChange({
+                name: e.target.files?.[0].name,
+                foto: e.target.files?.[0],
+              })
+            }
           />
         );
       }}
@@ -36,4 +40,4 @@ const ControllerInput = (params: Props) => {
   );
 };
 
-export default ControllerInput;
+export default ControllerInputFile;
