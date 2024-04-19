@@ -4,6 +4,8 @@ import { useNovoEventoContext } from "../novoEventoProvider";
 import { Controller } from "react-hook-form";
 import NovoEventoFooter from "./novoEventoFooter";
 import FormularioLocal from "./Local/formularioLocal";
+import FormularioPulseira from "./Pulseira/formularioPulseira";
+import FormularioFilial from "./Filial/formularioFilial";
 
 const NovoEventoMain = () => {
   const { form } = useNovoEventoContext();
@@ -16,7 +18,7 @@ const NovoEventoMain = () => {
       name={"tabs.select"}
       render={({ field }) => {
         return (
-          <div className=" w-2/4 h-5/6 md:mx-10 p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
+          <div className=" w-full h-5/6 md:mx-10 p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
             <Tabs
               aria-label="Options"
               variant="underlined"
@@ -39,8 +41,12 @@ const NovoEventoMain = () => {
                 <FormularioLocal />
               </Tab>
 
+              <Tab key="branch" title="Filial" className="h-full">
+                <FormularioFilial />
+              </Tab>
+
               <Tab key="bracelet" title="Pulseira" className="h-full">
-                <NovoEventoFooter />
+                <FormularioPulseira />
               </Tab>
 
               <Tab key="fields" title="Campos" className="h-full">

@@ -1,15 +1,15 @@
-import { Input, type InputProps } from "@nextui-org/react";
+import { Textarea, type TextAreaProps } from "@nextui-org/react";
 import { Control, Controller, UseControllerProps } from "react-hook-form";
 
 interface Props {
-  inputProps?: InputProps;
+  textAreaProps?: TextAreaProps;
   controllerProps: Omit<UseControllerProps, "control"> & {
     control: Control<any>;
   };
 }
 
-const ControllerInput = (params: Props) => {
-  const { inputProps } = params;
+const ControllerTextArea = (params: Props) => {
+  const { textAreaProps } = params;
 
   return (
     <Controller
@@ -17,8 +17,8 @@ const ControllerInput = (params: Props) => {
       name={params.controllerProps.name}
       render={({ field }) => {
         return (
-          <Input
-            {...inputProps}
+          <Textarea
+            {...textAreaProps}
             variant="bordered"
             defaultValue={field.value}
             classNames={{
@@ -36,4 +36,4 @@ const ControllerInput = (params: Props) => {
   );
 };
 
-export default ControllerInput;
+export default ControllerTextArea;

@@ -24,7 +24,7 @@ const ControllerInput = (params: Props) => {
               trigger: `h-14 ${
                 field.value && "border-primary"
               } data-[hover=true]:border-primary group-data-[focus=true]:border-primary`,
-              label: "font-bold text-xl top-[45%]",
+              label: "font-bold",
             }}
           ></Select>
         );

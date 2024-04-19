@@ -25,7 +25,7 @@ const ControllerInputFile = (params: Props) => {
                 field.value && "border-primary"
               } data-[hover=true]:border-[#3E7E28] gap-2`,
               description: "text-red-700",
-              label: "font-bold text-xl top-[45%]",
+              label: "font-bold",
             }}
             onChange={(e) =>
               field.onChange({

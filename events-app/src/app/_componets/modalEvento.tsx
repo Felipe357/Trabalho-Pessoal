@@ -59,7 +59,7 @@ const ModalEvento = () => {
               </div>
 
               <div className="flex gap-4 flex-col items-start w-full">
-                <span className="font-bold text-2xl md:text-4xl text-black">
+                <span className="font-bold text-2xl md:text-2xl text-black">
                   {titulo}
                 </span>
 
@@ -71,7 +71,7 @@ const ModalEvento = () => {
                     size="lg"
                     color="#3E7E28"
                   />
-                  <span className="font-medium text-base md:text-xl text-black">
+                  <span className="font-medium text-base md:text-lg text-black">
                     {data} ás {hora}
                   </span>
                 </div>
@@ -82,7 +82,7 @@ const ModalEvento = () => {
                     size="lg"
                     color="#3E7E28"
                   />
-                  <span className="font-medium text-base md:text-xl text-black">
+                  <span className="font-medium text-base md:text-lg text-black">
                     {local}
                   </span>
                 </div>
@@ -90,21 +90,21 @@ const ModalEvento = () => {
                 <Divider className="my-1" />
 
                 <div>
-                  <span className="font-medium text-base md:text-xl text-black">
+                  <span className="font-medium text-base md:text-lg text-black">
                     {descricao}
                   </span>
                 </div>
 
                 <Divider className="my-1" />
 
-                <span className="font-bold text-xl md:text-2xl text-[#000]">
+                <span className="font-bold text-xl md:text-xl text-[#000]">
                   Informações Importantes
                 </span>
 
                 <div className="flex flex-wrap items-center justify-start gap-4 h-20">
                   <div className="flex items-center gap-4">
                     <FontAwesomeIcon icon={faClock} size="lg" color="#3E7E28" />
-                    <span className="font-medium text-lg md:text-xl text-black">
+                    <span className="font-medium text-lg md:text-lg text-black">
                       Duração
                       <br />
                       2h 30m
@@ -115,7 +115,7 @@ const ModalEvento = () => {
 
                   <div className="flex items-center gap-4">
                     <FontAwesomeIcon icon={faUsers} size="lg" color="#3E7E28" />
-                    <span className="font-medium text-lg md:text-xl text-black">
+                    <span className="font-medium text-lg md:text-lg text-black">
                       Dependentes
                       <br />
                       até 18 anos
@@ -126,7 +126,7 @@ const ModalEvento = () => {
 
                   <div className="flex items-center gap-4">
                     <FontAwesomeIcon icon={faBeer} size="xl" color="#3E7E28" />
-                    <span className="font-medium text-lg md:text-xl text-black">
+                    <span className="font-medium text-lg md:text-lg text-black">
                       Bebidas para
                       <br />
                       maiores de 18 anos

@@ -23,7 +23,7 @@ const FormularioHeader = () => {
       >
         <FontAwesomeIcon icon={faChevronLeft} color="#FFF" size="1x" />
       </Button>
-      <span className="font-bold text-3xl">{evento?.titulo}</span>
+      <span className="font-bold text-2xl">{evento?.titulo}</span>
     </div>
   );
 };

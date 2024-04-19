@@ -3,7 +3,10 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNovoEventoContext } from "../novoEventoProvider";
 
 const NovoEventoFooter = () => {
@@ -20,17 +23,43 @@ const NovoEventoFooter = () => {
   };
 
   return (
-    <div className="flex flex-row justify-end items-center gap-4 w-full md:m-6">
-      <Button
-        color="primary"
-        size="lg"
-        onPress={() => {
-          setValue("tabs.select", setPage());
-        }}
-        endContent={<FontAwesomeIcon icon={faChevronRight} />}
-      >
-        Próximo
-      </Button>
+    <div className="flex flex-row justify-between items-center gap-4 w-full m-3 md:m-6">
+      {list.indexOf(select) > 0 ? (
+        <Button
+          color="default"
+          size="lg"
+          onPress={() => {
+            setValue("tabs.select", setPage());
+          }}
+          startContent={<FontAwesomeIcon icon={faChevronLeft} />}
+        >
+          Anterior
+        </Button>
+      ) : (
+        <></>
+      )}
+      {list.indexOf(select) === list.length - 1 ? (
+        <Button
+          color="primary"
+          size="lg"
+          onPress={() => {
+            setValue("tabs.select", setPage());
+          }}
+        >
+          Concluir
+        </Button>
+      ) : (
+        <Button
+          color="primary"
+          size="lg"
+          onPress={() => {
+            setValue("tabs.select", setPage());
+          }}
+          endContent={<FontAwesomeIcon icon={faChevronRight} />}
+        >
+          Próximo
+        </Button>
+      )}
     </div>
   );
 };

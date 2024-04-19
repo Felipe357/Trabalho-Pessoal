@@ -1,48 +1,26 @@
-import { HorasProps, useNovoEventoContext } from "../../novoEventoProvider";
+import { useNovoEventoContext } from "../../novoEventoProvider";
 import ControllerInput from "@/components/form/controllerInput";
 
-import React, { useEffect } from "react";
+import React from "react";
 import NovoEventoFooter from "../novoEventoFooter";
+import ControllerTextArea from "@/components/form/controllerTextArea";
 
 const FormularioLocal = () => {
   const { form } = useNovoEventoContext();
 
-  const { control, watch, setValue } = form;
-
-  const { horas, novoEvento } = watch();
-
-  useEffect(() => {
-    if (novoEvento.horaInicio) {
-      let disabledKeys = horas.keys.map((e: HorasProps) => {
-        if (Number(e.key.slice(1)) <= Number(novoEvento.horaInicio.slice(1))) {
-          return e.key;
-        }
-      });
-
-      setValue("horas.disableKeysFim", disabledKeys);
-    }
-
-    if (novoEvento.horaFim) {
-      let disabledKeys = horas.keys.map((e: HorasProps) => {
-        if (Number(e.key.slice(1)) >= Number(novoEvento.horaFim.slice(1))) {
-          return e.key;
-        }
-      });
-
-      setValue("horas.disableKeysInicio", disabledKeys);
-    }
-  }, [horas.keys, novoEvento.horaFim, novoEvento.horaInicio, setValue]);
+  const { control } = form;
 
   return (
     <div className="h-full flex flex-col justify-between">
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap gap-6 md:overflow-hidden overflow-y-scroll pr-2 md:pr-0">
         <ControllerInput
           inputProps={{
             placeholder: "Digite aqui o cep",
             isRequired: true,
             label: "Cep",
             labelPlacement: "outside",
-            className: "w-40 min-w-full md:min-w-40",
+            className: "w-60 min-w-full md:min-w-40",
+            maxLength: 9,
           }}
           controllerProps={{ control: control, name: "novoEvento.cep" }}
         />
@@ -53,18 +31,18 @@ const FormularioLocal = () => {
             label: "Endereço",
             isRequired: true,
             labelPlacement: "outside",
-            className: "w-5/12 min-w-full md:min-w-80",
+            className: "w-5/6 min-w-full md:min-w-80",
           }}
           controllerProps={{ control: control, name: "novoEvento.endereco" }}
         />
 
         <ControllerInput
           inputProps={{
-            placeholder: "Digite aqui o número / bloco / andar",
+            placeholder: "Digite aqui o número",
             label: "Número",
             isRequired: true,
             labelPlacement: "outside",
-            className: "w-64 min-w-full md:min-w-64",
+            className: "w-full md:w-60",
           }}
           controllerProps={{ control: control, name: "novoEvento.numero" }}
         />
@@ -75,7 +53,7 @@ const FormularioLocal = () => {
             label: "Bairro",
             isRequired: true,
             labelPlacement: "outside",
-            className: "w-64 min-w-full md:min-w-64",
+            className: "w-full md:w-10/12",
           }}
           controllerProps={{ control: control, name: "novoEvento.bairro" }}
         />
@@ -86,18 +64,17 @@ const FormularioLocal = () => {
             label: "Cidade",
             isRequired: true,
             labelPlacement: "outside",
-            className: "w-5/12 min-w-full md:min-w-80",
+            className: "w-full",
           }}
           controllerProps={{ control: control, name: "novoEvento.cidade" }}
         />
 
-        <ControllerInput
-          inputProps={{
+        <ControllerTextArea
+          textAreaProps={{
             placeholder: "Digite aqui o complemento",
             label: "Complemento",
-            isRequired: true,
             labelPlacement: "outside",
-            className: "w-5/12 min-w-full md:min-w-80",
+            className: "w-full",
           }}
           controllerProps={{ control: control, name: "novoEvento.complemento" }}
         />

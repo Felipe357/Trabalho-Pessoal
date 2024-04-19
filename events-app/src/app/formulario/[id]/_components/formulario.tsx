@@ -19,7 +19,7 @@ const Formulario = () => {
   return (
     <div className=" w-full md:mx-10 p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
       <div className="flex flex-col gap-4 w-full">
-        <span className="font-bold text-2xl">Colaborador</span>
+        <span className="font-bold text-xl">Colaborador</span>
 
         <FormColaborador />
 
@@ -28,7 +28,7 @@ const Formulario = () => {
             {evento.tipoConvidado === 2 || evento.tipoConvidado === 4 ? (
               <>
                 <Divider />
-                <span className="font-bold text-2xl">Dependentes</span>
+                <span className="font-bold text-xl">Dependentes</span>
               </>
             ) : (
               <></>
@@ -47,7 +47,7 @@ const Formulario = () => {
             {evento.tipoConvidado >= 3 && (
               <>
                 <Divider />
-                <span className="font-bold text-2xl">Acompanhante</span>
+                <span className="font-bold text-xl">Acompanhante</span>
               </>
             )}
 

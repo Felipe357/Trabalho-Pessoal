@@ -31,7 +31,7 @@ const ControllerDatePicker = (params: Props) => {
       name={controllerProps.name}
       render={({ field }) => {
         return (
-          <Popover placement="right">
+          <Popover placement="bottom-start">
             <PopoverTrigger>
               <Input
                 isReadOnly
@@ -45,11 +45,11 @@ const ControllerDatePicker = (params: Props) => {
                   <FontAwesomeIcon icon={faCalendar} color="#3E7E28" />
                 }
                 classNames={{
-                  inputWrapper: `h-14 ${
+                  inputWrapper: `h-14 mt-1 ${
                     field.value && "border-primary"
                   } data-[hover=true]:border-[#3E7E28] gap-2`,
                   description: "text-red-700",
-                  label: "font-bold text-xl top-[45%]",
+                  label: "font-bold",
                   input: "text-start cursor-pointer",
                 }}
               />

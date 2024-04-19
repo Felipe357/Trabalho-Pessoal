@@ -39,7 +39,7 @@ const ModalEventoCancelar = () => {
                 Certeza qua não vai participar?
               </span>
 
-              <span className=" font-bold text-xl md:text-3xl text-primary">
+              <span className=" font-bold text-xl md:text-2xl text-primary">
                 {titulo}
               </span>
 

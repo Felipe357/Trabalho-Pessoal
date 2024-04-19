@@ -20,7 +20,7 @@ const NovoEventoHeader = () => {
       >
         <FontAwesomeIcon icon={faChevronLeft} color="#FFF" size="1x" />
       </Button>
-      <span className="font-bold text-3xl">Cadastro de Evento</span>
+      <span className="font-bold text-2xl">Cadastro de Evento</span>
     </div>
   );
 };
