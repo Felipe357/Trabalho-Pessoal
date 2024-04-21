@@ -1,14 +1,41 @@
 import { useNovoEventoContext } from "../../novoEventoProvider";
 import ControllerInput from "@/components/form/controllerInput";
 
-import React from "react";
+import React, { useEffect } from "react";
 import NovoEventoFooter from "../novoEventoFooter";
 import ControllerTextArea from "@/components/form/controllerTextArea";
+import { api } from "@/service/api";
 
 const FormularioLocal = () => {
   const { form } = useNovoEventoContext();
 
-  const { control } = form;
+  const { control, setValue, watch } = form;
+
+  const { novoEvento } = watch()
+
+  const handleCepChange = async () => {
+    // Remove caracteres não numéricos do CEP
+    const cepNumerico = novoEvento.cep.replace(/\D/g, "");
+
+    // Verifique se o CEP tem o tamanho correto
+    if (cepNumerico.length !== 8) {
+      return;
+    }
+
+    // Faça a requisição para a API ViaCEP
+    const { data } = await api.get(`https://viacep.com.br/ws/${cepNumerico}/json/`)
+
+    // Preencha os campos de endereço, bairro e cidade com os dados retornados
+    setValue('novoEvento.endereco', data.logradouro)
+    setValue('novoEvento.bairro', data.bairro)
+    setValue('novoEvento.cidade', data.localidade)
+  };
+
+  useEffect(() => {
+    if (novoEvento.cep) {
+      handleCepChange()
+    }
+  }, [novoEvento.cep])
 
   return (
     <div className="h-full flex flex-col justify-between">

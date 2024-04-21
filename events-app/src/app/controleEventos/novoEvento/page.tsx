@@ -7,7 +7,7 @@ import NovoEventoMain from "./_components/formularioEventoMain";
 const NovoEvento = () => {
   return (
     <NovoEventoProvider>
-      <div className="p-6 overflow-hidden w-full h-full flex flex-wrap items-start">
+      <div className="p-6 overflow-hidden w-full h-full flex flex-col items-start gap-8">
         <NovoEventoHeader />
 
         <NovoEventoMain />

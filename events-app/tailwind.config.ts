@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 
 const config: Config = {
   content: [
@@ -18,33 +18,47 @@ const config: Config = {
       },
     },
   },
-  darkMode: 'class',
-  plugins: [nextui({
-    themes: {
-      "events": {
-              colors: {
-                primary: {
-                  50: "#3E7E28",
-                  100: "#FFF",
-                  200: "#FFF",
-                  300: "#FFF",
-                  400: "#FFF",
-                  500: "#DD62ED",
-                  600: "#F182F6",
-                  700: "#FCADF9",
-                  800: "#FFF",
-                  DEFAULT: "#3E7E28",
-                  foreground: "#ffffff",
-                },
-                warning: {
-                  DEFAULT: "#F45302",
-                  foreground: "#ffffff",
-                },
-                focus: "#3E7E28",
-              },
+  darkMode: "class",
+  plugins: [
+    nextui({
+      themes: {
+        events: {
+          colors: {
+            primary: {
+              50: "#3E7E28",
+              100: "#FFF",
+              200: "#FFF",
+              300: "#FFF",
+              400: "#FFF",
+              500: "#DD62ED",
+              600: "#F182F6",
+              700: "#FCADF9",
+              800: "#FFF",
+              DEFAULT: "#3E7E28",
+              foreground: "#ffffff",
             },
-  }
-  })
-],
+            warning: {
+              DEFAULT: "#F45302",
+              foreground: "#ffffff",
+            },
+            danger: {
+              50: "#F00",
+              100: "#FFF",
+              200: "#FFF",
+              300: "#FFF",
+              400: "#FFF",
+              500: "#DD62ED",
+              600: "#F182F6",
+              700: "#FCADF9",
+              800: "#FFF",
+              DEFAULT: "#F00",
+              foreground: "#ffffff",
+            },
+            focus: "#3E7E28",
+          },
+        },
+      },
+    }),
+  ],
 };
 export default config;

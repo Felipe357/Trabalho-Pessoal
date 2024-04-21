@@ -24,7 +24,7 @@ export const Navigation = ({ open, setOpen }: Props) => {
 
   return (
     <>
-      <div className="events w-full bg-white p-6 fixed top-0 left-0 right-0 z-20 flex flex-row items-center gap-10">
+      <div className="events w-full bg-white px-6 py-3 fixed top-0 left-0 right-0 z-20 flex flex-row items-center gap-10">
         <Button
           isIconOnly
           aria-label="Close Drawer"
@@ -76,11 +76,10 @@ export const Navigation = ({ open, setOpen }: Props) => {
             <Button
               variant="light"
               aria-label="Champagne Party"
-              className={`${
-                pathname === "/" || pathname.includes("formulario")
-                  ? `bg-primary`
-                  : ""
-              } h-14 gap-6 justify-start`}
+              className={`${pathname === "/" || pathname.includes("formulario")
+                ? `bg-primary`
+                : ""
+                } h-14 gap-6 justify-start`}
               onClick={() => {
                 router.push("/");
               }}
@@ -109,9 +108,8 @@ export const Navigation = ({ open, setOpen }: Props) => {
             <Button
               variant="light"
               aria-label="Champagne Party"
-              className={`h-16 gap-6 justify-start  ${
-                pathname.includes("controleEventos") ? `bg-primary` : ""
-              }`}
+              className={`h-16 gap-6 justify-start  ${pathname.includes("controleEventos") ? `bg-primary` : ""
+                }`}
               onClick={() => {
                 router.push("/controleEventos");
               }}
@@ -135,9 +133,8 @@ export const Navigation = ({ open, setOpen }: Props) => {
             <Button
               variant="light"
               aria-label="help"
-              className={`${
-                pathname === "/help" ? `bg-primary` : ""
-              } h-14 gap-6 justify-start`}
+              className={`${pathname === "/help" ? `bg-primary` : ""
+                } h-14 gap-6 justify-start`}
               onClick={() => {
                 router.push("/help");
               }}

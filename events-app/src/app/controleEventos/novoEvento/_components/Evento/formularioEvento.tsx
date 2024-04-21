@@ -107,9 +107,8 @@ const FormularioEvento = () => {
             <span className=" font-bold text-sm">Foto</span>
             <Button
               variant="bordered"
-              className={`${
-                watch("novoEvento.foto") && "border-primary"
-              } h-14 w-full border-dashed`}
+              className={`${watch("novoEvento.foto") && "border-primary"
+                } h-14 w-full border-dashed`}
               onClick={() => pictureInput.current?.click()}
             >
               <span className=" truncate">

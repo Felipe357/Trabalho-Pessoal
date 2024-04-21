@@ -10,7 +10,7 @@ const NovoEventoHeader = () => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-row items-center gap-4 w-full md:m-6">
+    <div className="flex flex-row items-center gap-4 w-full md:mx-3">
       <Button
         isIconOnly
         radius="full"

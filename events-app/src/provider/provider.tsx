@@ -7,6 +7,8 @@ import { Navigation } from "@/components/navigation";
 import Teste from "../assets/Farm-fields-sky-clouds_3840x2160.jpg";
 import Teste2 from "../assets/primavera1.jpg";
 import Teste3 from "../assets/italia.jpg";
+import Teste4 from "../assets/download.png";
+
 
 export type EventoProp = {
   id: string;
@@ -43,7 +45,7 @@ const eventosTeste: EventoProp[] = [
   },
   {
     id: "789012",
-    img: Teste,
+    img: Teste4,
     titulo: "Evento Não Confirmado Pode Levar Dependentes e Acompanhante",
     data: "15/08/2024",
     hora: "19:30",
@@ -129,7 +131,7 @@ const AppProvider = ({
         <div
           style={{
             height: "92vh",
-            marginTop: "70px",
+            marginTop: "60px",
             marginLeft: `${maxLength && open ? "320px" : "0px"}`,
             transition: "margin-left .3s ease-in-out",
           }}

@@ -16,9 +16,9 @@ const NovoEventoMain = () => {
     <Controller
       control={control}
       name={"tabs.select"}
-      render={({ field }) => {
+      render={({ field }: any) => {
         return (
-          <div className=" w-full h-5/6 md:mx-10 p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
+          <div className=" w-full h-[90%]  p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
             <Tabs
               aria-label="Options"
               variant="underlined"

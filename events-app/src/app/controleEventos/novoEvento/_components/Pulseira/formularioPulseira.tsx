@@ -21,20 +21,22 @@ import ControllerCheckbox from "@/components/form/controllerCheckbox";
 const FormularioPulseira = () => {
   const { form } = useNovoEventoContext();
 
-  const { control, watch, setValue } = form;
+  const { control, watch, setValue, handleSubmit } = form;
 
   const { novoEvento, pulseira } = watch();
+
+  const { idadeInicio, idadeFim } = pulseira
 
   const { pulseiras } = novoEvento;
 
   const adicionarPulceira = (): void => {
     if (pulseiras.length > 0) {
       setValue("novoEvento.pulseiras", [...pulseiras, watch("pulseira")]);
-      // setValue("pulseira", {
-      //   idadeInicio: "",
-      //   idadeFim: "",
-      //   color: "#3E7E28",
-      // });
+      setValue("pulseira", {
+        idadeInicio: "",
+        idadeFim: "",
+        color: "#3E7E28",
+      });
     } else {
       setValue("novoEvento.pulseiras", [watch("pulseira")]);
     }
@@ -51,69 +53,76 @@ const FormularioPulseira = () => {
     }
   }, [pulseira.idadeInicio, setValue]);
 
+  const onSubmit = (data: any) => {
+    console.log(data)
+    adicionarPulceira();
+  };
+
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="flex flex-wrap gap-6 md:overflow-hidden overflow-y-scroll pr-2 md:pr-0">
-        <ControllerInput
-          inputProps={{
-            placeholder: "Digite aqui a idade inicial",
-            isRequired: true,
-            label: "Idade Inicial",
-            labelPlacement: "outside",
-            className: "w-60 min-w-full md:min-w-40",
-            type: "number",
-            // isInvalid: !(
-            //   Number(watch("pulseira.idadeInicio")) <
-            //   (Number(watch("pulseira.idadeFim")) ?? 99999)
-            // ),
-          }}
-          controllerProps={{ control: control, name: "pulseira.idadeInicio" }}
-        />
 
-        <ControllerInput
-          inputProps={{
-            placeholder: "Digite aqui a idade final",
-            label: "Idade Final",
-            isRequired: true,
-            labelPlacement: "outside",
-            className: "w-60 min-w-full md:min-w-80",
-            type: "number",
-            // isInvalid: !(
-            //   (Number(watch("pulseira.idadeInicio")) ?? 99999) <
-            //   Number(watch("pulseira.idadeFim"))
-            // ),
-          }}
-          controllerProps={{ control: control, name: "pulseira.idadeFim" }}
-        />
-
-        <div className="flex flex-col items-start justify-end gap-0.5">
-          <span className="font-bold text-sm">Cor</span>
-
-          <ControllerColor
-            controllerProps={{ control: control, name: "pulseira.color" }}
-          />
-        </div>
-
-        <div className="flex items-center">
-          <ControllerCheckbox
-            controllerProps={{ control: control, name: "pulseira.bebida" }}
-            checkBoxProps={{
-              title: "Consumo de bebida alcoolica?",
-              isDisabled: isDisable,
+        <form className="flex flex-wrap gap-6 md:overflow-hidden overflow-y-scroll pr-2 md:pr-0" onSubmit={handleSubmit(onSubmit)}>
+          <ControllerInput
+            inputProps={{
+              placeholder: "Digite aqui a idade inicial",
+              isRequired: true,
+              label: "Idade Inicial",
+              labelPlacement: "outside",
+              className: "w-60 min-w-full md:min-w-40",
+              type: "number",
+              isInvalid: idadeInicio.trim() !== "" && idadeFim.trim() !== "" && Number(idadeInicio) >= Number(idadeFim)
             }}
+            controllerProps={{ control: control, name: "pulseira.idadeInicio" }}
           />
-        </div>
 
-        <div className="flex items-center">
-          <Button
-            color="primary"
-            isIconOnly
-            radius="full"
-            onPress={adicionarPulceira}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </Button>
-        </div>
+          <ControllerInput
+            inputProps={{
+              placeholder: "Digite aqui a idade final",
+              label: "Idade Final",
+              isRequired: true,
+              labelPlacement: "outside",
+              className: "w-60 min-w-full md:min-w-80",
+              type: "number",
+              isInvalid: idadeFim.trim() !== "" && idadeInicio.trim() !== "" && Number(idadeFim) <= Number(idadeInicio)
+            }}
+            controllerProps={{ control: control, name: "pulseira.idadeFim" }}
+          />
+
+          <div className="h-20 flex flex-col items-start justify-end gap-0.5">
+            <span className="font-bold text-sm">Cor</span>
+
+            <ControllerColor
+              controllerProps={{ control: control, name: "pulseira.color" }}
+            />
+          </div>
+
+          <div className="h-20 flex items-end">
+            <div className="h-14 flex items-center">
+              <ControllerCheckbox
+                controllerProps={{ control: control, name: "pulseira.bebida" }}
+                checkBoxProps={{
+                  title: "Consumo de bebida alcoolica?",
+                  isDisabled: isDisable,
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="h-20 flex items-end">
+            <div className="h-14 flex items-center">
+              <Button
+                color="primary"
+                isIconOnly
+                radius="full"
+                type="submit"
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </Button>
+            </div>
+          </div>
+
+        </form>
 
         {pulseiras.length > 0 && (
           <Table

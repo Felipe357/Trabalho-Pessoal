@@ -18,8 +18,12 @@ const NovoEventoFooter = () => {
 
   const { select, tabs: list } = tabs;
 
-  const setPage = (): string => {
+  const setProxPage = (): string => {
     return list[list.indexOf(select) + 1] ?? list[0];
+  };
+
+  const setAntPage = (): string => {
+    return list[list.indexOf(select) - 1] ?? list[0];
   };
 
   return (
@@ -29,7 +33,7 @@ const NovoEventoFooter = () => {
           color="default"
           size="lg"
           onPress={() => {
-            setValue("tabs.select", setPage());
+            setValue("tabs.select", setAntPage());
           }}
           startContent={<FontAwesomeIcon icon={faChevronLeft} />}
         >
@@ -43,7 +47,7 @@ const NovoEventoFooter = () => {
           color="primary"
           size="lg"
           onPress={() => {
-            setValue("tabs.select", setPage());
+            setValue("tabs.select", setProxPage());
           }}
         >
           Concluir
@@ -53,7 +57,7 @@ const NovoEventoFooter = () => {
           color="primary"
           size="lg"
           onPress={() => {
-            setValue("tabs.select", setPage());
+            setValue("tabs.select", setProxPage());
           }}
           endContent={<FontAwesomeIcon icon={faChevronRight} />}
         >
