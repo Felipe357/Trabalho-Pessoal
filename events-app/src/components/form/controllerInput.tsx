@@ -23,9 +23,9 @@ const ControllerInput = (params: Props) => {
             value={field.value}
             defaultValue={field.value}
             classNames={{
-              inputWrapper: `min-h-14 ${field.value && "border-primary"
-                } data-[hover=true]:border-[#3E7E28] gap-2`,
-              description: "text-red-700",
+              inputWrapper: `min-h-14 ${
+                field.value && "border-primary"
+              } data-[hover=true]:border-[#3E7E28] gap-2`,
               label: "font-bold",
             }}
             onChange={(e) => field.onChange(e.target.value)}

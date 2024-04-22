@@ -25,21 +25,23 @@ const FormularioPulseira = () => {
 
   const { novoEvento, pulseira } = watch();
 
-  const { idadeInicio, idadeFim } = pulseira
+  const { idadeInicio, idadeFim } = pulseira;
 
   const { pulseiras } = novoEvento;
 
   const adicionarPulceira = (): void => {
     if (pulseiras.length > 0) {
       setValue("novoEvento.pulseiras", [...pulseiras, watch("pulseira")]);
-      setValue("pulseira", {
-        idadeInicio: "",
-        idadeFim: "",
-        color: "#3E7E28",
-      });
     } else {
       setValue("novoEvento.pulseiras", [watch("pulseira")]);
     }
+
+    setValue("pulseira", {
+      idadeInicio: "",
+      idadeFim: "",
+      color: "#3E7E28",
+      bebida: false,
+    });
   };
 
   const [isDisable, setDisable] = useState(false);
@@ -54,15 +56,16 @@ const FormularioPulseira = () => {
   }, [pulseira.idadeInicio, setValue]);
 
   const onSubmit = (data: any) => {
-    console.log(data)
     adicionarPulceira();
   };
 
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="flex flex-wrap gap-6 md:overflow-hidden overflow-y-scroll pr-2 md:pr-0">
-
-        <form className="flex flex-wrap gap-6 md:overflow-hidden overflow-y-scroll pr-2 md:pr-0" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-wrap gap-6 md:overflow-hidden overflow-y-scroll pr-2 md:pr-0"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <ControllerInput
             inputProps={{
               placeholder: "Digite aqui a idade inicial",
@@ -71,7 +74,10 @@ const FormularioPulseira = () => {
               labelPlacement: "outside",
               className: "w-60 min-w-full md:min-w-40",
               type: "number",
-              isInvalid: idadeInicio.trim() !== "" && idadeFim.trim() !== "" && Number(idadeInicio) >= Number(idadeFim)
+              isInvalid:
+                idadeInicio.trim() !== "" &&
+                idadeFim.trim() !== "" &&
+                Number(idadeInicio) >= Number(idadeFim),
             }}
             controllerProps={{ control: control, name: "pulseira.idadeInicio" }}
           />
@@ -84,7 +90,10 @@ const FormularioPulseira = () => {
               labelPlacement: "outside",
               className: "w-60 min-w-full md:min-w-80",
               type: "number",
-              isInvalid: idadeFim.trim() !== "" && idadeInicio.trim() !== "" && Number(idadeFim) <= Number(idadeInicio)
+              isInvalid:
+                idadeFim.trim() !== "" &&
+                idadeInicio.trim() !== "" &&
+                Number(idadeFim) <= Number(idadeInicio),
             }}
             controllerProps={{ control: control, name: "pulseira.idadeFim" }}
           />
@@ -113,15 +122,13 @@ const FormularioPulseira = () => {
             <div className="h-14 flex items-center">
               <Button
                 color="primary"
-                isIconOnly
-                radius="full"
                 type="submit"
+                startContent={<FontAwesomeIcon icon={faPlus} />}
               >
-                <FontAwesomeIcon icon={faPlus} />
+                Adicionar pulseira
               </Button>
             </div>
           </div>
-
         </form>
 
         {pulseiras.length > 0 && (

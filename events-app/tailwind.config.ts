@@ -25,7 +25,7 @@ const config: Config = {
         events: {
           colors: {
             primary: {
-              50: "#3E7E28",
+              50: "#ddfad2",
               100: "#FFF",
               200: "#FFF",
               300: "#FFF",

@@ -8,6 +8,8 @@ import React, { useEffect, useRef } from "react";
 import NovoEventoFooter from "../novoEventoFooter";
 import ControllerInputFile from "@/components/form/controllerInputFile";
 import ControllerTextArea from "@/components/form/controllerTextArea";
+import ControllerCheckboxGroup from "@/components/form/controllerCheckboxGroup";
+import ControllerDateRangerPicker from "@/components/form/controllerDateRangerPicker";
 
 const FormularioEvento = () => {
   const pictureInput = useRef<HTMLInputElement>(null);
@@ -39,9 +41,22 @@ const FormularioEvento = () => {
     }
   }, [horas.keys, novoEvento.horaFim, novoEvento.horaInicio, setValue]);
 
+  const convidados = [
+    {
+      id: "01",
+      value: 1,
+      label: "Acompanhante",
+    },
+    {
+      id: "02",
+      value: 2,
+      label: "Dependente",
+    },
+  ];
+
   return (
     <div className="h-full flex flex-col justify-between">
-      <div className="flex flex-col gap-6 overflow-y-scroll md:overflow-hidden pr-2 md:pr-0">
+      <div className="flex flex-col gap-6 overflow-y-auto pr-2 md:pr-0">
         <ControllerInput
           inputProps={{
             placeholder: "Digite aqui o título do evento",
@@ -50,7 +65,7 @@ const FormularioEvento = () => {
             labelPlacement: "outside",
             className: "w-full",
           }}
-          controllerProps={{ control: control, name: "novoEvento.nome" }}
+          controllerProps={{ control: control, name: "novoEvento.titulo" }}
         />
 
         <ControllerTextArea
@@ -63,7 +78,7 @@ const FormularioEvento = () => {
           controllerProps={{ control: control, name: "novoEvento.descricao" }}
         />
 
-        <div className="w-full flex flex-wrap gap-10">
+        <div className="w-full flex flex-wrap gap-6">
           <ControllerDatePicker
             controllerProps={{ control: control, name: "novoEvento.data" }}
           />
@@ -82,7 +97,7 @@ const FormularioEvento = () => {
               placeholder: "Selecione o horário de início",
               disabledKeys: horas.disableKeysInicio,
               children: horas.keys.map((e: HorasProps) => {
-                return <SelectItem key={e.key}>{e.value}</SelectItem>;
+                return <SelectItem key={e.value}>{e.value}</SelectItem>;
               }),
             }}
           />
@@ -98,7 +113,7 @@ const FormularioEvento = () => {
               placeholder: "Selecione o horário de término",
               disabledKeys: horas.disableKeysFim,
               children: horas.keys.map((e: HorasProps) => {
-                return <SelectItem key={e.key}>{e.value}</SelectItem>;
+                return <SelectItem key={e.value}>{e.value}</SelectItem>;
               }),
             }}
           />
@@ -107,8 +122,9 @@ const FormularioEvento = () => {
             <span className=" font-bold text-sm">Foto</span>
             <Button
               variant="bordered"
-              className={`${watch("novoEvento.foto") && "border-primary"
-                } h-14 w-full border-dashed`}
+              className={`${
+                watch("novoEvento.foto") && "border-primary"
+              } h-14 w-full border-dashed`}
               onClick={() => pictureInput.current?.click()}
             >
               <span className=" truncate">
@@ -124,6 +140,52 @@ const FormularioEvento = () => {
               className: "hidden",
               type: "file",
               accept: "image/png, image/jpeg",
+            }}
+          />
+
+          <ControllerDateRangerPicker
+            controllerProps={{
+              control: control,
+              name: "novoEvento.formulario",
+            }}
+          />
+
+          <ControllerCheckboxGroup
+            checkboxGroupProps={{
+              label: "Participantes",
+              className: "max-w-max",
+              data: convidados.map((f) => {
+                return {
+                  id: f.id,
+                  value: f.value,
+                  label: f.label,
+                };
+              }),
+            }}
+            controllerProps={{
+              control: control,
+              name: "novoEvento.participantes",
+            }}
+          />
+
+          <ControllerInput
+            inputProps={{
+              placeholder: "Digite aqui a idade máxima",
+              defaultValue: "0",
+              min: 0,
+              label: "Idade Máxima do Dependente",
+              labelPlacement: "outside",
+              className: "w-64",
+              type: "number",
+              isDisabled:
+                watch("novoEvento.participantes") &&
+                watch("novoEvento.participantes").some((e: number) => e === 2)
+                  ? false
+                  : true,
+            }}
+            controllerProps={{
+              control: control,
+              name: "novoEvento.idadeDependente",
             }}
           />
         </div>

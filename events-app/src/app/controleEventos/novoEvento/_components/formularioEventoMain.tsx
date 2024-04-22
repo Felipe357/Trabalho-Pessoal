@@ -2,10 +2,10 @@ import { Tab, Tabs } from "@nextui-org/react";
 import FormularioEvento from "./Evento/formularioEvento";
 import { useNovoEventoContext } from "../novoEventoProvider";
 import { Controller } from "react-hook-form";
-import NovoEventoFooter from "./novoEventoFooter";
 import FormularioLocal from "./Local/formularioLocal";
 import FormularioPulseira from "./Pulseira/formularioPulseira";
 import FormularioFilial from "./Filial/formularioFilial";
+import FormularioCampos from "./Campos/formularioCampos";
 
 const NovoEventoMain = () => {
   const { form } = useNovoEventoContext();
@@ -18,7 +18,7 @@ const NovoEventoMain = () => {
       name={"tabs.select"}
       render={({ field }: any) => {
         return (
-          <div className=" w-full h-[90%]  p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
+          <div className=" w-full h-[90%] p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
             <Tabs
               aria-label="Options"
               variant="underlined"
@@ -50,7 +50,7 @@ const NovoEventoMain = () => {
               </Tab>
 
               <Tab key="fields" title="Campos" className="h-full">
-                <NovoEventoFooter />
+                <FormularioCampos />
               </Tab>
             </Tabs>
           </div>

@@ -17,7 +17,7 @@ const Formulario = () => {
   console.log(evento);
 
   return (
-    <div className=" w-full md:mx-10 p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
+    <div className=" w-full p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
       <div className="flex flex-col gap-4 w-full">
         <span className="font-bold text-xl">Colaborador</span>
 

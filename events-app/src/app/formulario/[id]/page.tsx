@@ -13,7 +13,7 @@ import ModalAceitar from "./_components/modalAceitar";
 const PageFormulario = () => {
   return (
     <FomrularioProvider>
-      <div className="p-6 overflow-hidden w-full flex flex-wrap justify-between gap-y-4">
+      <div className="p-6 overflow-hidden w-full flex flex-wrap justify-between gap-8">
         <FormularioHeader />
 
         <Formulario />

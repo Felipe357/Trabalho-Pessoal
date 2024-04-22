@@ -46,7 +46,7 @@ const ModalEvento = () => {
       isOpen={isOpenEvento}
       onClose={onCloseEvento}
       backdrop="blur"
-      className="events"
+      className="events max-h-[90%]"
       classNames={{ backdrop: "z-[5000]", wrapper: "z-[6000]" }}
     >
       <ModalContent>
@@ -54,7 +54,7 @@ const ModalEvento = () => {
           <>
             <ModalHeader></ModalHeader>
             <ModalBody className="max-h-sreen overflow-auto">
-              <div className=" overflow-hidden h-64 flex items-center rounded-2xl">
+              <div className=" overflow-hidden h-64 flex items-center justify-center rounded-2xl">
                 <Image src={img} alt="Fundo Evento" className="rounded-2xl" />
               </div>
 

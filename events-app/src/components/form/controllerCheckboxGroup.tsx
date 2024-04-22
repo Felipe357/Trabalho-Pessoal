@@ -28,10 +28,10 @@ const ControllerCheckboxGroup = (params: Props) => {
             value={field.value}
             onValueChange={field.onChange}
             orientation="horizontal"
-            className=" border- border-default-400"
             classNames={{
-              label: "font-bold text-black",
-              wrapper: "gap-x-10 border-medium rounded-xl p-4"
+              base: "gap-0",
+              label: "font-bold text-black text-small",
+              wrapper: "gap-x-10 border-medium rounded-xl p-4",
             }}
           >
             {checkboxGroupProps.data.map((c) => {

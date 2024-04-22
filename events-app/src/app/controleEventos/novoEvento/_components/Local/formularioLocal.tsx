@@ -11,7 +11,7 @@ const FormularioLocal = () => {
 
   const { control, setValue, watch } = form;
 
-  const { novoEvento } = watch()
+  const { novoEvento } = watch();
 
   const handleCepChange = async () => {
     // Remove caracteres não numéricos do CEP
@@ -23,23 +23,31 @@ const FormularioLocal = () => {
     }
 
     // Faça a requisição para a API ViaCEP
-    const { data } = await api.get(`https://viacep.com.br/ws/${cepNumerico}/json/`)
+    const { data } = await api.get(
+      `https://viacep.com.br/ws/${cepNumerico}/json/`
+    );
 
-    // Preencha os campos de endereço, bairro e cidade com os dados retornados
-    setValue('novoEvento.endereco', data.logradouro)
-    setValue('novoEvento.bairro', data.bairro)
-    setValue('novoEvento.cidade', data.localidade)
+    if (!data.erro) {
+      // Preencha os campos de endereço, bairro e cidade com os dados retornados
+      setValue("novoEvento.endereco", data.logradouro);
+      setValue("novoEvento.bairro", data.bairro);
+      setValue("novoEvento.cidade", data.localidade);
+    } else {
+      setValue("novoEvento.endereco", "");
+      setValue("novoEvento.bairro", "");
+      setValue("novoEvento.cidade", "");
+    }
   };
 
   useEffect(() => {
     if (novoEvento.cep) {
-      handleCepChange()
+      void handleCepChange();
     }
-  }, [novoEvento.cep])
+  }, [novoEvento.cep]);
 
   return (
     <div className="h-full flex flex-col justify-between">
-      <div className="flex flex-wrap gap-6 md:overflow-hidden overflow-y-scroll pr-2 md:pr-0">
+      <div className="flex flex-wrap gap-6 overflow-y-auto pr-2 md:pr-0">
         <ControllerInput
           inputProps={{
             placeholder: "Digite aqui o cep",

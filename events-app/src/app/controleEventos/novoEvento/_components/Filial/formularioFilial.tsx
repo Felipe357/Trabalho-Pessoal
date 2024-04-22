@@ -22,7 +22,7 @@ const FormularioFilial = () => {
             data: filiais.map((f: Filial) => {
               return {
                 id: f.id,
-                value: f.filial,
+                value: f.id,
                 label: f.filial + " - " + f.fazenda,
               };
             }),
@@ -30,13 +30,20 @@ const FormularioFilial = () => {
           controllerProps={{ control: control, name: "novoEvento.filiais" }}
         />
 
-        <span className="text-medium font-bold">Filiais Selecionadas - {novoEvento.filiais?.length ?? 0}</span>
+        <span className="text-small font-bold">
+          Filiais Selecionadas - {novoEvento.filiais?.length ?? 0}
+        </span>
         <div className="flex flex-wrap gap-3 overflow-y-auto">
-          {novoEvento.filiais && novoEvento.filiais.map((value: string) => (
-            <Chip key={value} color="primary">{value}</Chip>
-          ))}
+          {novoEvento.filiais &&
+            novoEvento.filiais.map((value: string) => (
+              <Chip key={value} color="primary">
+                {
+                  filiais.filter((e: { id: string }) => e.id === value)[0]
+                    .filial
+                }
+              </Chip>
+            ))}
         </div>
-
       </div>
 
       <NovoEventoFooter />

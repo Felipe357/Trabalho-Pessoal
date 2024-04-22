@@ -8,7 +8,7 @@ interface Props {
   };
 }
 
-const ControllerInput = (params: Props) => {
+const ControllerSelect = (params: Props) => {
   const { selectProps } = params;
 
   return (
@@ -33,4 +33,4 @@ const ControllerInput = (params: Props) => {
   );
 };
 
-export default ControllerInput;
+export default ControllerSelect;

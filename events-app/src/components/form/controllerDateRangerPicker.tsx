@@ -9,6 +9,7 @@ import {
   PopoverContent,
   Calendar,
   Input,
+  RangeCalendar,
 } from "@nextui-org/react";
 import { I18nProvider } from "@react-aria/i18n";
 import { format } from "date-fns";
@@ -16,15 +17,13 @@ import React from "react";
 import { Control, Controller, UseControllerProps } from "react-hook-form";
 
 interface Props {
-  calendarProps?: {
-    inInvalid: boolean;
-  };
+  calendarProps?: CalendarProps;
   controllerProps: Omit<UseControllerProps, "control"> & {
     control: Control<any>;
   };
 }
 
-const ControllerDatePicker = (params: Props) => {
+const ControllerDateRangerPicker = (params: Props) => {
   const { controllerProps } = params;
 
   return (
@@ -38,11 +37,15 @@ const ControllerDatePicker = (params: Props) => {
               <Input
                 isReadOnly
                 isRequired
-                label="Data Evento"
+                label="Período de Confirmação"
                 labelPlacement="outside"
-                className="w-64"
+                className="w-72"
                 variant="bordered"
-                value={field.value ?? "Selecione a data do evento"}
+                value={
+                  field.value
+                    ? `${field.value.start} - ${field.value.end}`
+                    : "Selecione o período de confirmação"
+                }
                 endContent={
                   <FontAwesomeIcon icon={faCalendar} color="#3E7E28" />
                 }
@@ -58,16 +61,24 @@ const ControllerDatePicker = (params: Props) => {
             </PopoverTrigger>
             <PopoverContent className="p-0">
               <I18nProvider>
-                <Calendar
+                <RangeCalendar
                   minValue={today(getLocalTimeZone())}
+                  // maxValue={}
                   color="primary"
                   classNames={{
                     base: "events",
                   }}
                   onChange={(e) =>
-                    field.onChange(
-                      format(e.toDate(getLocalTimeZone()), "dd/MM/yyyy")
-                    )
+                    field.onChange({
+                      start: format(
+                        e.start.toDate(getLocalTimeZone()),
+                        "dd/MM/yyyy"
+                      ),
+                      end: format(
+                        e.end.toDate(getLocalTimeZone()),
+                        "dd/MM/yyyy"
+                      ),
+                    })
                   }
                 />
               </I18nProvider>
@@ -79,4 +90,4 @@ const ControllerDatePicker = (params: Props) => {
   );
 };
 
-export default ControllerDatePicker;
+export default ControllerDateRangerPicker;

@@ -24,6 +24,7 @@ const ModalAceitar = () => {
       onClose={onClose}
       backdrop="blur"
       placement="center"
+      className="events"
       classNames={{ backdrop: "z-[5000]", wrapper: "z-[6000]" }}
     >
       <ModalContent>

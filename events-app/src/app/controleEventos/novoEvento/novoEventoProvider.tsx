@@ -133,12 +133,14 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
     defaultValues: {
       novoEvento: {
         pulseiras: [],
+        campos: [],
       },
       horas: {
         keys: horas,
         disableKeysInicio: [],
         disableKeysFim: [],
       },
+      filiais: filiais,
       tabs: {
         select: "event",
         tabs: tabs,
@@ -149,7 +151,13 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
         color: "#3E7E28",
         bebida: false,
       },
-      filiais: filiais,
+      campo: {
+        titulo: "",
+        descricao: "",
+        tituloValor: "",
+        valor: "",
+        valores: [],
+      },
     },
   });
 
