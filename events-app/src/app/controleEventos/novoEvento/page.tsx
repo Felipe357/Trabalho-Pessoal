@@ -3,6 +3,8 @@
 import NovoEventoHeader from "./_components/novoEventoHeader";
 import { NovoEventoProvider } from "./novoEventoProvider";
 import NovoEventoMain from "./_components/formularioEventoMain";
+import ModalCadastroEvento from "./_components/modalCadastroEvento";
+import ModalErroEvento from "./_components/modalErroEvento";
 
 const NovoEvento = () => {
   return (
@@ -12,6 +14,9 @@ const NovoEvento = () => {
 
         <NovoEventoMain />
       </div>
+
+      <ModalCadastroEvento />
+      <ModalErroEvento />
     </NovoEventoProvider>
   );
 };

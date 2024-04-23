@@ -6,25 +6,18 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { usePageContext } from "../pageProvider";
+import { useNovoEventoContext } from "../novoEventoProvider";
 
-const ModalEventoCancelar = () => {
-  const { disclousureEventoCancelar, disclousureEvento, form } =
-    usePageContext();
+const ModalCadastroEvento = () => {
+  const { disclousureNovoEvento } = useNovoEventoContext();
 
-  const { isOpen, onClose: onCloseCancelar } = disclousureEventoCancelar;
-
-  const { onClose: onCloseEvento } = disclousureEvento;
-
-  const { watch } = form;
-
-  const { id, titulo, formulario } = watch("evento");
+  const { isOpen, onClose } = disclousureNovoEvento;
 
   return (
     <Modal
       size={"2xl"}
       isOpen={isOpen}
-      onClose={onCloseCancelar}
+      onClose={onClose}
       backdrop="blur"
       placement="center"
       className="events"
@@ -36,18 +29,11 @@ const ModalEventoCancelar = () => {
             <ModalHeader></ModalHeader>
             <ModalBody className=" overflow-y-auto text-center gap-10">
               <span className="font-bold text-2xl md:text-xl text-black">
-                Certeza qua não vai participar?
-              </span>
-
-              <span className=" font-bold text-xl md:text-2xl text-primary">
-                {titulo}
+                Confirmar cadastro do novo evento?
               </span>
 
               <span className="font-medium text-2xl md:text-xl text-black">
-                Cadastro poderá ser alterado até{" "}
-                <span className="font-bold">
-                  {formulario && formulario.end}
-                </span>
+                Cadastro poderá ser alterado até a data do evento.
               </span>
             </ModalBody>
             <ModalFooter>
@@ -55,7 +41,6 @@ const ModalEventoCancelar = () => {
                 className="bg-primary text-white"
                 onPress={() => {
                   onClose();
-                  onCloseEvento();
                 }}
               >
                 Confirmar
@@ -68,4 +53,4 @@ const ModalEventoCancelar = () => {
   );
 };
 
-export default ModalEventoCancelar;
+export default ModalCadastroEvento;

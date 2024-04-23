@@ -1,6 +1,6 @@
 "use client";
 
-import { EventoProp, useInicialContext } from "@/provider/provider";
+import { type EventoProp, useInicialContext } from "@/provider/provider";
 import { useDisclosure } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";

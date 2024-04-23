@@ -5,44 +5,95 @@ import { NextUIProvider } from "@nextui-org/system";
 import { Navigation } from "@/components/navigation";
 
 import Teste from "../assets/download.png";
+import { useForm } from "react-hook-form";
 
 export type EventoProp = {
   id: string;
-  img: any;
+  campos: [
+    {
+      titulo: string;
+      descricao: string;
+      valores: {
+        titulo: string;
+        valor: string;
+      }[];
+    }
+  ];
   titulo: string;
+  descricao?: string;
   data: string;
-  hora: string;
-  local: string;
-  descricao: string;
-  dataFormularioInicio: string;
-  dataFormularioFim: string;
-  confirm: boolean;
-  tipoConvidado: number;
+  horaInicio: string;
+  horaFim: string;
+  foto: {
+    name: string;
+    foto: {};
+  };
+  formulario: {
+    start: string;
+    end: string;
+  };
+  participantes: number;
+  cep: string;
+  endereco: string;
+  numero: string;
+  bairro: string;
+  cidade: string;
+  confirmacao: boolean;
   idadeDependente: number;
   situacao: number;
 };
 
 const eventosTeste: EventoProp[] = [
   {
-    id: "123456",
-    img: Teste,
-    titulo: "Evento Não Confirmado Somente Colaborador",
-    data: "05/05/2024",
-    hora: "10:00",
-    local: "Praça Central, Centro, Primavera do Leste",
-    descricao:
-      "Venha conferir a diversidade de artesanatos locais, comidas típicas e apresentações culturais.",
-    dataFormularioInicio: "01/04/2024",
-    dataFormularioFim: "25/04/2024",
-    confirm: false,
-    tipoConvidado: 1,
-    idadeDependente: 0,
+    id: "1234",
+    campos: [
+      {
+        titulo: "Camiseta",
+        descricao: "Selecione um tamanho de camiseta",
+        valores: [
+          {
+            titulo: "Tamanho P",
+            valor: "P",
+          },
+          {
+            titulo: "Tamanho M",
+            valor: "M",
+          },
+          {
+            titulo: "Tamanho G",
+            valor: "G",
+          },
+        ],
+      },
+    ],
+    titulo: "Comemoração 65 Anos Terra Viva",
+    descricao: "",
+    data: "30/04/2024",
+    horaInicio: "12:00",
+    horaFim: "18:30",
+    foto: {
+      name: "primavera1.jpg",
+      foto: Teste,
+    },
+    formulario: {
+      start: "22/04/2024",
+      end: "27/04/2024",
+    },
+    participantes: 4,
+    cep: "13833024",
+    endereco: "Rua Luiza Bertassola Milanes",
+    numero: "682",
+    bairro: "Jardim Vila Rica II",
+    cidade: "Santo Antônio de Posse",
+    confirmacao: false,
+    idadeDependente: 18,
     situacao: 1,
   },
 ];
 
 interface InicialContextProps {
   evento: EventoProp[];
+  form: any;
 }
 
 export const InicialContext = React.createContext({} as InicialContextProps);
@@ -68,11 +119,14 @@ const AppProvider = ({
     };
   }, []);
 
+  const form = useForm();
+
   return (
     <NextUIProvider className="provider">
       <InicialContext.Provider
         value={{
           evento: eventosTeste,
+          form: form,
         }}
       >
         <Navigation open={open} setOpen={setOpen} />

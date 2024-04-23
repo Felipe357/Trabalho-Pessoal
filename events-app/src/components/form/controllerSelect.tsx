@@ -19,6 +19,7 @@ const ControllerSelect = (params: Props) => {
         return (
           <Select
             {...selectProps}
+            defaultSelectedKeys={field.value && [field.value]}
             onSelectionChange={(e) => field.onChange((e as any).anchorKey)}
             classNames={{
               trigger: `h-14 ${

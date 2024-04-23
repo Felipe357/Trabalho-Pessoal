@@ -3,6 +3,7 @@
 import { useDisclosure } from "@nextui-org/react";
 import { createContext, useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useInicialContext } from "@/provider/provider";
 
 interface NovoEventoProviderProps extends React.PropsWithChildren {}
 
@@ -18,10 +19,11 @@ type DisclosureProps = {
 
 interface NovoEventoContextProps {
   form: any;
+  disclousureNovoEvento: DisclosureProps;
+  disclosureErroEvento: DisclosureProps;
 }
 
 export interface HorasProps {
-  key: string;
   value: string;
 }
 
@@ -43,14 +45,12 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
   const carregarHorario = () => {
     for (let index = 0; index < 24; index++) {
       horas.push({
-        key: "H" + index,
         value:
           index.toString().length === 1
             ? "0" + index.toString() + ":00"
             : index.toString() + ":00",
       });
       horas.push({
-        key: "M" + index,
         value:
           index.toString().length === 1
             ? "0" + index.toString() + ":30"
@@ -128,10 +128,15 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
       log_alteracao: null,
     },
   ];
+  const { form: formControle } = useInicialContext();
+
+  const { watch } = formControle;
+
+  const { eventoSelect } = watch();
 
   const form = useForm({
     defaultValues: {
-      novoEvento: {
+      novoEvento: eventoSelect ?? {
         pulseiras: [],
         campos: [],
       },
@@ -161,10 +166,20 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
     },
   });
 
+  const disclosureNovoEvento = useDisclosure({
+    id: "disclosure-novo-evento",
+  });
+
+  const disclosureErroEvento = useDisclosure({
+    id: "disclosure-erro-novo-evento",
+  });
+
   return (
     <NovoEventoContext.Provider
       value={{
         form: form,
+        disclousureNovoEvento: disclosureNovoEvento,
+        disclosureErroEvento: disclosureErroEvento,
       }}
     >
       {children}

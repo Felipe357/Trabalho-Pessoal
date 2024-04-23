@@ -14,8 +14,6 @@ const Formulario = () => {
 
   const { colaborador } = watch();
 
-  console.log(evento);
-
   return (
     <div className=" w-full p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
       <div className="flex flex-col gap-4 w-full">
@@ -25,7 +23,7 @@ const Formulario = () => {
 
         {evento && (
           <>
-            {evento.tipoConvidado === 2 || evento.tipoConvidado === 4 ? (
+            {evento.participantes === 2 || evento.participantes === 4 ? (
               <>
                 <Divider />
                 <span className="font-bold text-xl">Dependentes</span>
@@ -34,7 +32,7 @@ const Formulario = () => {
               <></>
             )}
 
-            {evento.tipoConvidado === 2 || evento.tipoConvidado === 4 ? (
+            {evento.participantes === 2 || evento.participantes === 4 ? (
               colaborador.dependentes.map((de: any, index: number) => {
                 return (
                   de.tipo === 1 && <FormDependente key={index} index={index} />
@@ -44,14 +42,14 @@ const Formulario = () => {
               <></>
             )}
 
-            {evento.tipoConvidado >= 3 && (
+            {evento.participantes >= 3 && (
               <>
                 <Divider />
                 <span className="font-bold text-xl">Acompanhante</span>
               </>
             )}
 
-            {evento.tipoConvidado === 3 || evento.tipoConvidado === 4 ? (
+            {evento.participantes === 3 || evento.participantes === 4 ? (
               colaborador.dependentes.map((de: any, index: number) => {
                 return (
                   de.tipo === 2 && (

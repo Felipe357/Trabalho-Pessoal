@@ -31,14 +31,28 @@ const ModalEvento = () => {
 
   const { watch } = form;
 
-  const { id, titulo, img, data, hora, local, descricao, dataFormularioFim } =
-    watch("evento");
+  const {
+    id,
+    foto,
+    titulo,
+    data,
+    endereco,
+    numero,
+    bairro,
+    cidade,
+    formulario,
+    descricao,
+    horaInicio,
+    participantes,
+    idadeDependente,
+  } = watch("evento");
 
   const dataAtual = new Date();
-
-  const providedDate = dataFormularioFim
-    ? parse(dataFormularioFim, "dd/MM/yyyy", new Date())
+  const providedDate = formulario
+    ? parse(formulario.end, "dd/MM/yyyy", new Date())
     : new Date();
+
+  const local = endereco + ", " + numero + ", " + bairro + ", " + cidade;
 
   return (
     <Modal
@@ -55,7 +69,11 @@ const ModalEvento = () => {
             <ModalHeader></ModalHeader>
             <ModalBody className="max-h-sreen overflow-auto">
               <div className=" overflow-hidden h-64 flex items-center justify-center rounded-2xl">
-                <Image src={img} alt="Fundo Evento" className="rounded-2xl" />
+                <Image
+                  src={foto.foto}
+                  alt="Fundo Evento"
+                  className="rounded-2xl"
+                />
               </div>
 
               <div className="flex gap-4 flex-col items-start w-full">
@@ -72,7 +90,7 @@ const ModalEvento = () => {
                     color="#3E7E28"
                   />
                   <span className="font-medium text-base md:text-lg text-black">
-                    {data} ás {hora}
+                    {data} ás {horaInicio}
                   </span>
                 </div>
 
@@ -87,13 +105,17 @@ const ModalEvento = () => {
                   </span>
                 </div>
 
-                <Divider className="my-1" />
+                {descricao && (
+                  <>
+                    <Divider className="my-1" />
 
-                <div>
-                  <span className="font-medium text-base md:text-lg text-black">
-                    {descricao}
-                  </span>
-                </div>
+                    <div>
+                      <span className="font-medium text-base md:text-lg text-black">
+                        {descricao}
+                      </span>
+                    </div>
+                  </>
+                )}
 
                 <Divider className="my-1" />
 
@@ -111,16 +133,28 @@ const ModalEvento = () => {
                     </span>
                   </div>
 
-                  <Divider orientation="vertical" className="mx-1 h-3/4" />
+                  {participantes === 3 ||
+                    (participantes === 4 && (
+                      <>
+                        <Divider
+                          orientation="vertical"
+                          className="mx-1 h-3/4"
+                        />
 
-                  <div className="flex items-center gap-4">
-                    <FontAwesomeIcon icon={faUsers} size="lg" color="#3E7E28" />
-                    <span className="font-medium text-lg md:text-lg text-black">
-                      Dependentes
-                      <br />
-                      até 18 anos
-                    </span>
-                  </div>
+                        <div className="flex items-center gap-4">
+                          <FontAwesomeIcon
+                            icon={faUsers}
+                            size="lg"
+                            color="#3E7E28"
+                          />
+                          <span className="font-medium text-lg md:text-lg text-black">
+                            Dependentes
+                            <br />
+                            até {idadeDependente} anos
+                          </span>
+                        </div>
+                      </>
+                    ))}
 
                   <Divider orientation="vertical" className="mx-1 h-3/4" />
 

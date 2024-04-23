@@ -19,7 +19,7 @@ const FormDependente = (params: Props) => {
   const dataAtual = new Date();
 
   const providedDate = evento
-    ? parse(evento.dataFormularioFim, "dd/MM/yyyy", new Date())
+    ? parse(evento.formulario.end, "dd/MM/yyyy", new Date())
     : new Date();
 
   const disable = dataAtual > providedDate;

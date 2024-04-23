@@ -1,16 +1,15 @@
-import {
-  faEdit,
-  faEye,
-  faPlus,
-  faSync,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Divider, Listbox, ListboxItem } from "@nextui-org/react";
-import { usePathname, useRouter } from "next/navigation";
+import { Divider, Listbox, ListboxItem } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useInicialContext } from "@/provider/provider";
 
 const OpcaoesEvento = () => {
+  const { form } = useInicialContext();
+
+  const { setValue } = form;
+
   const [maxLength, setMaxLength] = useState(true);
 
   useEffect(() => {
@@ -28,8 +27,6 @@ const OpcaoesEvento = () => {
   }, []);
 
   const router = useRouter();
-
-  const pathname = usePathname();
 
   return (
     <div className="shadow-large w-full md:min-w-72 md:max-w-60 h-36 md:h-full border-2 rounded-2xl border-[#eee] p-6 text-center flex flex-row md:flex-col overflow-auto gap-3">
@@ -51,7 +48,13 @@ const OpcaoesEvento = () => {
             key="new"
             className="h-14 gap-4"
             description
-            onPress={() => router.push(`/controleEventos/novoEvento`)}
+            onPress={() => {
+              setValue("eventoSelect", {
+                pulseiras: [],
+                campos: [],
+              });
+              router.push(`/controleEventos/novoEvento`);
+            }}
             startContent={<FontAwesomeIcon icon={faPlus} />}
           >
             Novo evento

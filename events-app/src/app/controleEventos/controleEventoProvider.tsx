@@ -19,6 +19,7 @@ type DisclosureProps = {
 interface ControleEventoContextProps {
   form: any;
   evento: any[];
+  disclosureParticipantesEvento: DisclosureProps;
 }
 
 const evento = [
@@ -71,8 +72,8 @@ const evento = [
     ],
     titulo: "Comemoração 65 Anos Terra Viva",
     data: "30/04/2024",
-    horaInicio: "H12",
-    horaFim: "M18",
+    horaInicio: "12:00",
+    horaFim: "18:30",
     foto: {
       name: "primavera1.jpg",
       foto: {},
@@ -81,7 +82,7 @@ const evento = [
       start: "22/04/2024",
       end: "27/04/2024",
     },
-    participantes: 4,
+    participantes: [2, 1],
     idadeDependente: "18",
     filiais: [
       "a8a1a717-5802-4e17-9590-750f8de66f58",
@@ -107,13 +108,31 @@ export const ControleEventoContext = createContext(
 export function ControleEventoProvider({
   children,
 }: ControleEventoProviderProps) {
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      filter: {
+        nome: "",
+        tipoParticipante: "all",
+        participacao: "all",
+        bebida: "all",
+        transporte: "all",
+      },
+      eventoSelect: {
+        titulo: "Nenhum Evento Selecionado",
+      },
+    },
+  });
+
+  const disclosureParticipantesEvento = useDisclosure({
+    id: "disclousure-participantes-evento",
+  });
 
   return (
     <ControleEventoContext.Provider
       value={{
         form: form,
         evento: evento,
+        disclosureParticipantesEvento: disclosureParticipantesEvento,
       }}
     >
       {children}

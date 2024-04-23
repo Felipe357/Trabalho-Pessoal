@@ -4,6 +4,7 @@ import React from "react";
 import { ControleEventoProvider } from "./controleEventoProvider";
 import ListaEventos from "./_components/listaEventos";
 import OpcaoesEvento from "./_components/opcoesEvento";
+import ModalParticipantesEvento from "./_components/modalErroEvento";
 
 const ControleEventos = () => {
   return (
@@ -13,6 +14,7 @@ const ControleEventos = () => {
 
         <ListaEventos />
       </div>
+      <ModalParticipantesEvento />
     </ControleEventoProvider>
   );
 };

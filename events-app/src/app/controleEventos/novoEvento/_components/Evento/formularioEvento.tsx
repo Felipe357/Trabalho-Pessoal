@@ -21,23 +21,27 @@ const FormularioEvento = () => {
 
   useEffect(() => {
     if (novoEvento.horaInicio) {
-      let disabledKeys = horas.keys.map((e: HorasProps) => {
-        if (Number(e.key.slice(1)) <= Number(novoEvento.horaInicio.slice(1))) {
-          return e.key;
-        }
-      });
+      const disabledKeys = horas.keys
+        .map((e: HorasProps) => {
+          if (e.value <= novoEvento.horaInicio) {
+            return e.value;
+          }
+        })
+        .filter(Boolean);
 
       setValue("horas.disableKeysFim", disabledKeys);
     }
 
     if (novoEvento.horaFim) {
-      let disabledKeys = horas.keys.map((e: HorasProps) => {
-        if (Number(e.key.slice(1)) >= Number(novoEvento.horaFim.slice(1))) {
-          return e.key;
-        }
-      });
+      const disabledKeys = horas.keys
+        .map((e: HorasProps) => {
+          if (e.value >= novoEvento.horaFim) {
+            return e.value;
+          }
+        })
+        .filter(Boolean);
 
-      setValue("horas.disableKeysInicio", disabledKeys);
+      setValue("horas.disableKeysFim", disabledKeys);
     }
   }, [horas.keys, novoEvento.horaFim, novoEvento.horaInicio, setValue]);
 
@@ -178,8 +182,8 @@ const FormularioEvento = () => {
               className: "w-64",
               type: "number",
               isDisabled:
-                watch("novoEvento.participantes") &&
-                watch("novoEvento.participantes").some((e: number) => e === 2)
+                novoEvento.participantes &&
+                novoEvento.participantes.some((e: number) => e === 2)
                   ? false
                   : true,
             }}

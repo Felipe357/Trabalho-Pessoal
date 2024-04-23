@@ -44,7 +44,7 @@ const ModalAceitar = () => {
 
                 <span className="font-medium text-2xl md:text-xl text-black">
                   Cadastro poderá ser alterado até{" "}
-                  <span className="font-bold">{evento.dataFormularioFim}</span>
+                  <span className="font-bold">{evento.formulario.end}</span>
                 </span>
               </ModalBody>
             )}

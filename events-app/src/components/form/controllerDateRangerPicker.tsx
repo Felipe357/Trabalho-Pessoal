@@ -1,18 +1,17 @@
+import { useNovoEventoContext } from "@/app/controleEventos/novoEvento/novoEventoProvider";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { getLocalTimeZone, today, fromDate } from "@internationalized/date";
 import {
   Popover,
   type CalendarProps,
   PopoverTrigger,
-  Button,
   PopoverContent,
-  Calendar,
   Input,
   RangeCalendar,
 } from "@nextui-org/react";
 import { I18nProvider } from "@react-aria/i18n";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import React from "react";
 import { Control, Controller, UseControllerProps } from "react-hook-form";
 
@@ -25,6 +24,14 @@ interface Props {
 
 const ControllerDateRangerPicker = (params: Props) => {
   const { controllerProps } = params;
+
+  const { form } = useNovoEventoContext();
+
+  const { watch } = form;
+
+  let originalDate =
+    watch("novoEvento.data") &&
+    parse(watch("novoEvento.data"), "dd/MM/yyyy", new Date());
 
   return (
     <Controller
@@ -62,8 +69,29 @@ const ControllerDateRangerPicker = (params: Props) => {
             <PopoverContent className="p-0">
               <I18nProvider>
                 <RangeCalendar
-                  minValue={today(getLocalTimeZone())}
-                  // maxValue={}
+                  minValue={
+                    field.value && field.value.start
+                      ? fromDate(
+                          parse(field.value.start, "dd/MM/yyyy", new Date()),
+                          getLocalTimeZone()
+                        )
+                      : today(getLocalTimeZone())
+                  }
+                  maxValue={
+                    originalDate && fromDate(originalDate, getLocalTimeZone())
+                  }
+                  defaultValue={
+                    field.value && {
+                      start: fromDate(
+                        parse(field.value.start, "dd/MM/yyyy", new Date()),
+                        getLocalTimeZone()
+                      ),
+                      end: fromDate(
+                        parse(field.value.end, "dd/MM/yyyy", new Date()),
+                        getLocalTimeZone()
+                      ),
+                    }
+                  }
                   color="primary"
                   classNames={{
                     base: "events",

@@ -9,31 +9,30 @@ import {
 import { useEffect, useState } from "react";
 import { usePageContext } from "../pageProvider";
 import { parse } from "date-fns";
+import { type EventoProp } from "@/provider/provider";
 
 type EventoProps = {
-  eventProps: {
-    id: string;
-    img: any;
-    titulo: string;
-    data: string;
-    hora: string;
-    local: string;
-    descricao: string;
-    dataFormularioInicio: string;
-    dataFormularioFim: string;
-    confirm: boolean;
-    tipoConvidado: number;
-    idadeDependente: number;
-  };
+  eventProps: EventoProp;
 };
 
 const Evento = ({ eventProps }: EventoProps) => {
-  const { id, img, titulo, data, local, dataFormularioFim, confirm } =
-    eventProps;
+  const {
+    id,
+    foto,
+    titulo,
+    data,
+    endereco,
+    numero,
+    bairro,
+    cidade,
+    formulario,
+    confirmacao,
+  } = eventProps;
 
   const dataAtual = new Date();
+  const providedDate = parse(formulario.end, "dd/MM/yyyy", new Date());
 
-  const providedDate = parse(dataFormularioFim, "dd/MM/yyyy", new Date());
+  const local = endereco + ", " + numero + ", " + bairro + ", " + cidade;
 
   const [maxLength, setMaxLength] = useState(45);
   const [truncatedLocal, setTruncatedLocal] = useState(local);
@@ -73,7 +72,12 @@ const Evento = ({ eventProps }: EventoProps) => {
       }}
     >
       <div className="w-full">
-        <Image src={img} layout="fill" objectFit="cover" alt="Fundo Evento" />
+        <Image
+          src={foto.foto as string}
+          layout="fill"
+          objectFit="cover"
+          alt="Fundo Evento"
+        />
       </div>
       <div className="bg-[#00000066] absolute h-full w-full top-0 p-4 md:p-6 flex flex-col justify-between items-start">
         <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mix-blend-screen whitespace-normal">
@@ -101,7 +105,7 @@ const Evento = ({ eventProps }: EventoProps) => {
                 variant="faded"
                 className="h-8 md:h-10 px-2 md:px-4 gap-2"
               >
-                Confirmar até {dataFormularioFim}
+                Confirmar até {formulario.end}
               </Chip>
             ) : (
               <Chip
@@ -113,7 +117,7 @@ const Evento = ({ eventProps }: EventoProps) => {
               </Chip>
             )}
           </div>
-          {confirm ? (
+          {confirmacao ? (
             <Chip
               variant="faded"
               className="h-8 md:h-10 px-2 md:px-4 gap-2 text-white bg-primary border-primary"

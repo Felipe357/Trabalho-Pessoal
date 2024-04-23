@@ -19,12 +19,18 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  Tooltip,
 } from "@nextui-org/react";
 import { useControleEventoContext } from "../controleEventoProvider";
+import { useInicialContext, type EventoProp } from "@/provider/provider";
+import { useRouter } from "next/navigation";
 
 const ListaEventos = () => {
-  const { evento } = useControleEventoContext();
+  const { evento, disclosureParticipantesEvento } = useControleEventoContext();
+  const { form } = useInicialContext();
+
+  const { setValue } = form;
+
+  const { onOpen } = disclosureParticipantesEvento;
 
   const participantes = [
     "Colaboradores",
@@ -34,6 +40,16 @@ const ListaEventos = () => {
   ];
 
   const colorParticipante = ["#D4D4D866", "#F45302", "#345eeb", "#3E7E28"];
+
+  const router = useRouter();
+
+  function somarArray(valores: number[]): number {
+    let soma = 0;
+    for (const valor of valores) {
+      soma += valor;
+    }
+    return soma;
+  }
 
   return (
     <div className="shadow-large border-2 rounded-2xl border-[#eee] p-8 w-full h-full overflow-y-auto">
@@ -55,37 +71,48 @@ const ListaEventos = () => {
         </TableHeader>
         <TableBody emptyContent="Nenhum evento encontrado">
           {evento &&
-            evento.map((e) => {
+            evento.map((e: EventoProp) => {
               return (
                 <TableRow key={e.id}>
                   <TableCell className="truncate max-w-40 md:max-w-max whitespace-nowrap">
                     {e.titulo}
                   </TableCell>
                   <TableCell>{e.data}</TableCell>
-                  <TableCell>{e.hora}</TableCell>
+                  <TableCell>{e.horaInicio}</TableCell>
                   <TableCell className="flex items-center justify-center">
                     <Chip
                       radius="lg"
                       variant="flat"
                       style={{
-                        backgroundColor: colorParticipante[e.tipoConvidado - 1],
-                        color: e.tipoConvidado === 1 ? "#000" : "#FFF",
+                        backgroundColor:
+                          colorParticipante[
+                            somarArray(e.participantes as unknown as number[])
+                          ],
+                        color:
+                          somarArray(e.participantes as unknown as number[]) ===
+                          1
+                            ? "#000"
+                            : "#FFF",
                       }}
                       className="w-full !max-w-96 text-center h-8"
                     >
-                      {participantes[e.tipoConvidado - 1]}
+                      {
+                        participantes[
+                          somarArray(e.participantes as unknown as number[])
+                        ]
+                      }
                     </Chip>
                   </TableCell>
                   <TableCell>{e.idadeDependente}</TableCell>
-                  <TableCell>{e.dataFormularioInicio}</TableCell>
-                  <TableCell>{e.dataFormularioFim}</TableCell>
+                  <TableCell>{e.formulario.start}</TableCell>
+                  <TableCell>{e.formulario.end}</TableCell>
                   <TableCell>
                     <Chip radius="sm" variant="flat">
                       Teste
                     </Chip>
                   </TableCell>
                   <TableCell>
-                    <Popover placement="right">
+                    <Popover placement="left">
                       <PopoverTrigger>
                         <Button isIconOnly variant="light" radius="full">
                           <FontAwesomeIcon icon={faBars} />
@@ -98,6 +125,10 @@ const ListaEventos = () => {
                               key="view"
                               description="Listagem de Participantes"
                               startContent={<FontAwesomeIcon icon={faEye} />}
+                              onPress={() => {
+                                setValue("eventoSelect", e);
+                                onOpen();
+                              }}
                             >
                               Visualizar
                             </ListboxItem>
@@ -106,6 +137,10 @@ const ListaEventos = () => {
                               showDivider
                               description="Editar Evento"
                               startContent={<FontAwesomeIcon icon={faEdit} />}
+                              onPress={() => {
+                                setValue("eventoSelect", e);
+                                router.push(`/controleEventos/novoEvento`);
+                              }}
                             >
                               Editar
                             </ListboxItem>

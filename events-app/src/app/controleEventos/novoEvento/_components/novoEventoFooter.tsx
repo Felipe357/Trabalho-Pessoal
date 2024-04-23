@@ -10,7 +10,11 @@ import {
 import { useNovoEventoContext } from "../novoEventoProvider";
 
 const NovoEventoFooter = () => {
-  const { form } = useNovoEventoContext();
+  const { form, disclousureNovoEvento, disclosureErroEvento } =
+    useNovoEventoContext();
+
+  const { onOpen } = disclousureNovoEvento;
+  const { onOpen: onOpenErro } = disclosureErroEvento;
 
   const { setValue, watch } = form;
 
@@ -25,7 +29,6 @@ const NovoEventoFooter = () => {
     horaFim,
     formulario,
     participantes,
-    idadeDependente,
     cep,
     endereco,
     numero,
@@ -33,7 +36,6 @@ const NovoEventoFooter = () => {
     cidade,
     filiais,
     pulseiras,
-    campos,
   } = novoEvento;
 
   const setProxPage = (): string => {
@@ -47,6 +49,9 @@ const NovoEventoFooter = () => {
   const enviarEvento = () => {
     if (!validarForm()) {
       console.log(novoEvento);
+      onOpen();
+    } else {
+      onOpenErro();
     }
   };
 
@@ -65,14 +70,7 @@ const NovoEventoFooter = () => {
     }
 
     if (!participantes) {
-      setValue("novoEvento.participantes", 1);
-    } else {
-      let part = 1;
-      participantes.map((e: number) => {
-        part = part + e;
-      });
-
-      setValue("novoEvento.participantes", part);
+      return true;
     }
 
     if (!cep || !endereco || !numero || !bairro || !cidade) {
@@ -87,11 +85,6 @@ const NovoEventoFooter = () => {
 
     if (!pulseiras || pulseiras.length === 0) {
       console.log("Pulseira");
-      return true;
-    }
-
-    if (!campos || campos.length === 0) {
-      console.log("Campos");
       return true;
     }
 
