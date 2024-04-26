@@ -10,7 +10,10 @@ type Props = {
 const FormAcompanhante = (params: Props) => {
   const { index } = params;
   const { form, evento } = useFomrularioContext();
-  const { control } = form;
+  const { control, watch } = form;
+  const { colaborador } = watch();
+
+  const acompanhante = colaborador?.dependentes[index];
 
   const dataAtual = new Date();
 
@@ -25,6 +28,8 @@ const FormAcompanhante = (params: Props) => {
       <ControllerInput
         inputProps={{
           isReadOnly: disable,
+          defaultValue: acompanhante?.nome,
+          placeholder: "Digite nome do namorado(a), marido ou esposa",
           description: "Nome do Namorado(a), Marido ou Esposa",
           className: "max-w-96",
         }}

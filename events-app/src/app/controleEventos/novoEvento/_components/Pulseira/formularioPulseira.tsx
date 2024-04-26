@@ -23,20 +23,20 @@ const FormularioPulseira = () => {
 
   const { control, watch, setValue, handleSubmit } = form;
 
-  const { novoEvento, pulseira } = watch();
+  const { novoEvento, pulseiraForm } = watch();
 
-  const { idadeInicio, idadeFim } = pulseira;
+  const { idadeInicio, idadeFim } = pulseiraForm;
 
-  const { pulseiras } = novoEvento;
+  const { pulseira } = novoEvento;
 
   const adicionarPulceira = (): void => {
-    if (pulseiras.length > 0) {
-      setValue("novoEvento.pulseiras", [...pulseiras, watch("pulseira")]);
+    if (pulseira.length > 0) {
+      setValue("novoEvento.pulseira", [...pulseira, watch("pulseiraForm")]);
     } else {
-      setValue("novoEvento.pulseiras", [watch("pulseira")]);
+      setValue("novoEvento.pulseira", [watch("pulseiraForm")]);
     }
 
-    setValue("pulseira", {
+    setValue("pulseiraForm", {
       idadeInicio: "",
       idadeFim: "",
       color: "#3E7E28",
@@ -47,13 +47,13 @@ const FormularioPulseira = () => {
   const [isDisable, setDisable] = useState(false);
 
   useEffect(() => {
-    if (Number(pulseira.idadeInicio) < 18) {
+    if (Number(idadeInicio) < 18) {
       setDisable(true);
-      setValue("pulseira.bebida", false);
+      setValue("pulseiraForm.bebida", false);
     } else {
       setDisable(false);
     }
-  }, [pulseira.idadeInicio, setValue]);
+  }, [idadeInicio, setValue]);
 
   const onSubmit = (data: any) => {
     adicionarPulceira();
@@ -79,7 +79,10 @@ const FormularioPulseira = () => {
                 idadeFim.trim() !== "" &&
                 Number(idadeInicio) >= Number(idadeFim),
             }}
-            controllerProps={{ control: control, name: "pulseira.idadeInicio" }}
+            controllerProps={{
+              control: control,
+              name: "pulseiraForm.idadeInicio",
+            }}
           />
 
           <ControllerInput
@@ -95,21 +98,27 @@ const FormularioPulseira = () => {
                 idadeInicio.trim() !== "" &&
                 Number(idadeFim) <= Number(idadeInicio),
             }}
-            controllerProps={{ control: control, name: "pulseira.idadeFim" }}
+            controllerProps={{
+              control: control,
+              name: "pulseiraForm.idadeFim",
+            }}
           />
 
           <div className="h-20 flex flex-col items-start justify-end gap-0.5">
             <span className="font-bold text-sm">Cor</span>
 
             <ControllerColor
-              controllerProps={{ control: control, name: "pulseira.color" }}
+              controllerProps={{ control: control, name: "pulseiraForm.color" }}
             />
           </div>
 
           <div className="h-20 flex items-end">
             <div className="h-14 flex items-center">
               <ControllerCheckbox
-                controllerProps={{ control: control, name: "pulseira.bebida" }}
+                controllerProps={{
+                  control: control,
+                  name: "pulseiraForm.bebida",
+                }}
                 checkBoxProps={{
                   title: "Consumo de bebida alcoolica?",
                   isDisabled: isDisable,
@@ -131,12 +140,12 @@ const FormularioPulseira = () => {
           </div>
         </form>
 
-        {pulseiras.length > 0 && (
+        {pulseira && pulseira.length > 0 && (
           <Table
             isHeaderSticky
-            aria-label="Pulseiras"
+            aria-label="pulseira"
             classNames={{
-              base: "max-h-[520px] overflow-y-scroll",
+              base: "max-h-[40%] overflow-y-scroll",
               wrapper: "shadow-sm",
             }}
           >
@@ -147,7 +156,7 @@ const FormularioPulseira = () => {
               <TableColumn>Ação</TableColumn>
             </TableHeader>
             <TableBody>
-              {pulseiras.map(
+              {pulseira.map(
                 (
                   p: {
                     idadeInicio: string;
@@ -186,8 +195,8 @@ const FormularioPulseira = () => {
                           color="danger"
                           onPress={() => {
                             setValue(
-                              "novoEvento.pulseiras",
-                              pulseiras.filter(
+                              "novoEvento.pulseira",
+                              pulseira.filter(
                                 (e: any, indexF: number) => indexF !== index
                               )
                             );

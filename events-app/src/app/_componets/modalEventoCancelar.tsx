@@ -18,7 +18,9 @@ const ModalEventoCancelar = () => {
 
   const { watch } = form;
 
-  const { id, titulo, formulario } = watch("evento");
+  const { evento } = watch();
+
+  const { id, titulo, formulario } = evento ?? {};
 
   return (
     <Modal

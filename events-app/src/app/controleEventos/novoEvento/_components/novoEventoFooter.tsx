@@ -28,13 +28,12 @@ const NovoEventoFooter = () => {
     horaInicio,
     horaFim,
     formulario,
-    participantes,
     cep,
     endereco,
     numero,
     bairro,
     cidade,
-    filiais,
+    filial,
     pulseiras,
   } = novoEvento;
 
@@ -69,24 +68,20 @@ const NovoEventoFooter = () => {
       return true;
     }
 
-    if (!participantes) {
-      return true;
-    }
-
     if (!cep || !endereco || !numero || !bairro || !cidade) {
       console.log("Local");
       return true;
     }
 
-    if (!filiais || filiais.length === 0) {
+    if (!filial || filial.length === 0) {
       console.log("Filial");
       return true;
     }
 
-    if (!pulseiras || pulseiras.length === 0) {
-      console.log("Pulseira");
-      return true;
-    }
+    // if (!pulseiras || pulseiras.length === 0) {
+    //   console.log("Pulseira");
+    //   return true;
+    // }
 
     return false;
   };

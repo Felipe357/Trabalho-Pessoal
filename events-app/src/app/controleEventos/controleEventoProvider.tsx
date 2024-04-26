@@ -1,7 +1,8 @@
 "use client";
 
+import { api } from "@/service/api";
 import { useDisclosure } from "@nextui-org/react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface ControleEventoProviderProps extends React.PropsWithChildren {}
@@ -18,7 +19,6 @@ type DisclosureProps = {
 
 interface ControleEventoContextProps {
   form: any;
-  evento: any[];
   disclosureParticipantesEvento: DisclosureProps;
 }
 
@@ -82,8 +82,8 @@ const evento = [
       start: "22/04/2024",
       end: "27/04/2024",
     },
-    participantes: [2, 1],
-    idadeDependente: "18",
+    tipo_participante: 3,
+    idade_dependente: "18",
     filiais: [
       "a8a1a717-5802-4e17-9590-750f8de66f58",
       "dee0527a-2dc6-45ee-8847-d75174e2179b",
@@ -108,6 +108,8 @@ export const ControleEventoContext = createContext(
 export function ControleEventoProvider({
   children,
 }: ControleEventoProviderProps) {
+  const tabs: string[] = ["list", "participants"];
+
   const form = useForm({
     defaultValues: {
       filter: {
@@ -120,8 +122,27 @@ export function ControleEventoProvider({
       eventoSelect: {
         titulo: "Nenhum Evento Selecionado",
       },
+      tabs: {
+        select: "list",
+        tabs: tabs,
+      },
+      eventos: "",
     },
   });
+
+  const { setValue } = form;
+
+  const buscarEventos = async () => {
+    const response = await api.get("evento/listar");
+
+    if (response.data.status === 200) {
+      setValue("eventos", response.data.eventos);
+    }
+  };
+
+  useEffect(() => {
+    buscarEventos();
+  }, []);
 
   const disclosureParticipantesEvento = useDisclosure({
     id: "disclousure-participantes-evento",
@@ -131,7 +152,6 @@ export function ControleEventoProvider({
     <ControleEventoContext.Provider
       value={{
         form: form,
-        evento: evento,
         disclosureParticipantesEvento: disclosureParticipantesEvento,
       }}
     >

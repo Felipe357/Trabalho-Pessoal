@@ -74,58 +74,35 @@ export const Navigation = ({ open, setOpen }: Props) => {
           </div>
           <div className="flex flex-col gap-4">
             <Button
+              color={
+                pathname === "/" || pathname.includes("formulario")
+                  ? "primary"
+                  : "default"
+              }
               variant="light"
               aria-label="Champagne Party"
-              className={`${pathname === "/" || pathname.includes("formulario")
-                ? `bg-primary`
-                : ""
-                } h-14 gap-6 justify-start`}
+              className="h-14 gap-6 justify-start"
               onClick={() => {
                 router.push("/");
               }}
             >
-              <FontAwesomeIcon
-                icon={faChampagneGlasses}
-                color={
-                  pathname === "/" || pathname.includes("formulario")
-                    ? "#FFF"
-                    : ""
-                }
-                className="h-4"
-              />
-              <span
-                style={{
-                  color:
-                    pathname === "/" || pathname.includes("formulario")
-                      ? "#FFF"
-                      : "#000",
-                }}
-              >
-                Eventos
-              </span>
+              <FontAwesomeIcon icon={faChampagneGlasses} className="h-4" />
+              Eventos
             </Button>
 
             <Button
+              color={
+                pathname.includes("controleEventos") ? "primary" : "default"
+              }
               variant="light"
               aria-label="Champagne Party"
-              className={`h-16 gap-6 justify-start  ${pathname.includes("controleEventos") ? `bg-primary` : ""
-                }`}
+              className="h-16 gap-6 justify-start"
               onClick={() => {
                 router.push("/controleEventos");
               }}
             >
-              <FontAwesomeIcon
-                icon={faCalendarPlus}
-                color={pathname.includes("controleEventos") ? "#FFF" : ""}
-                className="h-4"
-              />
-              <span
-                style={{
-                  color: pathname.includes("controleEventos") ? "#FFF" : "#000",
-                }}
-              >
-                Controle de Eventos
-              </span>
+              <FontAwesomeIcon icon={faCalendarPlus} className="h-4" />
+              Controle de Eventos
             </Button>
           </div>
           <div className="flex flex-col gap-4">
@@ -133,8 +110,9 @@ export const Navigation = ({ open, setOpen }: Props) => {
             <Button
               variant="light"
               aria-label="help"
-              className={`${pathname === "/help" ? `bg-primary` : ""
-                } h-14 gap-6 justify-start`}
+              className={`${
+                pathname === "/help" ? `bg-primary` : ""
+              } h-14 gap-6 justify-start`}
               onClick={() => {
                 router.push("/help");
               }}

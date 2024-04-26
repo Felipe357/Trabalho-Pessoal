@@ -23,7 +23,7 @@ const ControllerInputFile = (params: Props) => {
             classNames={{
               inputWrapper: `min-h-14 ${
                 field.value && "border-primary"
-              } data-[hover=true]:border-[#3E7E28] gap-2`,
+              } data-[hover=true]:border-[#52b032] gap-2`,
               description: "text-red-700",
               label: "font-bold",
             }}

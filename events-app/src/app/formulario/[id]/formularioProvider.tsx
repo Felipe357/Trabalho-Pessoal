@@ -1,6 +1,7 @@
 "use client";
 
 import { type EventoProp, useInicialContext } from "@/provider/provider";
+import { transformJSON } from "@/utils/transformColaborador";
 import { useDisclosure } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -33,11 +34,17 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
 
   const [eventoFilter, setEvento] = useState<EventoProp>();
 
-  const { evento } = useInicialContext();
+  const { form: inicialForm } = useInicialContext();
+
+  const { watch } = inicialForm;
+
+  const { colaborador, eventos } = watch();
 
   useEffect(() => {
     if (params.id) {
-      let filterEvento = evento.filter((e) => e.id === params.id)[0];
+      let filterEvento = eventos.filter(
+        (e: EventoProp) => e.id === params.id
+      )[0];
       if (filterEvento) {
         setEvento(filterEvento);
       } else {
@@ -50,39 +57,7 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
 
   const form = useForm({
     defaultValues: {
-      colaborador: {
-        id: "000014",
-        nome: "Fabiana Barboza Ribeiro",
-        presenca: true,
-        bebida: false,
-        transporte: false,
-        dependentes: [
-          {
-            id: "0321457",
-            nome: "Henrique Augusto Ribeiro Serra",
-            idade: 5,
-            tipo: 1,
-            presenca: false,
-            bebida: false,
-          },
-          {
-            id: "3658749",
-            nome: "Felipe Augusto Ribeiro Serra",
-            idade: 15,
-            tipo: 1,
-            presenca: false,
-            bebida: false,
-          },
-          {
-            id: "2587469",
-            nome: "Samuel Augusto Serra",
-            idade: 41,
-            tipo: 2,
-            presenca: false,
-            bebida: false,
-          },
-        ],
-      },
+      colaborador: transformJSON(colaborador),
     },
   });
 

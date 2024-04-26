@@ -18,7 +18,7 @@ const NovoEventoMain = () => {
       name={"tabs.select"}
       render={({ field }: any) => {
         return (
-          <div className=" w-full h-[90%] p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
+          <div className=" w-full h-[90%] px-6 py-3  border-[#eeeeee] rounded-2xl border-2">
             <Tabs
               aria-label="Options"
               variant="underlined"

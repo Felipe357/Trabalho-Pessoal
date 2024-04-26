@@ -72,12 +72,14 @@ const Evento = ({ eventProps }: EventoProps) => {
       }}
     >
       <div className="w-full">
-        <Image
-          src={foto.foto as string}
-          layout="fill"
-          objectFit="cover"
-          alt="Fundo Evento"
-        />
+        {foto && (
+          <Image
+            src={foto as string}
+            layout="fill"
+            objectFit="cover"
+            alt="Fundo Evento"
+          />
+        )}
       </div>
       <div className="bg-[#00000066] absolute h-full w-full top-0 p-4 md:p-6 flex flex-col justify-between items-start">
         <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mix-blend-screen whitespace-normal">

@@ -27,22 +27,24 @@ const FormularioFilial = () => {
               };
             }),
           }}
-          controllerProps={{ control: control, name: "novoEvento.filiais" }}
+          controllerProps={{ control: control, name: "novoEvento.filial" }}
         />
 
         <span className="text-small font-bold">
-          Filiais Selecionadas - {novoEvento.filiais?.length ?? 0}
+          Filiais Selecionadas - {novoEvento.filial?.length ?? 0}
         </span>
         <div className="flex flex-wrap gap-3 overflow-y-auto">
-          {novoEvento.filiais &&
-            novoEvento.filiais.map((value: string) => (
-              <Chip key={value} color="primary">
-                {
-                  filiais.filter((e: { id: string }) => e.id === value)[0]
-                    .filial
-                }
-              </Chip>
-            ))}
+          {novoEvento.filial &&
+            novoEvento.filial.map((value: string) => {
+              const filialFilter = filiais.filter(
+                (e: { id: string }) => e.id === value
+              )[0];
+              return (
+                <Chip key={value} color="primary">
+                  {filialFilter && filialFilter.filial}
+                </Chip>
+              );
+            })}
         </div>
       </div>
 

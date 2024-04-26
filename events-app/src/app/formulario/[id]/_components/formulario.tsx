@@ -8,7 +8,7 @@ import FormDependente from "./formularioDependente";
 import FormAcompanhante from "./formularioAcompanhante";
 
 const Formulario = () => {
-  const { form, evento } = useFomrularioContext();
+  const { evento, form } = useFomrularioContext();
 
   const { watch } = form;
 
@@ -21,9 +21,9 @@ const Formulario = () => {
 
         <FormColaborador />
 
-        {evento && (
+        {evento && colaborador && (
           <>
-            {evento.participantes === 2 || evento.participantes === 4 ? (
+            {evento.tipo_participante >= 3 ? (
               <>
                 <Divider />
                 <span className="font-bold text-xl">Dependentes</span>
@@ -32,7 +32,7 @@ const Formulario = () => {
               <></>
             )}
 
-            {evento.participantes === 2 || evento.participantes === 4 ? (
+            {evento.tipo_participante >= 3 ? (
               colaborador.dependentes.map((de: any, index: number) => {
                 return (
                   de.tipo === 1 && <FormDependente key={index} index={index} />
@@ -42,17 +42,19 @@ const Formulario = () => {
               <></>
             )}
 
-            {evento.participantes >= 3 && (
-              <>
-                <Divider />
-                <span className="font-bold text-xl">Acompanhante</span>
-              </>
-            )}
+            {evento.tipo_participante === 2 ||
+              (evento.tipo_participante === 4 && (
+                <>
+                  <Divider />
+                  <span className="font-bold text-xl">Acompanhante</span>
+                </>
+              ))}
 
-            {evento.participantes === 3 || evento.participantes === 4 ? (
+            {evento.tipo_participante === 2 ||
+            evento.tipo_participante === 4 ? (
               colaborador.dependentes.map((de: any, index: number) => {
                 return (
-                  de.tipo === 2 && (
+                  de.tipo === 0 && (
                     <FormAcompanhante key={index} index={index} />
                   )
                 );

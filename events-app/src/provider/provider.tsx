@@ -4,95 +4,47 @@ import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { Navigation } from "@/components/navigation";
 
-import Teste from "../assets/download.png";
 import { useForm } from "react-hook-form";
+import { api } from "@/service/api";
 
 export type EventoProp = {
   id: string;
-  campos: [
-    {
+  campos?: {
+    titulo: string;
+    descricao: string;
+    valores: {
       titulo: string;
-      descricao: string;
-      valores: {
-        titulo: string;
-        valor: string;
-      }[];
-    }
-  ];
+      valor: string;
+    }[];
+  }[];
+  pulseira?: {
+    bebida: string;
+    cor: string;
+    idadeInicio: string;
+    idadeFim: string;
+  }[];
   titulo: string;
   descricao?: string;
   data: string;
   horaInicio: string;
   horaFim: string;
-  foto: {
-    name: string;
-    foto: {};
-  };
+  foto?: string;
   formulario: {
     start: string;
     end: string;
   };
-  participantes: number;
+  tipo_participante: number[];
   cep: string;
   endereco: string;
   numero: string;
   bairro: string;
   cidade: string;
   confirmacao: boolean;
-  idadeDependente: number;
-  situacao: number;
+  idade_dependente: number;
+  status: number;
 };
 
-const eventosTeste: EventoProp[] = [
-  {
-    id: "1234",
-    campos: [
-      {
-        titulo: "Camiseta",
-        descricao: "Selecione um tamanho de camiseta",
-        valores: [
-          {
-            titulo: "Tamanho P",
-            valor: "P",
-          },
-          {
-            titulo: "Tamanho M",
-            valor: "M",
-          },
-          {
-            titulo: "Tamanho G",
-            valor: "G",
-          },
-        ],
-      },
-    ],
-    titulo: "Comemoração 65 Anos Terra Viva",
-    descricao: "",
-    data: "30/04/2024",
-    horaInicio: "12:00",
-    horaFim: "18:30",
-    foto: {
-      name: "primavera1.jpg",
-      foto: Teste,
-    },
-    formulario: {
-      start: "22/04/2024",
-      end: "27/04/2024",
-    },
-    participantes: 4,
-    cep: "13833024",
-    endereco: "Rua Luiza Bertassola Milanes",
-    numero: "682",
-    bairro: "Jardim Vila Rica II",
-    cidade: "Santo Antônio de Posse",
-    confirmacao: false,
-    idadeDependente: 18,
-    situacao: 1,
-  },
-];
-
 interface InicialContextProps {
-  evento: EventoProp[];
   form: any;
 }
 
@@ -121,11 +73,37 @@ const AppProvider = ({
 
   const form = useForm();
 
+  const { setValue } = form;
+
+  const buscarColaborador = async () => {
+    const response = await api.get(
+      "colaborador/buscar/2748bec4-cacb-456b-9a37-80f49e0e4ac2"
+    );
+
+    if (response.data.status === 200) {
+      setValue("colaborador", response.data.colaborador);
+    }
+  };
+
+  const buscarEventos = async () => {
+    const response = await api.get(
+      "evento/listar/colaborador/a8a1a717-5802-4e17-9590-750f8de66f58/2748bec4-cacb-456b-9a37-80f49e0e4ac2"
+    );
+
+    if (response.data.status === 200) {
+      setValue("eventos", response.data.eventos);
+    }
+  };
+
+  React.useEffect(() => {
+    buscarColaborador();
+    buscarEventos();
+  }, []);
+
   return (
     <NextUIProvider className="provider">
       <InicialContext.Provider
         value={{
-          evento: eventosTeste,
           form: form,
         }}
       >

@@ -1,64 +1,64 @@
-import type { Config } from "tailwindcss";
+// tailwind.config.js
+import type { Config } from 'tailwindcss'
 
-const { nextui } = require("@nextui-org/react");
+const { nextui } = require('@nextui-org/react')
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-    },
-  },
-  darkMode: "class",
-  plugins: [
-    nextui({
-      themes: {
-        events: {
-          colors: {
-            primary: {
-              50: "#ddfad2",
-              100: "#FFF",
-              200: "#FFF",
-              300: "#FFF",
-              400: "#FFF",
-              500: "#DD62ED",
-              600: "#F182F6",
-              700: "#FCADF9",
-              800: "#FFF",
-              DEFAULT: "#3E7E28",
-              foreground: "#ffffff",
-            },
-            warning: {
-              DEFAULT: "#F45302",
-              foreground: "#ffffff",
-            },
-            danger: {
-              50: "#F00",
-              100: "#FFF",
-              200: "#FFF",
-              300: "#FFF",
-              400: "#FFF",
-              500: "#DD62ED",
-              600: "#F182F6",
-              700: "#FCADF9",
-              800: "#FFF",
-              DEFAULT: "#F00",
-              foreground: "#ffffff",
-            },
-            focus: "#3E7E28",
-          },
+      colors: {
+        primary: {
+          foreground: '#FFFFFF',
+          DEFAULT: '#52b032',
+          50: '#eef7eb',
+          100: '#cbe7c2',
+          200: '#a9d899',
+          300: '#86c870',
+          400: '#63b847',
+          500: '#52b032',
+          600: '#4a9e2d',
+          700: '#397b23',
+          800: '#295819',
+          900: '#19350f'
         },
-      },
-    }),
-  ],
-};
-export default config;
+        secondary: {
+          foreground: '#FFFFFF',
+          DEFAULT: '#f45302',
+          50: '#feeee6',
+          100: '#fccbb3',
+          200: '#faa981',
+          300: '#f7874e',
+          400: '#f5641b',
+          500: '#f45302',
+          600: '#dc4b02',
+          700: '#ab3a01',
+          800: '#7a2a01',
+          900: '#622101'
+        },
+        success: {
+          foreground: '#FFFFFF',
+          DEFAULT: '#006fee',
+          50: '#e6f1fe',
+          100: '#cce3fd',
+          200: '#99c7fb',
+          300: '#66aaf9',
+          400: '#338ef7',
+          500: '#006fee',
+          600: '#005bc4',
+          700: '#004493',
+          800: '#002e62',
+          900: '#001731'
+        },
+        focus: '#52b032'
+      }
+    }
+  },
+  darkMode: 'class',
+  plugins: [nextui()]
+}
+
+export default config

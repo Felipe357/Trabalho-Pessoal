@@ -29,7 +29,7 @@ const ControllerDropdown = (params: Props) => {
             <DropdownTrigger className="hidden sm:flex">
               <Button
                 variant="bordered"
-                className={`w-40 h-14 justify-start border-[#3E7E28]`}
+                className={`w-40 h-14 justify-start border-[#52b032]`}
               >
                 {dropdownMenuProps.label}
               </Button>

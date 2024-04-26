@@ -19,17 +19,21 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePageContext } from "../pageProvider";
 import { parse } from "date-fns";
+import calcularIntervaloFormatado from "@/utils/calcularIntervaloHoras";
 
 const ModalEvento = () => {
   const router = useRouter();
 
-  const { disclousureEvento, disclousureEventoCancelar, form } =
-    usePageContext();
+  const { disclousureEvento, disclousureEventoCancelar } = usePageContext();
+
+  const { form } = usePageContext();
 
   const { isOpen: isOpenEvento, onClose: onCloseEvento } = disclousureEvento;
   const { onOpen: onOpenEventoCancelar } = disclousureEventoCancelar;
 
   const { watch } = form;
+
+  const { evento } = watch();
 
   const {
     id,
@@ -43,9 +47,11 @@ const ModalEvento = () => {
     formulario,
     descricao,
     horaInicio,
-    participantes,
-    idadeDependente,
-  } = watch("evento");
+    horaFim,
+    tipo_participante,
+    idade_dependente,
+    confirmacao,
+  } = evento ?? {};
 
   const dataAtual = new Date();
   const providedDate = formulario
@@ -68,13 +74,15 @@ const ModalEvento = () => {
           <>
             <ModalHeader></ModalHeader>
             <ModalBody className="max-h-sreen overflow-auto">
-              <div className=" overflow-hidden h-64 flex items-center justify-center rounded-2xl">
-                <Image
-                  src={foto.foto}
-                  alt="Fundo Evento"
-                  className="rounded-2xl"
-                />
-              </div>
+              {foto && (
+                <div className=" overflow-hidden h-64 flex items-center justify-center rounded-2xl">
+                  <Image
+                    src={foto.foto}
+                    alt="Fundo Evento"
+                    className="rounded-2xl"
+                  />
+                </div>
+              )}
 
               <div className="flex gap-4 flex-col items-start w-full">
                 <span className="font-bold text-2xl md:text-2xl text-black">
@@ -87,9 +95,9 @@ const ModalEvento = () => {
                   <FontAwesomeIcon
                     icon={faCalendarDays}
                     size="lg"
-                    color="#3E7E28"
+                    color="#52b032"
                   />
-                  <span className="font-medium text-base md:text-lg text-black">
+                  <span className="font-medium text-base  text-black">
                     {data} ás {horaInicio}
                   </span>
                 </div>
@@ -98,9 +106,9 @@ const ModalEvento = () => {
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     size="lg"
-                    color="#3E7E28"
+                    color="#52b032"
                   />
-                  <span className="font-medium text-base md:text-lg text-black">
+                  <span className="font-medium text-base  text-black">
                     {local}
                   </span>
                 </div>
@@ -110,7 +118,7 @@ const ModalEvento = () => {
                     <Divider className="my-1" />
 
                     <div>
-                      <span className="font-medium text-base md:text-lg text-black">
+                      <span className="font-medium text-base  text-black">
                         {descricao}
                       </span>
                     </div>
@@ -125,16 +133,16 @@ const ModalEvento = () => {
 
                 <div className="flex flex-wrap items-center justify-start gap-4 h-20">
                   <div className="flex items-center gap-4">
-                    <FontAwesomeIcon icon={faClock} size="lg" color="#3E7E28" />
-                    <span className="font-medium text-lg md:text-lg text-black">
+                    <FontAwesomeIcon icon={faClock} size="lg" color="#52b032" />
+                    <span className="font-medium text-base text-black">
                       Duração
                       <br />
-                      2h 30m
+                      {calcularIntervaloFormatado(horaInicio, horaFim)}
                     </span>
                   </div>
 
-                  {participantes === 3 ||
-                    (participantes === 4 && (
+                  {tipo_participante === 3 ||
+                    (tipo_participante === 4 && (
                       <>
                         <Divider
                           orientation="vertical"
@@ -145,12 +153,12 @@ const ModalEvento = () => {
                           <FontAwesomeIcon
                             icon={faUsers}
                             size="lg"
-                            color="#3E7E28"
+                            color="#52b032"
                           />
-                          <span className="font-medium text-lg md:text-lg text-black">
+                          <span className="font-medium text-base text-black">
                             Dependentes
                             <br />
-                            até {idadeDependente} anos
+                            até {idade_dependente} anos
                           </span>
                         </div>
                       </>
@@ -159,8 +167,8 @@ const ModalEvento = () => {
                   <Divider orientation="vertical" className="mx-1 h-3/4" />
 
                   <div className="flex items-center gap-4">
-                    <FontAwesomeIcon icon={faBeer} size="xl" color="#3E7E28" />
-                    <span className="font-medium text-lg md:text-lg text-black">
+                    <FontAwesomeIcon icon={faBeer} size="xl" color="#52b032" />
+                    <span className="font-medium text-base text-black">
                       Bebidas para
                       <br />
                       maiores de 18 anos
@@ -171,25 +179,43 @@ const ModalEvento = () => {
             </ModalBody>
             <ModalFooter className="flex flex-row items-end">
               {dataAtual <= providedDate ? (
-                <>
-                  <Button
-                    className="bg-warning text-white"
-                    onPress={onOpenEventoCancelar}
-                  >
-                    Não vou á festa
-                  </Button>
-                  <Button
-                    className="bg-primary text-white h-14 w-32 text-md"
-                    onPress={() => router.push(`/formulario/${id}`)}
-                  >
-                    Vou á festa
-                  </Button>
-                </>
+                confirmacao ? (
+                  <>
+                    <Button
+                      className="bg-warning text-white"
+                      onPress={onOpenEventoCancelar}
+                    >
+                      Não vou mais á festa
+                    </Button>
+                    <Button
+                      className="bg-primary text-white h-14 w-32 text-md"
+                      onPress={() => router.push(`/formulario/${id}`)}
+                    >
+                      Alterar
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      className="bg-warning text-white"
+                      onPress={onOpenEventoCancelar}
+                    >
+                      Não vou á festa
+                    </Button>
+                    <Button
+                      className="bg-primary text-white h-14 w-32 text-md"
+                      onPress={() => router.push(`/formulario/${id}`)}
+                    >
+                      Vou á festa
+                    </Button>
+                  </>
+                )
               ) : (
                 <>
                   <Button
                     className="bg-primary text-white h-14 w-32 text-md"
                     onPress={() => router.push(`/formulario/${id}`)}
+                    isDisabled={confirmacao}
                   >
                     Visualizar
                   </Button>

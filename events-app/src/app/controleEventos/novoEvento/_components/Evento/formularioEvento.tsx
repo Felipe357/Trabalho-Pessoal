@@ -168,7 +168,7 @@ const FormularioEvento = () => {
             }}
             controllerProps={{
               control: control,
-              name: "novoEvento.participantes",
+              name: "novoEvento.tipo_participante",
             }}
           />
 
@@ -182,14 +182,14 @@ const FormularioEvento = () => {
               className: "w-64",
               type: "number",
               isDisabled:
-                novoEvento.participantes &&
-                novoEvento.participantes.some((e: number) => e === 2)
+                novoEvento.tipo_participante &&
+                novoEvento.tipo_participante.some((e: number) => e === 2)
                   ? false
                   : true,
             }}
             controllerProps={{
               control: control,
-              name: "novoEvento.idadeDependente",
+              name: "novoEvento.idade_dependente",
             }}
           />
         </div>

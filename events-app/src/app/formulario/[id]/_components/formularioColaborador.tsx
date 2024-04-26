@@ -7,7 +7,6 @@ import ControllerSelect from "@/components/form/controllerSelect";
 const FormColaborador = () => {
   const { form, evento } = useFomrularioContext();
   const { control, watch } = form;
-
   const { colaborador } = watch();
 
   const dataAtual = new Date();
@@ -23,10 +22,10 @@ const FormColaborador = () => {
       <Input
         isReadOnly
         variant="bordered"
-        defaultValue={colaborador.nome}
+        defaultValue={colaborador?.nome}
         className="w-full max-w-96"
         classNames={{
-          inputWrapper: `h-14 border-[#306B25]`,
+          inputWrapper: `h-14 border-[#52b032]`,
         }}
       />
       <ControllerCheckbox
@@ -47,6 +46,7 @@ const FormColaborador = () => {
 
       <div className="mt-[-25px]">
         {evento &&
+          evento.campos &&
           evento.campos.length > 0 &&
           evento.campos.map((c, index) => {
             return (

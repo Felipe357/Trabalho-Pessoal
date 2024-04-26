@@ -18,20 +18,6 @@ interface Props {
 const ControllerColor = (params: Props) => {
   const { controllerProps } = params;
 
-  const { form } = useNovoEventoContext();
-
-  const { watch } = form;
-
-  const { pulseira } = watch();
-
-  const [color, setColor] = useState(pulseira.color);
-
-  const [isVisible, setVisible] = useState(true);
-
-  useEffect(() => {
-    setColor(pulseira.color);
-  }, [pulseira.color]);
-
   return (
     <Controller
       {...controllerProps}
@@ -42,11 +28,11 @@ const ControllerColor = (params: Props) => {
             <PopoverTrigger>
               <Button
                 variant="bordered"
-                className="h-14 mt-[-4px] data-[hover=true]:border-[#3E7E28] "
+                className="h-14 mt-[-4px] data-[hover=true]:border-[#52b032] "
                 endContent={
                   <div
                     className={`h-6 w-6 rounded-md`}
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: field.value ?? "#EEE" }}
                   ></div>
                 }
               >

@@ -10,11 +10,12 @@ type Props = {
 const FormDependente = (params: Props) => {
   const { index } = params;
   const { form, evento } = useFomrularioContext();
+
   const { control, watch } = form;
 
   const { colaborador } = watch();
 
-  const { nome, idade } = colaborador.dependentes[index];
+  const dependente = colaborador?.dependentes[index];
 
   const dataAtual = new Date();
 
@@ -29,11 +30,11 @@ const FormDependente = (params: Props) => {
       <Input
         isReadOnly
         variant="bordered"
-        defaultValue={nome}
+        defaultValue={dependente?.nome}
         className="w-full max-w-96"
         classNames={{
-          inputWrapper: "h-14 border-[#306B25] ",
-          mainWrapper: "hover:border-[#306B25]",
+          inputWrapper: "h-14 border-[#52b032] ",
+          mainWrapper: "hover:border-[#52b032]",
         }}
       />
       <ControllerCheckbox
@@ -50,7 +51,7 @@ const FormDependente = (params: Props) => {
       <ControllerCheckbox
         checkBoxProps={{
           title: "Consumo de bebida alcoolica?",
-          isDisabled: idade < 18 ?? disable,
+          isDisabled: (dependente && dependente?.idade < 18) ?? disable,
         }}
         controllerProps={{
           control: control,

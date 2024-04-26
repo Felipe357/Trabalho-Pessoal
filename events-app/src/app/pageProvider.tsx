@@ -1,6 +1,6 @@
 "use client";
 
-import { EventoProp, useInicialContext } from "@/provider/provider";
+import { useInicialContext } from "@/provider/provider";
 import { useDisclosure } from "@nextui-org/react";
 import { createContext, useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,6 @@ type DisclosureProps = {
 
 interface PageContextProps {
   form: any;
-  evento: EventoProp[];
   disclousureEvento: DisclosureProps;
   disclousureEventoCancelar: DisclosureProps;
 }
@@ -27,35 +26,7 @@ interface PageContextProps {
 export const PageContext = createContext({} as PageContextProps);
 
 export function PageProvider({ children }: PageProviderProps) {
-  const form = useForm({
-    defaultValues: {
-      evento: {},
-      colaborador: {
-        id: "000014",
-        nome: "Fabiana Barboza Ribeiro",
-        dependentes: [
-          {
-            id: "0321457",
-            nome: "Henrique Augusto Ribeiro Serra",
-            idade: 5,
-            tipo: 1,
-          },
-          {
-            id: "3658749",
-            nome: "Felipe Augusto Ribeiro Serra",
-            idade: 15,
-            tipo: 1,
-          },
-          {
-            id: "2587469",
-            nome: "Samuel Augusto Serra",
-            idade: 41,
-            tipo: 2,
-          },
-        ],
-      },
-    },
-  });
+  const form = useForm();
 
   const disclosureEvento = useDisclosure({
     id: "disclosure-evento",
@@ -65,13 +36,10 @@ export function PageProvider({ children }: PageProviderProps) {
     id: "disclousure-evento-cancelar",
   });
 
-  const { evento } = useInicialContext();
-
   return (
     <PageContext.Provider
       value={{
         form: form,
-        evento: evento,
         disclousureEvento: disclosureEvento,
         disclousureEventoCancelar: disclousureEventoCancelar,
       }}
