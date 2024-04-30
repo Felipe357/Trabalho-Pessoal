@@ -1,21 +1,21 @@
 import { Input } from "@nextui-org/react";
-import { useFomrularioContext } from "../formularioProvider";
+import { useFormularioContext } from "../formularioProvider";
 import ControllerCheckbox from "@/components/form/controllerCheckbox";
-import { parse } from "date-fns";
+import { differenceInYears, parse } from "date-fns";
 
 type Props = {
-  index: number;
+  dependente: any;
 };
 
 const FormDependente = (params: Props) => {
-  const { index } = params;
-  const { form, evento } = useFomrularioContext();
+  const { dependente } = params;
+  const { form, evento } = useFormularioContext();
 
   const { control, watch } = form;
 
-  const { colaborador } = watch();
+  const { participantes } = watch();
 
-  const dependente = colaborador?.dependentes[index];
+  const index = participantes.indexOf(dependente);
 
   const dataAtual = new Date();
 
@@ -30,7 +30,7 @@ const FormDependente = (params: Props) => {
       <Input
         isReadOnly
         variant="bordered"
-        defaultValue={dependente?.nome}
+        value={dependente?.dependente.nome_completo}
         className="w-full max-w-96"
         classNames={{
           inputWrapper: "h-14 border-[#52b032] ",
@@ -41,21 +41,29 @@ const FormDependente = (params: Props) => {
         checkBoxProps={{
           title: "Vai á festa?",
           isDisabled: disable,
+          defaultSelected: dependente.participacao,
         }}
         controllerProps={{
           control: control,
-          name: `colaborador.dependentes.${index}.presenca`,
+          name: `participantes.${index}.participacao`,
         }}
       />
 
       <ControllerCheckbox
         checkBoxProps={{
           title: "Consumo de bebida alcoolica?",
-          isDisabled: (dependente && dependente?.idade < 18) ?? disable,
+          isDisabled:
+            (dependente &&
+              differenceInYears(
+                dataAtual,
+                dependente.dependente.data_nascimento
+              ) < 18) ??
+            disable,
+          defaultSelected: dependente.bebida_alcoolica,
         }}
         controllerProps={{
           control: control,
-          name: `colaborador.dependentes.${index}.bebida`,
+          name: `participantes.${index}.bebida_alcoolica`,
         }}
       />
     </div>

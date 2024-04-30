@@ -1,13 +1,17 @@
 import { Input, SelectItem } from "@nextui-org/react";
-import { useFomrularioContext } from "../formularioProvider";
+import { useFormularioContext } from "../formularioProvider";
 import ControllerCheckbox from "@/components/form/controllerCheckbox";
 import { parse } from "date-fns";
 import ControllerSelect from "@/components/form/controllerSelect";
 
 const FormColaborador = () => {
-  const { form, evento } = useFomrularioContext();
+  const { form, evento } = useFormularioContext();
   const { control, watch } = form;
-  const { colaborador } = watch();
+  const { participantes } = watch();
+
+  const colaborador = participantes.filter((e: any) => e.colaborador)[0];
+
+  const index = participantes.indexOf(colaborador);
 
   const dataAtual = new Date();
 
@@ -17,12 +21,12 @@ const FormColaborador = () => {
 
   const disable = dataAtual > providedDate;
 
-  return (
+  return colaborador ? (
     <div className="flex flex-wrap gap-6 items-start">
       <Input
         isReadOnly
         variant="bordered"
-        defaultValue={colaborador?.nome}
+        value={colaborador.colaborador.nome_completo}
         className="w-full max-w-96"
         classNames={{
           inputWrapper: `h-14 border-[#52b032]`,
@@ -33,7 +37,10 @@ const FormColaborador = () => {
           title: "Consumo de bebida alcoolica?",
           isDisabled: disable,
         }}
-        controllerProps={{ control: control, name: "colaborador.bebida" }}
+        controllerProps={{
+          control: control,
+          name: `participantes.${index}.bebida_alcoolica`,
+        }}
       />
 
       <ControllerCheckbox
@@ -41,17 +48,20 @@ const FormColaborador = () => {
           title: "Vou com o ônibus da empresa?",
           isDisabled: disable,
         }}
-        controllerProps={{ control: control, name: "colaborador.transporte" }}
+        controllerProps={{
+          control: control,
+          name: `participantes.${index}.transporte`,
+        }}
       />
 
       <div className="mt-[-25px]">
         {evento &&
           evento.campos &&
           evento.campos.length > 0 &&
-          evento.campos.map((c, index) => {
+          evento.campos.map((c, indexMap) => {
             return (
               <ControllerSelect
-                key={index}
+                key={indexMap}
                 selectProps={{
                   label: c.titulo,
                   labelPlacement: "outside",
@@ -67,13 +77,15 @@ const FormColaborador = () => {
                 }}
                 controllerProps={{
                   control: control,
-                  name: `colaborador.campos.${index}`,
+                  name: `participantes.${index}.campos.${indexMap}`,
                 }}
               />
             );
           })}
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 

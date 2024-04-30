@@ -82,7 +82,7 @@ const Evento = ({ eventProps }: EventoProps) => {
         )}
       </div>
       <div className="bg-[#00000066] absolute h-full w-full top-0 p-4 md:p-6 flex flex-col justify-between items-start">
-        <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mix-blend-screen whitespace-normal">
+        <span className="text-2xl md:text-3xl font-semibold text-white mix-blend-screen whitespace-normal">
           {titulo}
         </span>
         <div className="w-full flex flex-wrap gap-y-2 justify-between items-end">

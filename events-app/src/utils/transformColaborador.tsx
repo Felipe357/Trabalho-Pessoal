@@ -1,62 +1,87 @@
-export interface Dependente {
+interface Dependente {
+  tipo: number;
+  nome_completo: string;
   colaborador_id: string;
   data_nascimento: string;
   id: string;
-  nome_completo: string;
-  tipo: number;
 }
 
-export interface Colaborador {
-  id: string;
+interface Colaborador {
+  nome_completo: string;
   cracha: string;
+  id: string;
+}
+
+interface Acompanhante {
   nome_completo: string;
-  autorizacao: number;
-  status: number;
-  filial_id: string;
-  dependente: Dependente[];
+  colaborador_id: string;
 }
 
-export interface TransformedDependente {
-  id: string;
-  nome: string;
-  idade: number;
-  tipo: number;
-  presenca: boolean;
-  bebida: boolean;
+export interface Registro {
+  bebida_alcoolica: number;
+  participacao: number;
+  transporte: number;
+  colaborador: Colaborador | null;
+  dependente: Dependente | null;
+  acompanhante: Acompanhante | null;
 }
 
-export interface TransformedColaborador {
-  id: string;
-  nome: string;
-  presenca: boolean;
-  bebida: boolean;
-  transporte: boolean;
-  dependentes: TransformedDependente[];
-}
-
-export function transformJSON(json: Colaborador): TransformedColaborador {
-  const transformDependente = (dep: Dependente): TransformedDependente => {
-    const hoje = new Date();
-    const dataNascimento = new Date(dep.data_nascimento);
-    const idade = hoje.getFullYear() - dataNascimento.getFullYear();
-    return {
-      id: dep.id,
-      nome: dep.nome_completo,
-      idade,
-      tipo: dep.tipo,
-      presenca: false,
-      bebida: false,
+export function transformJSON(json: any): Registro[] {
+  const registros: Registro[] = [];
+  if (json && json.dependente) {
+    const { nome_completo, cracha, id, dependente } = json;
+    const colaboradorRegistro: Registro = {
+      bebida_alcoolica: 0,
+      participacao: 1,
+      transporte: 0,
+      colaborador: {
+        nome_completo: nome_completo,
+        cracha: cracha,
+        id: id,
+      },
+      dependente: null,
+      acompanhante: null,
     };
-  };
 
-  const transformado: TransformedColaborador = {
-    id: json.cracha,
-    nome: json.nome_completo,
-    presenca: true,
-    bebida: false,
-    transporte: false,
-    dependentes: json.dependente.map(transformDependente),
-  };
+    registros.push(colaboradorRegistro);
 
-  return transformado;
+    dependente.forEach((dep: any) => {
+      const dependenteRegistro: Registro = {
+        bebida_alcoolica: 0,
+        participacao: 1,
+        transporte: 0,
+        colaborador: null,
+        dependente: {
+          tipo: dep.tipo,
+          nome_completo: dep.nome_completo,
+          colaborador_id: dep.colaborador_id,
+          data_nascimento: dep.data_nascimento,
+          id: dep.id,
+        },
+        acompanhante: null,
+      };
+
+      registros.push(dependenteRegistro);
+    });
+
+    const hasConjuge = dependente.filter((e: any) => e.tipo === 1).length === 0;
+
+    if (hasConjuge) {
+      const acompanhanteRegistro: Registro = {
+        bebida_alcoolica: 0,
+        participacao: 0,
+        transporte: 0,
+        colaborador: null,
+        dependente: null,
+        acompanhante: {
+          nome_completo: "",
+          colaborador_id: id,
+        },
+      };
+
+      registros.push(acompanhanteRegistro);
+    }
+  }
+
+  return registros;
 }

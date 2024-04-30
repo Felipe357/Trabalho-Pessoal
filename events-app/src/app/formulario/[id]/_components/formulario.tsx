@@ -1,18 +1,33 @@
 "use client";
 
 import React from "react";
-import { useFomrularioContext } from "../formularioProvider";
+import { useFormularioContext } from "../formularioProvider";
 import { Divider } from "@nextui-org/react";
 import FormColaborador from "./formularioColaborador";
 import FormDependente from "./formularioDependente";
 import FormAcompanhante from "./formularioAcompanhante";
 
 const Formulario = () => {
-  const { evento, form } = useFomrularioContext();
+  const { evento, form } = useFormularioContext();
 
   const { watch } = form;
 
-  const { colaborador } = watch();
+  const { participantes } = watch();
+
+  const tipo = evento?.tipo_participante as unknown as number;
+
+  const dependentes = participantes.filter(
+    (e: any) => e.dependente && e.dependente.tipo === 1
+  );
+
+  const dependenteAcompanhante = participantes.filter(
+    (e: any) => e.dependente && e.dependente.tipo === 0
+  );
+
+  const acompanhantes =
+    dependenteAcompanhante.length > 0
+      ? dependenteAcompanhante
+      : participantes.filter((e: any) => e.acompanhante !== null);
 
   return (
     <div className=" w-full p-6 md:p-10 border-[#eeeeee] rounded-2xl border-2">
@@ -21,9 +36,9 @@ const Formulario = () => {
 
         <FormColaborador />
 
-        {evento && colaborador && (
+        {evento && participantes && (
           <>
-            {evento.tipo_participante >= 3 ? (
+            {tipo >= 3 && dependentes.length > 0 ? (
               <>
                 <Divider />
                 <span className="font-bold text-xl">Dependentes</span>
@@ -32,33 +47,31 @@ const Formulario = () => {
               <></>
             )}
 
-            {evento.tipo_participante >= 3 ? (
-              colaborador.dependentes.map((de: any, index: number) => {
-                return (
-                  de.tipo === 1 && <FormDependente key={index} index={index} />
-                );
+            {tipo >= 3 ? (
+              dependentes.map((de: any, index: number) => {
+                return <FormDependente key={index} dependente={de} />;
               })
             ) : (
               <></>
             )}
 
-            {evento.tipo_participante === 2 ||
-              (evento.tipo_participante === 4 && (
-                <>
-                  <Divider />
-                  <span className="font-bold text-xl">Acompanhante</span>
-                </>
-              ))}
+            {tipo === 2 || tipo === 4 ? (
+              <>
+                <Divider />
+                <span className="font-bold text-xl">Acompanhante</span>
+              </>
+            ) : (
+              <></>
+            )}
 
-            {evento.tipo_participante === 2 ||
-            evento.tipo_participante === 4 ? (
-              colaborador.dependentes.map((de: any, index: number) => {
-                return (
-                  de.tipo === 0 && (
-                    <FormAcompanhante key={index} index={index} />
-                  )
-                );
-              })
+            {tipo === 2 || tipo === 4 ? (
+              acompanhantes.length > 0 ? (
+                acompanhantes.map((de: any, index: number) => {
+                  return <FormAcompanhante key={index} dependente={de} />;
+                })
+              ) : (
+                <FormAcompanhante />
+              )
             ) : (
               <></>
             )}

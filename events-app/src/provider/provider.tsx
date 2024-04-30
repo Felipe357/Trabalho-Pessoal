@@ -10,9 +10,11 @@ import { api } from "@/service/api";
 export type EventoProp = {
   id: string;
   campos?: {
+    id: string;
     titulo: string;
     descricao: string;
     valores: {
+      id: string;
       titulo: string;
       valor: string;
     }[];
@@ -73,32 +75,41 @@ const AppProvider = ({
 
   const form = useForm();
 
-  const { setValue } = form;
+  const { setValue, watch } = form;
 
   const buscarColaborador = async () => {
-    const response = await api.get(
-      "colaborador/buscar/2748bec4-cacb-456b-9a37-80f49e0e4ac2"
-    );
+    try {
+      const response = await api.get(
+        "colaborador/buscar/2748bec4-cacb-456b-9a37-80f49e0e4ac2"
+      );
 
-    if (response.data.status === 200) {
-      setValue("colaborador", response.data.colaborador);
-    }
+      if (response.data.status === 200) {
+        setValue("colaborador", response.data.colaborador);
+      }
+    } catch (error) {}
   };
 
   const buscarEventos = async () => {
-    const response = await api.get(
-      "evento/listar/colaborador/a8a1a717-5802-4e17-9590-750f8de66f58/2748bec4-cacb-456b-9a37-80f49e0e4ac2"
-    );
+    if (watch("colaborador")) {
+      try {
+        const response = await api.get(
+          `evento/listar/colaborador/${watch("colaborador").id}`
+        );
 
-    if (response.data.status === 200) {
-      setValue("eventos", response.data.eventos);
+        if (response.data.status === 200) {
+          setValue("eventos", response.data.eventos);
+        }
+      } catch (error) {}
     }
   };
 
   React.useEffect(() => {
-    buscarColaborador();
+    if (!watch("colaborador")) {
+      buscarColaborador();
+    }
+
     buscarEventos();
-  }, []);
+  }, [watch("colaborador"), watch("reload")]);
 
   return (
     <NextUIProvider className="provider">
