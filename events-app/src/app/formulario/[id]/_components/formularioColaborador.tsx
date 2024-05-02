@@ -56,9 +56,9 @@ const FormColaborador = () => {
 
       <div className="mt-[-25px]">
         {evento &&
-          evento.campos &&
-          evento.campos.length > 0 &&
-          evento.campos.map((c, indexMap) => {
+          evento.campo &&
+          evento.campo.length > 0 &&
+          evento.campo.map((c, indexMap) => {
             return (
               <ControllerSelect
                 key={indexMap}

@@ -27,15 +27,15 @@ const FormularioFilial = () => {
               };
             }),
           }}
-          controllerProps={{ control: control, name: "novoEvento.filial" }}
+          controllerProps={{ control: control, name: "novoEvento.filiais" }}
         />
 
         <span className="text-small font-bold">
-          Filiais Selecionadas - {novoEvento.filial?.length ?? 0}
+          Filiais Selecionadas - {novoEvento.filiais?.length ?? 0}
         </span>
         <div className="flex flex-wrap gap-3 overflow-y-auto">
-          {novoEvento.filial &&
-            novoEvento.filial.map((value: string) => {
+          {novoEvento.filiais &&
+            novoEvento.filiais.map((value: string) => {
               const filialFilter = filiais.filter(
                 (e: { id: string }) => e.id === value
               )[0];

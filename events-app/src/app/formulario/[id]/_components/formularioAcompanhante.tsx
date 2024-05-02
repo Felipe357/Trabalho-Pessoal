@@ -16,7 +16,7 @@ const FormAcompanhante = ({ dependente }: Props) => {
   const index = participantes.indexOf(dependente);
 
   const tipoParticipante = dependente
-    ? dependente.dependente.tipo === 0
+    ? dependente.dependente && dependente.dependente.tipo === 0
       ? "dependente"
       : "acompanhante"
     : "acompanhante";

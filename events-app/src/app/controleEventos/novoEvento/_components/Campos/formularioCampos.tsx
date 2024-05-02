@@ -13,15 +13,15 @@ const FormularioCampos = () => {
 
   const { control, watch, setValue, handleSubmit } = form;
 
-  const { novoEvento, campo } = watch();
+  const { novoEvento, campo: CampoForm } = watch();
 
-  const { campos } = novoEvento;
+  const { campo } = novoEvento;
 
-  const { valores, titulo, descricao, tituloValor, valor } = campo;
+  const { valores, titulo, descricao, tituloValor, valor } = CampoForm;
 
   const onSubmit = (data: any) => {
-    setValue("novoEvento.campos", [
-      ...campos,
+    setValue("novoEvento.campo", [
+      ...campo,
       {
         titulo: titulo,
         descricao: descricao,
@@ -152,9 +152,9 @@ const FormularioCampos = () => {
           </div>
         </form>
 
-        {campos.length > 0 && (
+        {campo.length > 0 && (
           <Accordion variant="bordered">
-            {campos.map(
+            {campo.map(
               (
                 p: {
                   titulo: string;
@@ -175,8 +175,8 @@ const FormularioCampos = () => {
                         color="danger"
                         onPress={() => {
                           setValue(
-                            "novoEvento.campos",
-                            campos.filter(
+                            "novoEvento.campo",
+                            campo.filter(
                               (e: any, indexF: number) => indexF !== index
                             )
                           );
@@ -198,9 +198,9 @@ const FormularioCampos = () => {
                             color="primary"
                             onClose={() => {
                               setValue(
-                                `novoEvento.campos.${index}.valores`,
+                                `novoEvento.campo.${index}.valores`,
                                 watch(
-                                  `novoEvento.campos.${index}.valores`
+                                  `novoEvento.campo.${index}.valores`
                                 ).filter(
                                   (e: any, indexF: number) => indexF !== index
                                 )

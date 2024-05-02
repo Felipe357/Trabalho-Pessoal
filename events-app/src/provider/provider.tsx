@@ -9,7 +9,7 @@ import { api } from "@/service/api";
 
 export type EventoProp = {
   id: string;
-  campos?: {
+  campo?: {
     id: string;
     titulo: string;
     descricao: string;
@@ -80,13 +80,13 @@ const AppProvider = ({
   const buscarColaborador = async () => {
     try {
       const response = await api.get(
-        "colaborador/buscar/2748bec4-cacb-456b-9a37-80f49e0e4ac2"
+        "colaborador/buscar/0eade1c9-5e37-4943-bb77-c7fe55a6c2da"
       );
 
       if (response.data.status === 200) {
         setValue("colaborador", response.data.colaborador);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const buscarEventos = async () => {
@@ -99,7 +99,7 @@ const AppProvider = ({
         if (response.data.status === 200) {
           setValue("eventos", response.data.eventos);
         }
-      } catch (error) {}
+      } catch (error) { }
     }
   };
 

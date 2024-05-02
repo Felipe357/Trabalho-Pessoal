@@ -33,8 +33,7 @@ const NovoEventoFooter = () => {
     numero,
     bairro,
     cidade,
-    filial,
-    pulseiras,
+    filiais,
   } = novoEvento;
 
   const setProxPage = (): string => {
@@ -47,7 +46,6 @@ const NovoEventoFooter = () => {
 
   const enviarEvento = () => {
     if (!validarForm()) {
-      console.log(novoEvento);
       onOpen();
     } else {
       onOpenErro();
@@ -73,12 +71,12 @@ const NovoEventoFooter = () => {
       return true;
     }
 
-    if (!filial || filial.length === 0) {
+    if (!filiais || filiais.length === 0) {
       console.log("Filial");
       return true;
     }
 
-    // if (!pulseiras || pulseiras.length === 0) {
+    // if (!pulseira || pulseira.length === 0) {
     //   console.log("Pulseira");
     //   return true;
     // }

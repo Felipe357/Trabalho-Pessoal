@@ -38,8 +38,8 @@ const ModalAceitar = () => {
     let resultados: { id: string; titulo: string; valor: string }[] = [];
 
     evento &&
-      evento.campos &&
-      evento.campos.forEach((obj) => {
+      evento.campo &&
+      evento.campo.forEach((obj) => {
         valorParams.forEach((valorBuscado: string) => {
           obj.valores.forEach((valor) => {
             if (valor.valor === valorBuscado) {
@@ -69,9 +69,10 @@ const ModalAceitar = () => {
             if (
               dependenteAcompanhante &&
               e.dependente.nome_completo !==
-                dependenteAcompanhante.nome_completo
+              dependenteAcompanhante.nome_completo
             ) {
               const nome = e.dependente.nome_completo;
+              const id = e.dependente.colaborador_id
 
               delete e.dependente;
 
@@ -79,6 +80,7 @@ const ModalAceitar = () => {
                 ...e,
                 acompanhante: {
                   nome_completo: nome,
+                  colaborador_id: id
                 },
                 bebida_alcoolica: e.bebida_alcoolica ? 1 : 0,
                 transporte: e.transporte ? 1 : 0,
@@ -112,9 +114,6 @@ const ModalAceitar = () => {
           );
         }),
     };
-
-    console.log(request);
-
     try {
       const response = await api.post("participante/criar", request);
 
@@ -145,7 +144,8 @@ const ModalAceitar = () => {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader></ModalHeader>
+            <ModalHeader>
+            </ModalHeader>
 
             {evento && (
               <ModalBody className=" overflow-y-auto text-center gap-10">

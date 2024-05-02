@@ -39,7 +39,7 @@ const FormularioPulseira = () => {
     setValue("pulseiraForm", {
       idadeInicio: "",
       idadeFim: "",
-      color: "#3E7E28",
+      cor: "#3E7E28",
       bebida: false,
     });
   };
@@ -108,7 +108,7 @@ const FormularioPulseira = () => {
             <span className="font-bold text-sm">Cor</span>
 
             <ControllerColor
-              controllerProps={{ control: control, name: "pulseiraForm.color" }}
+              controllerProps={{ control: control, name: "pulseiraForm.cor" }}
             />
           </div>
 
@@ -161,7 +161,7 @@ const FormularioPulseira = () => {
                   p: {
                     idadeInicio: string;
                     idadeFim: string;
-                    color: string;
+                    cor: string;
                     bebida: boolean;
                   },
                   index: number
@@ -185,7 +185,7 @@ const FormularioPulseira = () => {
                       <TableCell>
                         <div
                           className={`h-6 w-6 rounded-md`}
-                          style={{ backgroundColor: p.color }}
+                          style={{ backgroundColor: p.cor }}
                         ></div>
                       </TableCell>
                       <TableCell>

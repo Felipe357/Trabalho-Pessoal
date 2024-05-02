@@ -9,9 +9,13 @@ import {
 import { useNovoEventoContext } from "../novoEventoProvider";
 
 const ModalCadastroEvento = () => {
-  const { disclousureNovoEvento } = useNovoEventoContext();
+  const { disclousureNovoEvento, form } = useNovoEventoContext();
 
   const { isOpen, onClose } = disclousureNovoEvento;
+
+  const { watch } = form
+
+  const { novoEvento } = watch()
 
   return (
     <Modal
@@ -26,7 +30,9 @@ const ModalCadastroEvento = () => {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader></ModalHeader>
+            <ModalHeader>
+              {JSON.stringify(novoEvento, null, 2)}
+            </ModalHeader>
             <ModalBody className=" overflow-y-auto text-center gap-10">
               <span className="font-bold text-2xl md:text-xl text-black">
                 Confirmar cadastro do novo evento?
