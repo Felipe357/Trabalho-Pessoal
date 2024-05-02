@@ -50,8 +50,8 @@ const OpcaoesEvento = () => {
             description
             onPress={() => {
               setValue("eventoSelect", {
-                pulseiras: [],
-                campos: [],
+                pulseira: [],
+                campo: [],
               });
               router.push(`/controleEventos/novoEvento`);
             }}

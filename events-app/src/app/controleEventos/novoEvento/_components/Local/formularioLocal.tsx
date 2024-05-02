@@ -24,18 +24,22 @@ const FormularioLocal = () => {
 
     // Faça a requisição para a API ViaCEP
     const { data } = await api.get(
-      `https://viacep.com.br/ws/${cepNumerico}/json/`
+      `https://cep.awesomeapi.com.br/json/${cepNumerico}`
     );
 
     if (!data.erro) {
       // Preencha os campos de endereço, bairro e cidade com os dados retornados
-      setValue("novoEvento.endereco", data.logradouro);
-      setValue("novoEvento.bairro", data.bairro);
-      setValue("novoEvento.cidade", data.localidade);
+      setValue("novoEvento.endereco", data.address);
+      setValue("novoEvento.bairro", data.district);
+      setValue("novoEvento.cidade", data.city);
+      setValue("novoEvento.latitude", data.lat);
+      setValue("novoEvento.longitude", data.lng);
     } else {
       setValue("novoEvento.endereco", "");
       setValue("novoEvento.bairro", "");
       setValue("novoEvento.cidade", "");
+      setValue("novoEvento.latitude", "");
+      setValue("novoEvento.longitude", "");
     }
   };
 

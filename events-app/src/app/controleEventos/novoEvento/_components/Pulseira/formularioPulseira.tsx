@@ -74,6 +74,7 @@ const FormularioPulseira = () => {
               labelPlacement: "outside",
               className: "w-60 min-w-full md:min-w-40",
               type: "number",
+              min: 0,
               isInvalid:
                 idadeInicio.trim() !== "" &&
                 idadeFim.trim() !== "" &&

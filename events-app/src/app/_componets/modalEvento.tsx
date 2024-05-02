@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { usePageContext } from "../pageProvider";
 import { parse } from "date-fns";
 import calcularIntervaloFormatado from "@/utils/calcularIntervaloHoras";
+import Link from "next/link";
 
 const ModalEvento = () => {
   const router = useRouter();
@@ -44,6 +45,8 @@ const ModalEvento = () => {
     numero,
     bairro,
     cidade,
+    longitude,
+    latitude,
     formulario,
     descricao,
     horaInicio,
@@ -102,16 +105,34 @@ const ModalEvento = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <FontAwesomeIcon
-                    icon={faLocationDot}
-                    size="lg"
-                    color="#52b032"
-                  />
-                  <span className="font-medium text-base  text-black">
-                    {local}
-                  </span>
-                </div>
+                {longitude && latitude ? (
+                  <Link
+                    href={`https://maps.google.com/?q=${latitude},${longitude}`}
+                    className="flex items-center gap-3 underline"
+                    rel="maps"
+                    target="_blank"
+                  >
+                    <FontAwesomeIcon
+                      icon={faLocationDot}
+                      size="lg"
+                      color="#52b032"
+                    />
+                    <span className="font-medium text-base  text-black">
+                      {local}
+                    </span>
+                  </Link>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <FontAwesomeIcon
+                      icon={faLocationDot}
+                      size="lg"
+                      color="#52b032"
+                    />
+                    <span className="font-medium text-base  text-black">
+                      {local}
+                    </span>
+                  </div>
+                )}
 
                 {descricao && (
                   <>

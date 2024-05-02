@@ -22,6 +22,8 @@ interface NovoEventoContextProps {
   form: any;
   disclousureNovoEvento: DisclosureProps;
   disclosureErroEvento: DisclosureProps;
+  disclousureRequicisaoErro: DisclosureProps;
+  disclousureRequicisaoSucesso: DisclosureProps;
 }
 
 export interface HorasProps {
@@ -74,7 +76,7 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
     defaultValues: {
       novoEvento: eventoSelect ?? {
         pulseira: [],
-        campos: [],
+        campo: [],
       },
       horas: {
         keys: horas,
@@ -89,7 +91,7 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
       pulseiraForm: {
         idadeInicio: "",
         idadeFim: "",
-        color: "#52b032",
+        cor: "#52b032",
         bebida: false,
       },
       campo: {
@@ -124,12 +126,22 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
     id: "disclosure-erro-novo-evento",
   });
 
+  const disclousureRequicisaoErro = useDisclosure({
+    id: "disclosure-requcisao-novo-evento",
+  });
+
+  const disclousureRequicisaoSucesso = useDisclosure({
+    id: "disclosure-requcisao-erro-novo-evento",
+  });
+
   return (
     <NovoEventoContext.Provider
       value={{
         form: form,
         disclousureNovoEvento: disclosureNovoEvento,
         disclosureErroEvento: disclosureErroEvento,
+        disclousureRequicisaoErro: disclousureRequicisaoErro,
+        disclousureRequicisaoSucesso: disclousureRequicisaoSucesso,
       }}
     >
       {children}

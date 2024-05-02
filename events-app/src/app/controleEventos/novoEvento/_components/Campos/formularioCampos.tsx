@@ -3,7 +3,6 @@ import ControllerInput from "@/components/form/controllerInput";
 
 import React, { useEffect, useState } from "react";
 import NovoEventoFooter from "../novoEventoFooter";
-import ControllerColor from "@/components/form/controllerColor";
 import { Accordion, AccordionItem, Button, Chip } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";

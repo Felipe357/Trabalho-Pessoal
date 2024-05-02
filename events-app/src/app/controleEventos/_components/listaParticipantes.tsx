@@ -15,7 +15,7 @@ import ControllerInput from "@/components/form/controllerInput";
 import ControllerDropdown from "@/components/form/controllerDropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const ListaParticipantes = () => {
   const { form } = useControleEventoContext();
@@ -26,90 +26,72 @@ const ListaParticipantes = () => {
 
   const { participante } = eventoSelect;
 
-  const [page, setPage] = useState(1);
+  const allParticipants = participante;
 
+  const [filteredParticipants, setFilteredParticipants] =
+    useState(participante);
+
+  const [page, setPage] = useState(1);
   const rowsPerPage = 12;
 
-  const [pages, setPages] = useState(
-    Math.ceil(participante.length / rowsPerPage)
-  );
+  useEffect(() => {
+    applyFilters();
+  }, [
+    participante,
+    watch("filter.nome"),
+    watch("filter.tipoParticipante"),
+    watch("filter.participacao"),
+    watch("filter.bebida"),
+    watch("filter.transporte"),
+  ]);
 
-  const items = useMemo(() => {
+  const applyFilters = () => {
+    const filtered = allParticipants.filter((e: any) => {
+      const convidado = {
+        nome:
+          (e.colaborador && e.colaborador.nome_completo) ??
+          (e.dependente && e.dependente.nome_completo) ??
+          (e.acompanhante && e.acompanhante.nome_completo),
+        tipo: e.colaborador ? 1 : e.dependente ? 2 : 3,
+        transporte: e.transporte,
+        bebida: e.bebida_alcoolica,
+        participacao: e.participacao,
+      };
+      if (
+        (watch("filter.nome") === "" ||
+          convidado.nome
+            .toUpperCase()
+            .includes(watch("filter.nome").toUpperCase())) &&
+        (watch("filter.tipoParticipante") === "all" ||
+          Array.from(watch("filter.tipoParticipante")).includes(
+            String(convidado.tipo)
+          )) &&
+        (watch("filter.participacao") === "all" ||
+          Array.from(watch("filter.participacao")).includes(
+            String(convidado.participacao)
+          )) &&
+        (watch("filter.bebida") === "all" ||
+          Array.from(watch("filter.bebida")).includes(
+            String(convidado.bebida)
+          )) &&
+        (watch("filter.transporte") === "all" ||
+          Array.from(watch("filter.transporte")).includes(
+            String(convidado.transporte)
+          ))
+      ) {
+        return true;
+      }
+      return false;
+    });
+    setFilteredParticipants(filtered);
+  };
+
+  const pageCount = Math.ceil(filteredParticipants.length / rowsPerPage);
+
+  const getParticipantsForPage = () => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-
-    return participante.slice(start, end);
-  }, [page, participante]);
-
-  const filter = (e: any): JSX.Element | null => {
-    const convidado = {
-      nome:
-        (e.colaborador && e.colaborador.nome_completo) ??
-        (e.dependente && e.dependente.nome_completo) ??
-        (e.acompanhante && e.acompanhante.nome_completo),
-      tipo: e.colaborador ? 0 : e.dependente ? 1 : 2,
-    };
-    if (
-      watch("filter.nome") === "" ||
-      convidado.nome.includes(String(watch("filter.nome")).toUpperCase())
-    ) {
-      return (
-        <TableRow key={e.id}>
-          <TableCell className="truncate max-w-40 md:max-w-max whitespace-nowrap">
-            {convidado.nome}
-          </TableCell>
-          <TableCell>
-            {convidado.tipo === 0 ? (
-              <Chip variant="dot" color="primary" className="p-3">
-                Colaborador
-              </Chip>
-            ) : convidado.tipo === 1 ? (
-              <Chip variant="dot" color="success" className="p-3">
-                Dependente
-              </Chip>
-            ) : (
-              <Chip variant="dot" color="secondary" className="p-3">
-                Aconpanhante
-              </Chip>
-            )}
-          </TableCell>
-          <TableCell>
-            {e.participacao ? (
-              <Chip variant="dot" color="primary" className="p-3">
-                Sim
-              </Chip>
-            ) : (
-              <Chip variant="dot" color="danger" className="p-3">
-                Não
-              </Chip>
-            )}
-          </TableCell>
-          <TableCell>
-            {e.bebida ? (
-              <Chip variant="dot" color="primary" className="p-3">
-                Sim
-              </Chip>
-            ) : (
-              <Chip variant="dot" color="danger" className="p-3">
-                Não
-              </Chip>
-            )}
-          </TableCell>
-          <TableCell>
-            {e.transporte ? (
-              <Chip variant="dot" color="primary" className="p-3">
-                Sim
-              </Chip>
-            ) : (
-              <Chip variant="dot" color="danger" className="p-3">
-                Não
-              </Chip>
-            )}
-          </TableCell>
-        </TableRow>
-      );
-    }
-    return null;
+    return filteredParticipants.slice(start, end);
   };
 
   return (
@@ -160,7 +142,7 @@ const ListaParticipantes = () => {
           dropdownMenuProps={{
             children: [
               <DropdownItem key={1}>Sim</DropdownItem>,
-              <DropdownItem key={2}>Não</DropdownItem>,
+              <DropdownItem key={0}>Não</DropdownItem>,
             ],
             disallowEmptySelection: true,
             closeOnSelect: false,
@@ -177,7 +159,7 @@ const ListaParticipantes = () => {
           dropdownMenuProps={{
             children: [
               <DropdownItem key={1}>Sim</DropdownItem>,
-              <DropdownItem key={2}>Não</DropdownItem>,
+              <DropdownItem key={0}>Não</DropdownItem>,
             ],
             disallowEmptySelection: true,
             closeOnSelect: false,
@@ -194,7 +176,7 @@ const ListaParticipantes = () => {
           dropdownMenuProps={{
             children: [
               <DropdownItem key={1}>Sim</DropdownItem>,
-              <DropdownItem key={2}>Não</DropdownItem>,
+              <DropdownItem key={0}>Não</DropdownItem>,
             ],
             disallowEmptySelection: true,
             closeOnSelect: false,
@@ -223,7 +205,7 @@ const ListaParticipantes = () => {
               showShadow
               color="secondary"
               page={page}
-              total={pages}
+              total={pageCount}
               onChange={(page) => setPage(page)}
             />
           </div>
@@ -237,10 +219,63 @@ const ListaParticipantes = () => {
           <TableColumn>Trânsporte</TableColumn>
         </TableHeader>
         <TableBody>
-          {items &&
-            items.map((e: any) => {
-              return filter(e);
-            })}
+          {getParticipantsForPage().map((e: any) => (
+            <TableRow key={e.id}>
+              <TableCell className="truncate max-w-40 md:max-w-max whitespace-nowrap">
+                {(e.colaborador && e.colaborador.nome_completo) ??
+                  (e.dependente && e.dependente.nome_completo) ??
+                  (e.acompanhante && e.acompanhante.nome_completo)}
+              </TableCell>
+              <TableCell>
+                {e.colaborador ? (
+                  <Chip variant="dot" color="primary" className="p-3">
+                    Colaborador
+                  </Chip>
+                ) : e.dependente ? (
+                  <Chip variant="dot" color="success" className="p-3">
+                    Dependente
+                  </Chip>
+                ) : (
+                  <Chip variant="dot" color="secondary" className="p-3">
+                    Aconpanhante
+                  </Chip>
+                )}
+              </TableCell>
+              <TableCell>
+                {e.participacao ? (
+                  <Chip variant="dot" color="primary" className="p-3">
+                    Sim
+                  </Chip>
+                ) : (
+                  <Chip variant="dot" color="danger" className="p-3">
+                    Não
+                  </Chip>
+                )}
+              </TableCell>
+              <TableCell>
+                {e.bebida ? (
+                  <Chip variant="dot" color="primary" className="p-3">
+                    Sim
+                  </Chip>
+                ) : (
+                  <Chip variant="dot" color="danger" className="p-3">
+                    Não
+                  </Chip>
+                )}
+              </TableCell>
+              <TableCell>
+                {e.transporte ? (
+                  <Chip variant="dot" color="primary" className="p-3">
+                    Sim
+                  </Chip>
+                ) : (
+                  <Chip variant="dot" color="danger" className="p-3">
+                    Não
+                  </Chip>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

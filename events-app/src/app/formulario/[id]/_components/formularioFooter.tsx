@@ -19,11 +19,14 @@ const FormularioFooter = () => {
 
   const validarForm = () => {
     const campos = participantes.find((e: any) => e.colaborador).campos;
-    const isArrayOfStrings = campos.every(
-      (item: any) => typeof item === "string"
-    );
+    const isArrayOfStrings = campos
+      ? campos.every((item: any) => typeof item === "string")
+      : true;
 
-    if (!isArrayOfStrings || campos?.length !== evento?.campo?.length) {
+    if (
+      campos &&
+      (!isArrayOfStrings || campos?.length !== evento?.campo?.length)
+    ) {
       onOpenErro();
     } else {
       onOpen();

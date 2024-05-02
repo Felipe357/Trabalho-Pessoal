@@ -7,15 +7,50 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useNovoEventoContext } from "../novoEventoProvider";
+import { api } from "@/service/api";
+import { useInicialContext } from "@/provider/provider";
 
 const ModalCadastroEvento = () => {
-  const { disclousureNovoEvento, form } = useNovoEventoContext();
+  const {
+    disclousureNovoEvento,
+    form,
+    disclousureRequicisaoSucesso,
+    disclousureRequicisaoErro,
+  } = useNovoEventoContext();
 
   const { isOpen, onClose } = disclousureNovoEvento;
 
-  const { watch } = form
+  const { onOpen } = disclousureRequicisaoSucesso;
 
-  const { novoEvento } = watch()
+  const { onOpen: onOpenErro } = disclousureRequicisaoErro;
+
+  const { watch } = form;
+
+  const { novoEvento } = watch();
+
+  const { form: formInicial } = useInicialContext();
+
+  const { setValue } = formInicial;
+
+  const cadastrarEvento = async () => {
+    try {
+      const response = await api.post("evento/criar", novoEvento);
+
+      if (response.data.status === 200) {
+        setValue("reload", Math.random());
+        onClose();
+        onOpen();
+      } else {
+        onClose();
+        onOpenErro();
+      }
+    } catch (error) {
+      console.log(error);
+
+      onClose();
+      onOpenErro();
+    }
+  };
 
   return (
     <Modal
@@ -30,9 +65,8 @@ const ModalCadastroEvento = () => {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader>
-              {JSON.stringify(novoEvento, null, 2)}
-            </ModalHeader>
+            <ModalHeader></ModalHeader>
+
             <ModalBody className=" overflow-y-auto text-center gap-10">
               <span className="font-bold text-2xl md:text-xl text-black">
                 Confirmar cadastro do novo evento?
@@ -46,7 +80,7 @@ const ModalCadastroEvento = () => {
               <Button
                 className="bg-primary text-white"
                 onPress={() => {
-                  onClose();
+                  cadastrarEvento();
                 }}
               >
                 Confirmar

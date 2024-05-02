@@ -21,6 +21,8 @@ interface PageContextProps {
   form: any;
   disclousureEvento: DisclosureProps;
   disclousureEventoCancelar: DisclosureProps;
+  disclousureRequicisaoSucesso: DisclosureProps;
+  disclousureRequicisaoErro: DisclosureProps;
 }
 
 export const PageContext = createContext({} as PageContextProps);
@@ -36,12 +38,22 @@ export function PageProvider({ children }: PageProviderProps) {
     id: "disclousure-evento-cancelar",
   });
 
+  const disclousureRequicisaoSucesso = useDisclosure({
+    id: "disclosure-page-formulario-sucesso",
+  });
+
+  const disclousureRequicisaoErro = useDisclosure({
+    id: "disclosure-page-formulario-erro",
+  });
+
   return (
     <PageContext.Provider
       value={{
         form: form,
         disclousureEvento: disclosureEvento,
         disclousureEventoCancelar: disclousureEventoCancelar,
+        disclousureRequicisaoSucesso: disclousureRequicisaoSucesso,
+        disclousureRequicisaoErro: disclousureRequicisaoErro,
       }}
     >
       {children}

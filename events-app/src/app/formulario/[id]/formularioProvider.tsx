@@ -67,7 +67,7 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
 
   const { setValue } = form;
 
-  const buscarEventos = async () => {
+  const buscarParticipantes = async () => {
     if (eventoFilter) {
       try {
         const response = await api.get(
@@ -94,7 +94,7 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
   };
 
   useEffect(() => {
-    buscarEventos();
+    buscarParticipantes();
   }, [eventoFilter]);
 
   const disclousureFormularioConfirmacao = useDisclosure({

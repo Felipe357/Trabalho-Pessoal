@@ -4,6 +4,9 @@ import React from "react";
 import { ControleEventoProvider } from "./controleEventoProvider";
 import OpcaoesEvento from "./_components/opcoesEvento";
 import TabsListagemEventos from "./_components/tabsListagemEvento";
+import ModalDesativarEvento from "./_components/modalDesativarEvento";
+import ModalRequicisaoErro from "./_components/modalRequicisaoErro";
+import ModalRequicisaoSucesso from "./_components/modalRequicisaoSucesso";
 
 const ControleEventos = () => {
   return (
@@ -13,6 +16,10 @@ const ControleEventos = () => {
 
         <TabsListagemEventos />
       </div>
+
+      <ModalDesativarEvento />
+      <ModalRequicisaoErro />
+      <ModalRequicisaoSucesso />
     </ControleEventoProvider>
   );
 };

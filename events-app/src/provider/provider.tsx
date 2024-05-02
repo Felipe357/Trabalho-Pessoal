@@ -41,6 +41,8 @@ export type EventoProp = {
   numero: string;
   bairro: string;
   cidade: string;
+  longitude?: string;
+  latitude?: string;
   confirmacao: boolean;
   idade_dependente: number;
   status: number;
@@ -80,13 +82,13 @@ const AppProvider = ({
   const buscarColaborador = async () => {
     try {
       const response = await api.get(
-        "colaborador/buscar/0eade1c9-5e37-4943-bb77-c7fe55a6c2da"
+        "colaborador/buscar/7ecbc1a3-c9ba-4b2f-9241-3752d1ea7599"
       );
 
       if (response.data.status === 200) {
         setValue("colaborador", response.data.colaborador);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const buscarEventos = async () => {
@@ -99,7 +101,7 @@ const AppProvider = ({
         if (response.data.status === 200) {
           setValue("eventos", response.data.eventos);
         }
-      } catch (error) { }
+      } catch (error) {}
     }
   };
 

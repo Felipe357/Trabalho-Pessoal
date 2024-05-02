@@ -12,6 +12,8 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 import Logo from "../../assets/logo.png";
+import { useInicialContext } from "@/provider/provider";
+import { useEffect } from "react";
 
 type Props = {
   open: boolean;
@@ -21,6 +23,21 @@ type Props = {
 export const Navigation = ({ open, setOpen }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const { form } = useInicialContext();
+
+  const { watch } = form;
+
+  const { colaborador } = watch();
+
+  useEffect(() => {
+    if (
+      !colaborador ||
+      (colaborador.autorizacao === 0 && pathname.includes("controleEventos"))
+    ) {
+      router.push("/");
+    }
+  }, [colaborador]);
 
   return (
     <>
@@ -90,22 +107,24 @@ export const Navigation = ({ open, setOpen }: Props) => {
               Eventos
             </Button>
 
-            <Button
-              color={
-                pathname.includes("controleEventos") ? "primary" : "default"
-              }
-              variant="light"
-              aria-label="Champagne Party"
-              className="h-16 gap-6 justify-start"
-              onClick={() => {
-                router.push("/controleEventos");
-              }}
-            >
-              <FontAwesomeIcon icon={faCalendarPlus} className="h-4" />
-              Controle de Eventos
-            </Button>
+            {colaborador && colaborador.autorizacao === 1 && (
+              <Button
+                color={
+                  pathname.includes("controleEventos") ? "primary" : "default"
+                }
+                variant="light"
+                aria-label="Champagne Party"
+                className="h-16 gap-6 justify-start"
+                onClick={() => {
+                  router.push("/controleEventos");
+                }}
+              >
+                <FontAwesomeIcon icon={faCalendarPlus} className="h-4" />
+                Controle de Eventos
+              </Button>
+            )}
           </div>
-          <div className="flex flex-col gap-4">
+          {/* <div className="flex flex-col gap-4">
             <span className={`font-medium text-lg text-gray-500`}>Outros</span>
             <Button
               variant="light"
@@ -130,7 +149,7 @@ export const Navigation = ({ open, setOpen }: Props) => {
                 Ajuda
               </span>
             </Button>
-          </div>
+          </div> */}
         </div>
       </Drawer>
     </>

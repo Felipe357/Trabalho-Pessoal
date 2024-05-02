@@ -26,12 +26,15 @@ import { useRouter } from "next/navigation";
 import { somarArray } from "@/utils/somarArray";
 
 const ListaEventos = () => {
-  const { form: formControle } = useControleEventoContext();
+  const { form: formControle, disclosureDesativarEvento } =
+    useControleEventoContext();
   const { form } = useInicialContext();
 
   const { setValue: setValueInicial } = form;
   const { setValue, watch } = formControle;
   const { eventos } = watch();
+
+  const { onOpen } = disclosureDesativarEvento;
 
   const participantes = [
     "Colaboradores",
@@ -135,6 +138,10 @@ const ListaEventos = () => {
                             color="danger"
                             description="Deletar Permanentemente o Evento"
                             startContent={<FontAwesomeIcon icon={faTrash} />}
+                            onPress={() => {
+                              onOpen();
+                              setValue("eventoSelect", e);
+                            }}
                           >
                             Deletar
                           </ListboxItem>
