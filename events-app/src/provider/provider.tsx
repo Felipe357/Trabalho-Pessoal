@@ -30,7 +30,7 @@ export type EventoProp = {
   data: string;
   horaInicio: string;
   horaFim: string;
-  foto?: string;
+  foto_base64?: string;
   formulario: {
     start: string;
     end: string;
@@ -82,13 +82,13 @@ const AppProvider = ({
   const buscarColaborador = async () => {
     try {
       const response = await api.get(
-        "colaborador/buscar/7ecbc1a3-c9ba-4b2f-9241-3752d1ea7599"
+        "colaborador/buscar/721e72ab-c923-49a7-8b98-eb3bba7a7c3d"
       );
 
       if (response.data.status === 200) {
         setValue("colaborador", response.data.colaborador);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const buscarEventos = async () => {
@@ -101,7 +101,7 @@ const AppProvider = ({
         if (response.data.status === 200) {
           setValue("eventos", response.data.eventos);
         }
-      } catch (error) {}
+      } catch (error) { }
     }
   };
 

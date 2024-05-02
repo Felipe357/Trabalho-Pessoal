@@ -17,8 +17,7 @@ type EventoProps = {
 
 const Evento = ({ eventProps }: EventoProps) => {
   const {
-    id,
-    foto,
+    foto_base64,
     titulo,
     data,
     endereco,
@@ -72,9 +71,9 @@ const Evento = ({ eventProps }: EventoProps) => {
       }}
     >
       <div className="w-full">
-        {foto && (
+        {foto_base64 && (
           <Image
-            src={foto as string}
+            src={foto_base64 === undefined ? '' : `data:image/.png;base64,${foto_base64}`}
             layout="fill"
             objectFit="cover"
             alt="Fundo Evento"

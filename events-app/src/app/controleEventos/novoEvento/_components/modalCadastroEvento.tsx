@@ -34,9 +34,24 @@ const ModalCadastroEvento = () => {
 
   const cadastrarEvento = async () => {
     try {
+      const foto = novoEvento.foto
+      delete novoEvento.foto
       const response = await api.post("evento/criar", novoEvento);
 
       if (response.data.status === 200) {
+
+        if (foto.name) {
+          await api.put(`evento/alterar/foto`, {
+            "id": response.data.evento_id,
+            "foto": foto.foto
+          }, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+
+        }
+
         setValue("reload", Math.random());
         onClose();
         onOpen();
