@@ -10,6 +10,14 @@ import { useNovoEventoContext } from "../novoEventoProvider";
 import { api } from "@/service/api";
 import { useInicialContext } from "@/provider/provider";
 
+interface Objeto {
+  id: string;
+  titulo: string;
+  descricao: string;
+  valores: { titulo: string; valor: string }[];
+  fotos?: { index: number; name: string; foto: any }[];
+}
+
 const ModalCadastroEvento = () => {
   const {
     disclousureNovoEvento,
@@ -34,22 +42,69 @@ const ModalCadastroEvento = () => {
 
   const cadastrarEvento = async () => {
     try {
-      const foto = novoEvento.foto
-      delete novoEvento.foto
+      const foto = novoEvento.foto;
+      delete novoEvento.foto;
+
+      const semFotos: Objeto[] = [];
+      const comFotos: any[] = [];
+
+      novoEvento.campo.forEach((objeto: any) => {
+        comFotos.push({ id: objeto.id, fotos: objeto.fotos });
+        semFotos.push({
+          id: objeto.id,
+          titulo: objeto.titulo,
+          descricao: objeto.descricao,
+          valores: objeto.valores,
+        });
+      });
+
+      novoEvento.campo = semFotos;
+
       const response = await api.post("evento/criar", novoEvento);
 
       if (response.data.status === 200) {
-
-        if (foto.name) {
-          await api.put(`evento/alterar/foto`, {
-            "id": response.data.evento_id,
-            "foto": foto.foto
-          }, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
+        if (
+          foto &&
+          foto.name &&
+          foto.name !== "Arquivo sem nome" &&
+          foto.name !== novoEvento.foto_base64.nome
+        ) {
+          await api.put(
+            `evento/alterar/foto`,
+            {
+              id: response.data.evento_id,
+              nome_foto: foto.name,
+              foto: foto.foto,
+            },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
             }
-          })
+          );
+        }
 
+        if (comFotos.length > 0) {
+          await Promise.all(
+            comFotos.map(async (e) => {
+              if (e.fotos.length > 0) {
+                e.fotos.forEach(async (teste: any) => {
+                  await api.put(
+                    `evento/campo/imagens`,
+                    {
+                      id: e.id,
+                      imagens: teste.foto,
+                    },
+                    {
+                      headers: {
+                        "Content-Type": "multipart/form-data",
+                      },
+                    }
+                  );
+                });
+              }
+            })
+          );
         }
 
         setValue("reload", Math.random());

@@ -4,6 +4,7 @@ import { type EventoProp, useInicialContext } from "@/provider/provider";
 import { api } from "@/service/api";
 import { transformJSON } from "@/utils/transformColaborador";
 import { useDisclosure } from "@nextui-org/react";
+import { format, parse } from "date-fns";
 import { useParams, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,6 +28,7 @@ interface FomrularioContextProps {
   disclousureFormularioErroFormulario: DisclosureProps;
   disclousureRequicisaoSucesso: DisclosureProps;
   disclousureRequicisaoErro: DisclosureProps;
+  disclousureCamposImagens: DisclosureProps;
 }
 
 export const FomrularioContext = createContext({} as FomrularioContextProps);
@@ -62,6 +64,7 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
   const form = useForm({
     defaultValues: {
       participantes: [],
+      campoSelect: "",
     },
   });
 
@@ -69,6 +72,30 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
 
   const buscarParticipantes = async () => {
     if (eventoFilter) {
+      const montarParticipanteDependente = colaborador.dependente
+        .map((e: any) => {
+          const calcIdade =
+            (Number(parse(eventoFilter.data, "dd/MM/yyyy", "yyyyMMdd")) -
+              Number(format(e.data_nascimento, "yyyyMMdd"))) /
+            10000;
+
+          if (
+            (eventoFilter.tipo_participante as unknown as number) >= 3 &&
+            e.tipo === 1 &&
+            eventoFilter.idade_dependente >= Math.trunc(calcIdade)
+          ) {
+            return e;
+          } else if (
+            ((eventoFilter.tipo_participante as unknown as number) == 2 ||
+              (eventoFilter.tipo_participante as unknown as number) == 4) &&
+            e.tipo === 0
+          ) {
+            return e;
+          } else {
+            return;
+          }
+        })
+        .filter((e: any) => e !== undefined);
       try {
         const response = await api.get(
           `participante/buscar/${eventoFilter.id}/${colaborador.id}`
@@ -85,10 +112,23 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
             })
           );
         } else {
-          setValue("participantes", transformJSON(colaborador) as never[]);
+          setValue(
+            "participantes",
+            transformJSON({
+              ...colaborador,
+              dependente: montarParticipanteDependente,
+            }) as never[]
+          );
         }
       } catch (error) {
-        setValue("participantes", transformJSON(colaborador) as never[]);
+        console.log(error);
+        setValue(
+          "participantes",
+          transformJSON({
+            ...colaborador,
+            dependente: montarParticipanteDependente,
+          }) as never[]
+        );
       }
     }
   };
@@ -113,6 +153,10 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
     id: "disclosure-formulario-erro",
   });
 
+  const disclousureCamposImagens = useDisclosure({
+    id: "disclosure-campos-imagens",
+  });
+
   return (
     <FomrularioContext.Provider
       value={{
@@ -123,6 +167,7 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
           disclousureFormularioErroFormulario,
         disclousureRequicisaoErro: disclousureRequicisaoErro,
         disclousureRequicisaoSucesso: disclousureRequicisaoSucesso,
+        disclousureCamposImagens: disclousureCamposImagens,
       }}
     >
       {children}

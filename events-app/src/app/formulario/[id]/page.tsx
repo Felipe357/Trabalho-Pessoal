@@ -10,6 +10,7 @@ import ModalAceitar from "./_components/modalFormularioAceitar";
 import ModalErro from "./_components/modalFormularioErro";
 import ModalRequicisaoErro from "./_components/modalRequicisaoErro";
 import ModalRequicisaoSucesso from "./_components/modalRequicisaoSucesso";
+import ModalImagem from "./_components/modalImagens";
 
 const PageFormulario = () => {
   return (
@@ -25,6 +26,8 @@ const PageFormulario = () => {
         <ModalErro />
         <ModalRequicisaoErro />
         <ModalRequicisaoSucesso />
+
+        <ModalImagem />
       </div>
     </FomrularioProvider>
   );

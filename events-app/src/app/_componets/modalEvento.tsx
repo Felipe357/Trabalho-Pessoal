@@ -68,6 +68,7 @@ const ModalEvento = () => {
       size={"5xl"}
       isOpen={isOpenEvento}
       onClose={onCloseEvento}
+      scrollBehavior="inside"
       backdrop="blur"
       className="events max-h-[90%]"
       classNames={{ backdrop: "z-[5000]", wrapper: "z-[6000]" }}

@@ -143,10 +143,9 @@ const FormularioPulseira = () => {
 
         {pulseira && pulseira.length > 0 && (
           <Table
-            isHeaderSticky
             aria-label="pulseira"
             classNames={{
-              base: "max-h-[40%] overflow-y-scroll",
+              base: "min-h-40",
               wrapper: "shadow-sm",
             }}
           >

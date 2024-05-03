@@ -58,6 +58,15 @@ const FormularioEvento = () => {
     },
   ];
 
+  useEffect(() => {
+    if (novoEvento.foto_base64 && !novoEvento.foto) {
+      setValue("novoEvento.foto", {
+        name: novoEvento.foto_base64.nome ?? "Arquivo sem nome",
+        foto: novoEvento.foto_base64.foto,
+      });
+    }
+  }, []);
+
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="flex flex-col gap-6 overflow-y-auto pr-2 md:pr-0">

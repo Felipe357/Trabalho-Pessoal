@@ -24,6 +24,7 @@ interface NovoEventoContextProps {
   disclosureErroEvento: DisclosureProps;
   disclousureRequicisaoErro: DisclosureProps;
   disclousureRequicisaoSucesso: DisclosureProps;
+  disclousureImagemCampo: DisclosureProps;
 }
 
 export interface HorasProps {
@@ -100,6 +101,7 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
         tituloValor: "",
         valor: "",
         valores: [],
+        fotos: [],
       },
     },
   });
@@ -134,6 +136,10 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
     id: "disclosure-requcisao-erro-novo-evento",
   });
 
+  const disclousureImagemCampo = useDisclosure({
+    id: "disclousure-modal-imagem-campo",
+  });
+
   return (
     <NovoEventoContext.Provider
       value={{
@@ -142,6 +148,7 @@ export function NovoEventoProvider({ children }: NovoEventoProviderProps) {
         disclosureErroEvento: disclosureErroEvento,
         disclousureRequicisaoErro: disclousureRequicisaoErro,
         disclousureRequicisaoSucesso: disclousureRequicisaoSucesso,
+        disclousureImagemCampo: disclousureImagemCampo,
       }}
     >
       {children}

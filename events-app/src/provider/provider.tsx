@@ -18,6 +18,7 @@ export type EventoProp = {
       titulo: string;
       valor: string;
     }[];
+    campo_imagem: any[];
   }[];
   pulseira?: {
     bebida: string;
@@ -82,13 +83,13 @@ const AppProvider = ({
   const buscarColaborador = async () => {
     try {
       const response = await api.get(
-        "colaborador/buscar/721e72ab-c923-49a7-8b98-eb3bba7a7c3d"
+        "colaborador/buscar/7ecbc1a3-c9ba-4b2f-9241-3752d1ea7599"
       );
 
       if (response.data.status === 200) {
         setValue("colaborador", response.data.colaborador);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const buscarEventos = async () => {
@@ -101,7 +102,7 @@ const AppProvider = ({
         if (response.data.status === 200) {
           setValue("eventos", response.data.eventos);
         }
-      } catch (error) { }
+      } catch (error) {}
     }
   };
 
