@@ -163,28 +163,27 @@ const ModalEvento = () => {
                     </span>
                   </div>
 
-                  {tipo_participante === 3 ||
-                    (tipo_participante === 4 && (
-                      <>
-                        <Divider
-                          orientation="vertical"
-                          className="mx-1 h-3/4"
-                        />
+                  {(tipo_participante === 3 || tipo_participante === 4) && (
+                    <>
+                      <Divider
+                        orientation="vertical"
+                        className="mx-1 h-3/4"
+                      />
 
-                        <div className="flex items-center gap-4">
-                          <FontAwesomeIcon
-                            icon={faUsers}
-                            size="lg"
-                            color="#52b032"
-                          />
-                          <span className="font-medium text-base text-black">
-                            Dependentes
-                            <br />
-                            até {idade_dependente} anos
-                          </span>
-                        </div>
-                      </>
-                    ))}
+                      <div className="flex items-center gap-4">
+                        <FontAwesomeIcon
+                          icon={faUsers}
+                          size="lg"
+                          color="#52b032"
+                        />
+                        <span className="font-medium text-base text-black">
+                          Dependentes
+                          <br />
+                          até {idade_dependente} anos
+                        </span>
+                      </div>
+                    </>
+                  )}
 
                   <Divider orientation="vertical" className="mx-1 h-3/4" />
 

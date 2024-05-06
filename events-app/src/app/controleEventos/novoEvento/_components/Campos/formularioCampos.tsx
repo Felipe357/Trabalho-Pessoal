@@ -159,9 +159,8 @@ const FormularioCampos = () => {
             <span className=" font-bold text-sm">Foto</span>
             <Button
               variant="bordered"
-              className={`${
-                watch("campo.foto") && "border-primary"
-              } h-14 w-full border-dashed`}
+              className={`${watch("campo.foto") && "border-primary"
+                } h-14 w-full border-dashed`}
               onClick={() => pictureInput.current?.click()}
             >
               <span className=" truncate">
@@ -276,6 +275,7 @@ const FormularioCampos = () => {
             {campo.map(
               (
                 p: {
+                  campo_imagem: any;
                   titulo: string;
                   descricao: string;
                   valores: Array<{ titulo: string; valor: string; foto: any }>;
@@ -354,6 +354,23 @@ const FormularioCampos = () => {
                               <Button isIconOnly key={key} radius="full">
                                 <Image
                                   src={URL.createObjectURL(value.foto)}
+                                  alt={"Imagem Campo"}
+                                  className="rounded-full"
+                                  layout="fill"
+                                  objectFit="cover"
+                                />
+                              </Button>
+                            )
+                          )}
+
+                        {p.campo_imagem &&
+                          p.campo_imagem.map(
+                            (
+                              value: { imagem_base64: any; id: string }
+                            ) => (
+                              <Button isIconOnly key={value.id} radius="full">
+                                <Image
+                                  src={value.imagem_base64 === undefined ? '' : `data:image/.png;base64,${value.imagem_base64}`}
                                   alt={"Imagem Campo"}
                                   className="rounded-full"
                                   layout="fill"

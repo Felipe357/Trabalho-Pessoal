@@ -89,7 +89,7 @@ const AppProvider = ({
       if (response.data.status === 200) {
         setValue("colaborador", response.data.colaborador);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const buscarEventos = async () => {
@@ -102,7 +102,7 @@ const AppProvider = ({
         if (response.data.status === 200) {
           setValue("eventos", response.data.eventos);
         }
-      } catch (error) {}
+      } catch (error) { }
     }
   };
 

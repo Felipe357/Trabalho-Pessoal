@@ -3,6 +3,9 @@ import { useFormularioContext } from "../formularioProvider";
 import ControllerCheckbox from "@/components/form/controllerCheckbox";
 import { parse } from "date-fns";
 import ControllerSelect from "@/components/form/controllerSelect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 const FormColaborador = () => {
   const { form, evento, disclousureCamposImagens } = useFormularioContext();
@@ -22,6 +25,13 @@ const FormColaborador = () => {
   const disable = dataAtual > providedDate;
 
   const { onOpen } = disclousureCamposImagens;
+
+  useEffect(() => {
+    if (index >= 0 && colaborador) {
+      console.log(watch(`participantes.${index}.participacao`))
+      setValue(`participantes.${index}.participacao`, 1)
+    }
+  }, [colaborador, index])
 
   return colaborador ? (
     <div className="flex flex-wrap gap-6 items-start">
@@ -62,7 +72,7 @@ const FormColaborador = () => {
           evento.campo.length > 0 &&
           evento.campo.map((c, indexMap) => {
             return (
-              <>
+              <div className="flex flex-wrap md:flex-row items-end gap-6">
                 <ControllerSelect
                   key={indexMap}
                   selectProps={{
@@ -85,18 +95,21 @@ const FormColaborador = () => {
                     name: `participantes.${index}.campos.${indexMap}`,
                   }}
                 />
-                <div className="h-14 flex items-center">
-                  <Button
-                    color="primary"
-                    onPress={() => {
-                      setValue("campoSelect", c);
-                      onOpen();
-                    }}
-                  >
-                    Ver imagens
-                  </Button>
-                </div>
-              </>
+                {c.campo_imagem.length > 0 && (
+                  <div className="h-14 flex items-center">
+                    <Button
+                      color="primary"
+                      onPress={() => {
+                        setValue("campoSelect", c);
+                        onOpen();
+                      }}
+                      startContent={<FontAwesomeIcon icon={faImage} />}
+                    >
+                      Ver imagens
+                    </Button>
+                  </div>
+                )}
+              </div>
             );
           })}
       </div>
