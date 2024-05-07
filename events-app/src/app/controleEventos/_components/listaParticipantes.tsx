@@ -196,7 +196,6 @@ const ListaParticipantes = () => {
         classNames={{
           base: "overflow-y-scroll max-h-full",
         }}
-        isHeaderSticky
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination
@@ -253,7 +252,7 @@ const ListaParticipantes = () => {
                 )}
               </TableCell>
               <TableCell>
-                {e.bebida ? (
+                {e.bebida_alcoolica ? (
                   <Chip variant="dot" color="primary" className="p-3">
                     Sim
                   </Chip>

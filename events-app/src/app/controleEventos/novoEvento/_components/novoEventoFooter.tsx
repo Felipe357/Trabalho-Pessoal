@@ -76,11 +76,6 @@ const NovoEventoFooter = () => {
       return true;
     }
 
-    // if (!pulseira || pulseira.length === 0) {
-    //   console.log("Pulseira");
-    //   return true;
-    // }
-
     return false;
   };
 

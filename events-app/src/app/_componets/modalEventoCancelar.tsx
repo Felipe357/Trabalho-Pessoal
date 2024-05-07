@@ -5,12 +5,16 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  SelectItem,
 } from "@nextui-org/react";
 import { usePageContext } from "../pageProvider";
 import { useEffect, useState } from "react";
 import { transformJSON } from "@/utils/transformColaborador";
-import { useInicialContext } from "@/provider/provider";
 import { api } from "@/service/api";
+import { useInicialContext } from "@/providers/client.providers/evento.client.provider";
+import ControllerSelect from "@/components/form/controllerSelect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 const ModalEventoCancelar = () => {
   const {
@@ -19,6 +23,7 @@ const ModalEventoCancelar = () => {
     form,
     disclousureRequicisaoSucesso,
     disclousureRequicisaoErro,
+    disclousureCamposImagens,
   } = usePageContext();
 
   const { form: inicialForm } = useInicialContext();
@@ -27,6 +32,8 @@ const ModalEventoCancelar = () => {
 
   const { colaborador } = watchInicial();
 
+  const { onOpen } = disclousureCamposImagens;
+
   const { isOpen, onClose: onCloseCancelar } = disclousureEventoCancelar;
 
   const { onClose: onCloseEvento } = disclousureEvento;
@@ -34,13 +41,12 @@ const ModalEventoCancelar = () => {
   const { onOpen: onOpenRequicisaoSucesso } = disclousureRequicisaoSucesso;
   const { onOpen: onOpenRequicisaoErro } = disclousureRequicisaoErro;
 
-  const { watch } = form;
+  const { watch, control, setValue: setValueParticipante } = form;
 
-  const { evento } = watch();
+  const { evento, participantes } = watch();
 
   const { titulo, formulario } = evento ?? {};
 
-  const [participante, setParticipante] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const buscarParticipantes = async () => {
@@ -51,7 +57,8 @@ const ModalEventoCancelar = () => {
           `participante/buscar/${evento.id}/${colaborador.id}`
         );
         if (response.data.status === 200 && response.data.participantes) {
-          setParticipante(
+          setValueParticipante(
+            "participantes",
             response.data.participantes.map((e: any) => {
               return {
                 ...e,
@@ -63,12 +70,18 @@ const ModalEventoCancelar = () => {
 
           setIsLoading(false);
         } else {
-          setParticipante(transformJSON(colaborador) as never[]);
+          setValueParticipante(
+            "participantes",
+            transformJSON(colaborador) as never[]
+          );
           setIsLoading(false);
         }
       } catch (error) {
         setIsLoading(false);
-        setParticipante(transformJSON(colaborador) as never[]);
+        setValueParticipante(
+          "participantes",
+          transformJSON(colaborador) as never[]
+        );
       }
     }
   };
@@ -106,7 +119,7 @@ const ModalEventoCancelar = () => {
 
     const request = {
       evento_id: evento?.id,
-      participantes: participante
+      participantes: participantes
         .map((e: any) => {
           if (e.dependente && e.dependente.tipo === 0) {
             if (
@@ -177,6 +190,29 @@ const ModalEventoCancelar = () => {
     }
   };
 
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (participantes) {
+      const colaborador = participantes.filter((e: any) => e.colaborador)[0];
+
+      setIndex(participantes.indexOf(colaborador));
+    }
+  }, [participantes]);
+
+  const campos =
+    evento &&
+    evento.campo &&
+    evento.campo.length > 0 &&
+    evento.campo
+      .map((c: any) => {
+        if (c.obrigatorio) {
+          return c;
+        }
+        return null;
+      })
+      .filter((e: any) => e !== null);
+
   return (
     <Modal
       size={"2xl"}
@@ -206,6 +242,63 @@ const ModalEventoCancelar = () => {
                   {formulario && formulario.end}
                 </span>
               </span>
+
+              {campos && (
+                <div className="w-full flex items-center justify-start">
+                  <span>Campos obrigatórios</span>
+                </div>
+              )}
+
+              <div className="w-full flex items-center justify-center">
+                {campos &&
+                  campos.map((c: any, indexMap: any) => {
+                    return (
+                      <div
+                        className="flex flex-wrap md:flex-row items-end gap-6"
+                        key={indexMap}
+                      >
+                        <ControllerSelect
+                          key={indexMap}
+                          selectProps={{
+                            label: c.titulo,
+                            labelPlacement: "outside",
+                            variant: "bordered",
+                            isRequired: true,
+                            className: "w-64 md:w-72",
+                            placeholder: c.descricao,
+                            children: c.valores.map(
+                              (e: { titulo: string; valor: string }) => {
+                                return (
+                                  <SelectItem key={e.valor}>
+                                    {e.titulo}
+                                  </SelectItem>
+                                );
+                              }
+                            ),
+                          }}
+                          controllerProps={{
+                            control: control,
+                            name: `participantes.${index}.campos.${indexMap}`,
+                          }}
+                        />
+                        {c.campo_imagem.length > 0 && (
+                          <div className="h-14 flex items-center">
+                            <Button
+                              color="primary"
+                              onPress={() => {
+                                setValueParticipante("campoSelect", c);
+                                onOpen();
+                              }}
+                              startContent={<FontAwesomeIcon icon={faImage} />}
+                            >
+                              Ver imagens
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
             </ModalBody>
             <ModalFooter>
               <Button

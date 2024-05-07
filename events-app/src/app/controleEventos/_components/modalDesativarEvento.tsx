@@ -7,8 +7,8 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { api } from "@/service/api";
-import { useInicialContext } from "@/provider/provider";
 import { useControleEventoContext } from "../controleEventoProvider";
+import { useInicialContext } from "@/providers/client.providers/evento.client.provider";
 
 const ModalDesativarEvento = () => {
   const {

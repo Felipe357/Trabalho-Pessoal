@@ -8,6 +8,7 @@ import ModalEventoCancelar from "./_componets/modalEventoCancelar";
 import Eventos from "./_componets/eventos";
 import ModalRequicisaoSucesso from "./_componets/modalRequicisaoSucesso";
 import ModalRequicisaoErro from "./_componets/modalRequicisaoErro";
+import ModalImagem from "./_componets/modalImagens";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
 
         <ModalEvento />
         <ModalEventoCancelar />
+        <ModalImagem />
 
         <ModalRequicisaoSucesso />
         <ModalRequicisaoErro />

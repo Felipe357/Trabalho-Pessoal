@@ -1,6 +1,9 @@
 "use client";
 
-import { type EventoProp, useInicialContext } from "@/provider/provider";
+import {
+  type EventoProp,
+  useInicialContext,
+} from "@/providers/client.providers/evento.client.provider";
 import { api } from "@/service/api";
 import { transformJSON } from "@/utils/transformColaborador";
 import { useDisclosure } from "@nextui-org/react";
@@ -121,7 +124,6 @@ export function FomrularioProvider({ children }: FomrularioProviderProps) {
           );
         }
       } catch (error) {
-        console.log(error);
         setValue(
           "participantes",
           transformJSON({

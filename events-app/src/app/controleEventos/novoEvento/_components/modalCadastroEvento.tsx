@@ -8,12 +8,13 @@ import {
 } from "@nextui-org/react";
 import { useNovoEventoContext } from "../novoEventoProvider";
 import { api } from "@/service/api";
-import { useInicialContext } from "@/provider/provider";
+import { useInicialContext } from "@/providers/client.providers/evento.client.provider";
 
 interface Objeto {
   id: string;
   titulo: string;
   descricao: string;
+  obrigatorio: boolean;
   valores: { titulo: string; valor: string }[];
   fotos?: { index: number; name: string; foto: any }[];
 }
@@ -54,6 +55,7 @@ const ModalCadastroEvento = () => {
           id: objeto.id,
           titulo: objeto.titulo,
           descricao: objeto.descricao,
+          obrigatorio: objeto.obrigatorio,
           valores: objeto.valores,
         });
       });
@@ -67,7 +69,8 @@ const ModalCadastroEvento = () => {
           foto &&
           foto.name &&
           foto.name !== "Arquivo sem nome" &&
-          foto.name !== novoEvento.foto_base64.nome
+          foto.name !==
+            (novoEvento.foto_base64 ? novoEvento.foto_base64.nome : "")
         ) {
           await api.put(
             `evento/alterar/foto`,
@@ -87,7 +90,7 @@ const ModalCadastroEvento = () => {
         if (comFotos.length > 0) {
           await Promise.all(
             comFotos.map(async (e) => {
-              if (e.fotos.length > 0) {
+              if (e.fotos && e.fotos.length > 0) {
                 e.fotos.forEach(async (teste: any) => {
                   await api.put(
                     `evento/campo/imagens`,

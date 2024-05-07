@@ -8,7 +8,7 @@ import {
 } from "@nextui-org/react";
 import { useFormularioContext } from "../formularioProvider";
 import { api } from "@/service/api";
-import { useInicialContext } from "@/provider/provider";
+import { useInicialContext } from "@/providers/client.providers/evento.client.provider";
 
 const ModalAceitar = () => {
   const {

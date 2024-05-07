@@ -3,8 +3,8 @@
 import { useDisclosure } from "@nextui-org/react";
 import { createContext, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useInicialContext } from "@/provider/provider";
 import { api } from "@/service/api";
+import { useInicialContext } from "@/providers/client.providers/evento.client.provider";
 
 interface NovoEventoProviderProps extends React.PropsWithChildren {}
 

@@ -2,7 +2,7 @@ import React from "react";
 
 import type { Metadata } from "next";
 
-import AppProvider from "@/provider/provider";
+import AppProvider from "@/providers/provider";
 
 import "./globals.css";
 

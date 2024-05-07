@@ -1,9 +1,9 @@
+import { useInicialContext } from "@/providers/client.providers/evento.client.provider";
 import { faPlus, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Listbox, ListboxItem } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useInicialContext } from "@/provider/provider";
 
 const OpcaoesEvento = () => {
   const { form } = useInicialContext();

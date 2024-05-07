@@ -28,10 +28,9 @@ const FormColaborador = () => {
 
   useEffect(() => {
     if (index >= 0 && colaborador) {
-      console.log(watch(`participantes.${index}.participacao`))
-      setValue(`participantes.${index}.participacao`, 1)
+      setValue(`participantes.${index}.participacao`, 1);
     }
-  }, [colaborador, index])
+  }, [colaborador, index]);
 
   return colaborador ? (
     <div className="flex flex-wrap gap-6 items-start">
@@ -72,7 +71,10 @@ const FormColaborador = () => {
           evento.campo.length > 0 &&
           evento.campo.map((c, indexMap) => {
             return (
-              <div className="flex flex-wrap md:flex-row items-end gap-6">
+              <div
+                className="flex flex-wrap md:flex-row items-end gap-6"
+                key={indexMap}
+              >
                 <ControllerSelect
                   key={indexMap}
                   selectProps={{

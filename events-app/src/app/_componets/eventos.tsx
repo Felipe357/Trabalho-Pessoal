@@ -1,6 +1,9 @@
 "use client";
 
-import { EventoProp, useInicialContext } from "@/provider/provider";
+import {
+  type EventoProp,
+  useInicialContext,
+} from "@/providers/client.providers/evento.client.provider";
 import Evento from "./evento";
 
 import React from "react";

@@ -21,9 +21,12 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import { useControleEventoContext } from "../controleEventoProvider";
-import { useInicialContext, type EventoProp } from "@/provider/provider";
 import { useRouter } from "next/navigation";
 import { somarArray } from "@/utils/somarArray";
+import {
+  type EventoProp,
+  useInicialContext,
+} from "@/providers/client.providers/evento.client.provider";
 
 const ListaEventos = () => {
   const { form: formControle, disclosureDesativarEvento } =
@@ -48,11 +51,7 @@ const ListaEventos = () => {
   const router = useRouter();
 
   return (
-    <Table
-      removeWrapper
-      aria-label="Example static collection table"
-      isHeaderSticky
-    >
+    <Table removeWrapper aria-label="Example static collection table">
       <TableHeader>
         <TableColumn>Título</TableColumn>
         <TableColumn>Data</TableColumn>

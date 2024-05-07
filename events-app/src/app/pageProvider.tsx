@@ -1,6 +1,5 @@
 "use client";
 
-import { useInicialContext } from "@/provider/provider";
 import { useDisclosure } from "@nextui-org/react";
 import { createContext, useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -23,6 +22,7 @@ interface PageContextProps {
   disclousureEventoCancelar: DisclosureProps;
   disclousureRequicisaoSucesso: DisclosureProps;
   disclousureRequicisaoErro: DisclosureProps;
+  disclousureCamposImagens: DisclosureProps;
 }
 
 export const PageContext = createContext({} as PageContextProps);
@@ -46,6 +46,10 @@ export function PageProvider({ children }: PageProviderProps) {
     id: "disclosure-page-formulario-erro",
   });
 
+  const disclousureCamposImagens = useDisclosure({
+    id: "disclosure-page-formulario-evento-imagens",
+  });
+
   return (
     <PageContext.Provider
       value={{
@@ -54,6 +58,7 @@ export function PageProvider({ children }: PageProviderProps) {
         disclousureEventoCancelar: disclousureEventoCancelar,
         disclousureRequicisaoSucesso: disclousureRequicisaoSucesso,
         disclousureRequicisaoErro: disclousureRequicisaoErro,
+        disclousureCamposImagens: disclousureCamposImagens,
       }}
     >
       {children}

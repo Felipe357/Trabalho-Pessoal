@@ -6,6 +6,11 @@ import { Navigation } from "@/components/navigation";
 
 import { useForm } from "react-hook-form";
 import { api } from "@/service/api";
+import { NextAuthProvider } from "./nextauth.client.provider";
+import SessionProvider from "./session.client.provider";
+import { useSession } from "next-auth/react";
+import { jwtDecode } from "jwt-decode";
+import SinginScreen from "@/components/singin/page";
 
 export type EventoProp = {
   id: string;
@@ -55,11 +60,12 @@ interface InicialContextProps {
 
 export const InicialContext = React.createContext({} as InicialContextProps);
 
-const AppProvider = ({
+const EventosProvider = ({
   children,
 }: React.PropsWithChildren<{}>): React.ReactElement => {
-  const [open, setOpen] = React.useState(false);
+  const { data: session } = useSession();
 
+  const [open, setOpen] = React.useState(false);
   const [maxLength, setMaxLength] = React.useState(true);
 
   React.useEffect(() => {
@@ -68,7 +74,6 @@ const AppProvider = ({
     };
 
     updateMaxLength();
-
     window.addEventListener("resize", updateMaxLength);
 
     return () => {
@@ -77,19 +82,19 @@ const AppProvider = ({
   }, []);
 
   const form = useForm();
-
   const { setValue, watch } = form;
 
   const buscarColaborador = async () => {
     try {
-      const response = await api.get(
-        "colaborador/buscar/7ecbc1a3-c9ba-4b2f-9241-3752d1ea7599"
-      );
+      const id =
+        session && (jwtDecode((session as any).access_token) as any).oid;
+
+      const response = await api.get(`colaborador/buscar/${id}`);
 
       if (response.data.status === 200) {
         setValue("colaborador", response.data.colaborador);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const buscarEventos = async () => {
@@ -102,43 +107,50 @@ const AppProvider = ({
         if (response.data.status === 200) {
           setValue("eventos", response.data.eventos);
         }
-      } catch (error) { }
+      } catch (error) {}
     }
   };
 
   React.useEffect(() => {
-    if (!watch("colaborador")) {
-      buscarColaborador();
-    }
+    if (session) {
+      if (!watch("colaborador")) {
+        buscarColaborador();
+      }
 
-    buscarEventos();
-  }, [watch("colaborador"), watch("reload")]);
+      buscarEventos();
+    }
+  }, [session, watch("colaborador"), watch("reload")]);
 
   return (
-    <NextUIProvider className="provider">
-      <InicialContext.Provider
-        value={{
-          form: form,
+    <InicialContext.Provider
+      value={{
+        form: form,
+      }}
+    >
+      <Navigation open={open} setOpen={setOpen} />
+      <div
+        style={{
+          height: "92vh",
+          marginTop: "60px",
+          marginLeft: `${maxLength && open ? "320px" : "0px"}`,
+          transition: "margin-left .3s ease-in-out",
         }}
+        className="events"
       >
-        <Navigation open={open} setOpen={setOpen} />
-        <div
-          style={{
-            height: "92vh",
-            marginTop: "60px",
-            marginLeft: `${maxLength && open ? "320px" : "0px"}`,
-            transition: "margin-left .3s ease-in-out",
-          }}
-          className="events"
-        >
-          {children}
-        </div>
-      </InicialContext.Provider>
-    </NextUIProvider>
+        {session ? (
+          children
+        ) : (
+          <>
+            <SinginScreen />
+            {children}
+          </>
+        )}
+      </div>
+    </InicialContext.Provider>
   );
 };
 
-export default AppProvider;
+export default EventosProvider;
 
 export const useInicialContext = (): InicialContextProps => {
   const context = React.useContext(InicialContext);

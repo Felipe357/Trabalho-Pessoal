@@ -3,7 +3,6 @@ import {
   faCalendarPlus,
   faChampagneGlasses,
   faClose,
-  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Drawer } from "@mui/material";
@@ -12,8 +11,10 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 import Logo from "../../assets/logo.png";
-import { useInicialContext } from "@/provider/provider";
 import { useEffect } from "react";
+import { HomeSignInButton } from "./_components/buttonSigin";
+import { useSession } from "next-auth/react";
+import { useInicialContext } from "@/providers/client.providers/evento.client.provider";
 
 type Props = {
   open: boolean;
@@ -23,6 +24,8 @@ type Props = {
 export const Navigation = ({ open, setOpen }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const { data: session } = useSession();
 
   const { form } = useInicialContext();
 
@@ -41,15 +44,21 @@ export const Navigation = ({ open, setOpen }: Props) => {
 
   return (
     <>
-      <div className="events w-full bg-white px-6 py-3 fixed top-0 left-0 right-0 z-20 flex flex-row items-center gap-10">
-        <Button
-          isIconOnly
-          aria-label="Close Drawer"
-          color="primary"
-          onPress={() => setOpen(true)}
-        >
-          <FontAwesomeIcon icon={faBars} color={"#FFF"} />
-        </Button>
+      <div className="events w-full bg-white px-6 py-3 fixed top-0 left-0 right-0 z-20 flex flex-row justify-between items-center gap-10">
+        {session ? (
+          <Button
+            isIconOnly
+            aria-label="Close Drawer"
+            color="primary"
+            onPress={() => setOpen(true)}
+          >
+            <FontAwesomeIcon icon={faBars} color={"#FFF"} />
+          </Button>
+        ) : (
+          <div></div>
+        )}
+
+        {!session && <HomeSignInButton />}
       </div>
       <Drawer
         anchor="left"

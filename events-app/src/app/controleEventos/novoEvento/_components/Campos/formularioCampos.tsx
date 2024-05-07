@@ -17,6 +17,7 @@ import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import ControllerInputFile from "@/components/form/controllerInputFile";
 import ModalVisualizarImagem from "./modalVisualizarImagem";
 import Image from "next/image";
+import ControllerCheckbox from "@/components/form/controllerCheckbox";
 
 const FormularioCampos = () => {
   const pictureInput = useRef<HTMLInputElement>(null);
@@ -30,7 +31,8 @@ const FormularioCampos = () => {
 
   const { campo } = novoEvento;
 
-  const { valores, titulo, descricao, tituloValor, valor, fotos } = CampoForm;
+  const { valores, titulo, descricao, obrigatorio, tituloValor, valor, fotos } =
+    CampoForm;
 
   const onSubmit = (data: any) => {
     setValue("novoEvento.campo", [
@@ -39,6 +41,7 @@ const FormularioCampos = () => {
         id: uuid(),
         titulo: titulo,
         descricao: descricao,
+        obrigatorio: obrigatorio,
         valores: valores,
         fotos: fotos,
       },
@@ -48,6 +51,7 @@ const FormularioCampos = () => {
       titulo: "",
       descricao: "",
       tituloValor: "",
+      obrigatorio: false,
       valor: "",
       valores: [],
       fotos: [],
@@ -59,6 +63,7 @@ const FormularioCampos = () => {
       titulo: titulo,
       descricao: descricao,
       tituloValor: tituloValor,
+      obrigatorio: obrigatorio,
       valor: valor,
       valores: valores,
       fotos: [
@@ -76,6 +81,7 @@ const FormularioCampos = () => {
     setValue("campo", {
       titulo: titulo,
       descricao: descricao,
+      obrigatorio: obrigatorio,
       tituloValor: "",
       valor: "",
       valores: [
@@ -94,6 +100,7 @@ const FormularioCampos = () => {
       titulo: titulo,
       descricao: descricao,
       tituloValor: tituloValor,
+      obrigatorio: obrigatorio,
       valor: valor,
       valores: valores.filter((e: any, indexF: number) => indexF !== key),
       fotos: fotos,
@@ -104,7 +111,7 @@ const FormularioCampos = () => {
     <div className="h-full flex flex-col justify-between">
       <div className="flex flex-wrap gap-6 overflow-y-auto pr-2 md:pr-0">
         <form
-          className="flex w-full flex-wrap gap-6 md:overflow-hidden overflow-y-auto pr-2 md:pr-0"
+          className="flex flex-wrap md:flex-nowrap gap-6 w-full w-"
           onSubmit={handleSubmit(onSubmit)}
         >
           <ControllerInput
@@ -113,7 +120,7 @@ const FormularioCampos = () => {
               isRequired: true,
               label: "Título",
               labelPlacement: "outside",
-              className: "w-1/5 min-w-full md:min-w-40",
+              className: "w-full sm:w-96",
             }}
             controllerProps={{ control: control, name: "campo.titulo" }}
           />
@@ -125,10 +132,19 @@ const FormularioCampos = () => {
               isRequired: true,
               label: "Descrição",
               labelPlacement: "outside",
-              className: "w-3/5 min-w-full md:min-w-40",
+              className: "w-full",
             }}
             controllerProps={{ control: control, name: "campo.descricao" }}
           />
+
+          <div className="h-20 flex items-end">
+            <ControllerCheckbox
+              controllerProps={{ control: control, name: "campo.obrigatorio" }}
+              checkBoxProps={{
+                title: "Obrigatório",
+              }}
+            />
+          </div>
 
           <div className="h-20 flex items-end">
             <Tooltip
@@ -159,8 +175,9 @@ const FormularioCampos = () => {
             <span className=" font-bold text-sm">Foto</span>
             <Button
               variant="bordered"
-              className={`${watch("campo.foto") && "border-primary"
-                } h-14 w-full border-dashed`}
+              className={`${
+                watch("campo.foto") && "border-primary"
+              } h-14 w-full border-dashed`}
               onClick={() => pictureInput.current?.click()}
             >
               <span className=" truncate">
@@ -261,7 +278,7 @@ const FormularioCampos = () => {
 
         <div className="w-2/5">
           <span>Valores</span>
-          <div className="h-14 rounded-xl flex flex-row items-center p-2 gap-3 overflow-x-auto border-2 border-default-200">
+          <div className="h-14 rounded-xl flex flex-row items-center p-2 gap-3 overflow-x-scroll overflow-y-hidden border-2 border-default-200">
             {valores.map((value: { titulo: string }, key: number) => (
               <Chip key={key} color="primary" onClose={() => onClear(key)}>
                 {value.titulo}
@@ -365,12 +382,14 @@ const FormularioCampos = () => {
 
                         {p.campo_imagem &&
                           p.campo_imagem.map(
-                            (
-                              value: { imagem_base64: any; id: string }
-                            ) => (
+                            (value: { imagem_base64: any; id: string }) => (
                               <Button isIconOnly key={value.id} radius="full">
                                 <Image
-                                  src={value.imagem_base64 === undefined ? '' : `data:image/.png;base64,${value.imagem_base64}`}
+                                  src={
+                                    value.imagem_base64 === undefined
+                                      ? ""
+                                      : `data:image/.png;base64,${value.imagem_base64}`
+                                  }
                                   alt={"Imagem Campo"}
                                   className="rounded-full"
                                   layout="fill"

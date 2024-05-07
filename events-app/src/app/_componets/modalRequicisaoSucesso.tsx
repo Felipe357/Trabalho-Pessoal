@@ -42,7 +42,6 @@ const ModalRequicisaoSucesso = () => {
                 color="primary"
                 className="text-white"
                 onPress={() => {
-                  console.log("aqui");
                   onClose();
                 }}
               >

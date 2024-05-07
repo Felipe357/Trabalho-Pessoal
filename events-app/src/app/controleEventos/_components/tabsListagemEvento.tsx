@@ -15,7 +15,7 @@ const TabsListagemEventos = () => {
       name={"tabs.select"}
       render={({ field }: any) => {
         return (
-          <div className="shadow-large border-2 rounded-2xl border-[#eee] px-4 w-full h-full">
+          <div className="shadow-large border-2 rounded-2xl border-[#eee] px-4 w-full h-full overflow-auto">
             <div className="flex w-full flex-col h-full">
               <Tabs
                 aria-label="Controller"

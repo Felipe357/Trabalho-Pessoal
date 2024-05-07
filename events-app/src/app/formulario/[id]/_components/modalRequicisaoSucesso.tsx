@@ -22,6 +22,7 @@ const ModalRequicisaoSucesso = () => {
     <Modal
       size={"xl"}
       isOpen={isOpen}
+      onClose={onClose}
       hideCloseButton
       backdrop="blur"
       placement="center"
